@@ -55,21 +55,21 @@ class JSON_RPC_Reader(object):
 
     def read_response(self):
         # Using a mutable list to hold the value since a immutable string passed by reference won't change the value
-        message_content = [""]
+        content = [""]
         while (self.read_next_chunk()):
             # If we can't read a header, read the next chunk
-            if (self.read_state == "Header" and not self.try_read_message_headers()):
+            if (self.read_state == "Header" and not self.try_read_headers()):
                 continue
             # If we read the header, try the content. If that fails, read the next chunk
-            if (self.read_state == "Content" and not self.try_read_message_content(message_content)):
+            if (self.read_state == "Content" and not self.try_read_content(content)):
                 continue
-            # We have the message content
+            # We have the  content
             break
         
         # Resize buffer and remove bytes we have read
         self.shift_buffer_bytes_and_reset(self.read_offset)
         try:
-            return json.loads(message_content[0])
+            return json.loads(content[0])
         except ValueError as error:
             # response has invalid json object, throw Exception TODO: log message
             raise
@@ -102,7 +102,7 @@ class JSON_RPC_Reader(object):
             #TODO: Add more granular exception message 
             raise
 
-    def try_read_message_headers(self):
+    def try_read_headers(self):
         # Scan the buffer up until right before the CRLFCRLF
         scan_offset = self.read_offset
         while(scan_offset + 3 < self.buffer_end_offset and
@@ -147,12 +147,12 @@ class JSON_RPC_Reader(object):
         self.read_state = "Content"
         return True
 
-    def try_read_message_content(self, message_content):
+    def try_read_content(self, content):
         # if we buffered less than the expected content length, return false
         if (self.buffer_end_offset - self.read_offset < self.expected_content_length):
             return False
 
-        message_content[0] = self.buffer[self.read_offset:self.read_offset + self.expected_content_length].decode(self.encoding)
+        content[0] = self.buffer[self.read_offset:self.read_offset + self.expected_content_length].decode(self.encoding)
         self.read_offset += self.expected_content_length
         #TODO: Create a enum for this
         self.read_state = "Header"
