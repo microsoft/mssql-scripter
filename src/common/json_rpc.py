@@ -4,9 +4,18 @@
 # --------------------------------------------------------------------------------------------
 
 from io import BytesIO
+from enum import Enum
 import json
 
-class JSON_RPC_Writer(object):
+class Read_State(Enum):
+    Header = 1
+    Content = 2
+
+class Json_Rpc_Writer(object):
+    """
+    Writes to the supplied stream through the JSON RPC Protocol where a request is formatted through a method
+    name and the necessary parameters.
+    """
     HEADER = "Content-Length: {0}\r\n\r\n"
     
     def __init__(self, stream, encoding = None):
@@ -15,7 +24,10 @@ class JSON_RPC_Writer(object):
         if encoding is None:
             self.encoding = 'UTF-8'
 
-    def send_request(self, method, params, id):
+    def send_request(self, method, params, id = None):
+        """
+        Forms and writes a JSON RPC protocol compliant request a method and it's parameters to the stream.
+        """
         # Perhaps move to a different def to add some validation
         content_body = {
             "jsonrpc": "2.0",
@@ -27,10 +39,16 @@ class JSON_RPC_Writer(object):
         json_content = json.dumps(content_body)
         header = self.HEADER.format(str(len(json_content)))
 
-        self.stream.write(header.encode("ascii"))
+        self.stream.write(header.encode('ascii'))
         self.stream.write(json_content.encode(self.encoding))
+        self.stream.flush()
 
-class JSON_RPC_Reader(object):
+class Json_Rpc_Reader(object):
+    """
+    Reads from the supplied stream through the JSON RPC Protocol. A Content-length header is required in the format
+    of "Content-Length: <number of bytes>".
+    Various exceptions may occur during the read process and are documented in each method.
+    """
     # \r\n
     CR = 13
     LF = 10
@@ -50,31 +68,46 @@ class JSON_RPC_Reader(object):
         self.read_offset = 0
         self.expected_content_length = 0
         self.headers = {}
-        #TODO: Create enum
-        self.read_state = "Header"
+        self.read_state = Read_State.Header
 
     def read_response(self):
+        """
+        Reads the response from the supplied stream by chunks into a buffer until all headers and body content are read. 
+
+        Returns the response body content in JSON
+        Exceptions raised:
+            ValueError
+                if the body-content can not be serialized to a JSON object
+        """
         # Using a mutable list to hold the value since a immutable string passed by reference won't change the value
         content = [""]
         while (self.read_next_chunk()):
             # If we can't read a header, read the next chunk
-            if (self.read_state == "Header" and not self.try_read_headers()):
+            if (self.read_state is Read_State.Header and not self.try_read_headers()):
                 continue
             # If we read the header, try the content. If that fails, read the next chunk
-            if (self.read_state == "Content" and not self.try_read_content(content)):
+            if (self.read_state is Read_State.Content and not self.try_read_content(content)):
                 continue
             # We have the  content
             break
         
         # Resize buffer and remove bytes we have read
-        self.shift_buffer_bytes_and_reset(self.read_offset)
+        self.trim_buffer_and_resize(self.read_offset)
         try:
             return json.loads(content[0])
-        except ValueError as error:
-            # response has invalid json object, throw Exception TODO: log message
+        except ValueError:
+            # response has invalid json object, throw Exception TODO: log message to telemetry
             raise
 
     def read_next_chunk(self):
+        """
+        Reads a chunk of the stream into the byte array. Buffer size is doubled if less than 25% of buffer space is available.abs
+        Exceptions raised:
+            EOFError
+                Stream was empty or Stream did not contain a valid header or content-body
+            IOError
+                Stream was closed externally
+        """
         # Check if we need to resize
         current_buffer_size = len(self.buffer)
         if ((current_buffer_size - float(self.buffer_end_offset)) / current_buffer_size) < self.BUFFER_RESIZE_TRIGGER:
@@ -92,17 +125,23 @@ class JSON_RPC_Reader(object):
 
             if (length_read == 0):
                 # Nothing was read, could be due to the server process shutting down while leaving stream open
-                # close stream and return false and/or throw exception?
-                # for now throwing exception
                 raise EOFError("End of stream reached with no valid header or content-body")
 
             return True
 
-        except Exception:
-            #TODO: Add more granular exception message 
+        except IOError as error:
+            # TODO: add to telemetry
             raise
 
     def try_read_headers(self):
+        """
+        Attempts to read the Header information from the internal buffer expending the last header contain "\r\n\r\n.
+
+        Returns false if the header was not found.
+        Exceptions:
+            LookupError The content-length header was not found
+            ValueError The content-length contained a invalid literal for int
+        """
         # Scan the buffer up until right before the CRLFCRLF
         scan_offset = self.read_offset
         while(scan_offset + 3 < self.buffer_end_offset and
@@ -123,42 +162,51 @@ class JSON_RPC_Reader(object):
                 colon_index = header.find(':')
 
                 if (colon_index == -1):
-                    raise KeyError("Colon missing from Header")
+                    raise KeyError("Colon missing from Header: {0}.".format(header))
                 
-                header_key = header[:colon_index]
+                # Making all headers lowercase to support case insensitivity
+                header_key = header[:colon_index].lower()
                 header_value = header[colon_index + 1:]
 
                 self.headers[header_key] = header_value
             
             #Find content body in the list of headers and parse the Value
-            if (self.headers["Content-Length"] is None):
-                raise LookupError("Content Length was not found in headers received")
+            if (not ("content-length" in self.headers)):
+                raise LookupError("Content-Length was not found in headers received.")
             
-            self.expected_content_length = int(self.headers["Content-Length"])
-
-        except Exception:
-            # Trash the buffer we read and shift past read content
-            self.shift_buffer_bytes_and_reset(self.scan_offset + 4)
+            self.expected_content_length = int(self.headers["content-length"])
+        
+        except ValueError:
+            # Content-length contained invalid literal for int
+            self.trim_buffer_and_resize(scan_offset + 4)
             raise
 
         # Pushing read pointer past the newline characters
         self.read_offset = scan_offset + 4
-        # TODO: Create enum for this
-        self.read_state = "Content"
+        self.read_state = Read_State.Content
+        
         return True
 
     def try_read_content(self, content):
+        """
+        Attempts to read the content from the internal buffer.
+
+        Returns false if buffer does not contain the entire content.
+        """
         # if we buffered less than the expected content length, return false
         if (self.buffer_end_offset - self.read_offset < self.expected_content_length):
             return False
 
         content[0] = self.buffer[self.read_offset:self.read_offset + self.expected_content_length].decode(self.encoding)
         self.read_offset += self.expected_content_length
-        #TODO: Create a enum for this
-        self.read_state = "Header"
+        
+        self.read_state = Read_State.Header
         return True
         
-    def shift_buffer_bytes_and_reset(self, bytes_to_remove):
+    def trim_buffer_and_resize(self, bytes_to_remove):
+        """
+        Trims the buffer by the passed in bytes_to_remove by creating a new buffer that is at a minimum the default max size.
+        """
         current_buffer_size = len(self.buffer)
         # Create a new buffer with either minumum size or leftover size
         new_buffer = bytearray(max(current_buffer_size - bytes_to_remove, self.DEFAULT_BUFFER_SIZE))
