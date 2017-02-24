@@ -1,2 +1,2 @@
-Microsoft XPlat Cli common module
+Microsoft XPlat CLI common module
 =================================

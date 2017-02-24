@@ -16,7 +16,7 @@ class Json_Rpc_Writer(object):
     Writes to the supplied stream through the JSON RPC Protocol where a request is formatted through a method
     name and the necessary parameters.
     """
-    HEADER = "Content-Length: {0}\r\n\r\n"
+    HEADER = 'Content-Length: {0}\r\n\r\n'
     
     def __init__(self, stream, encoding = None):
         self.stream = stream
@@ -30,10 +30,10 @@ class Json_Rpc_Writer(object):
         """
         # Perhaps move to a different def to add some validation
         content_body = {
-            "jsonrpc": "2.0",
-            "method": method,
-            "params": params,
-            "id": id 
+            'jsonrpc': '2.0',
+            'method': method,
+            'params': params,
+            'id': id 
         }
 
         json_content = json.dumps(content_body)
@@ -80,7 +80,7 @@ class Json_Rpc_Reader(object):
                 if the body-content can not be serialized to a JSON object
         """
         # Using a mutable list to hold the value since a immutable string passed by reference won't change the value
-        content = [""]
+        content = ['']
         while (self.read_next_chunk()):
             # If we can't read a header, read the next chunk
             if (self.read_state is Read_State.Header and not self.try_read_headers()):
@@ -162,7 +162,7 @@ class Json_Rpc_Reader(object):
                 colon_index = header.find(':')
 
                 if (colon_index == -1):
-                    raise KeyError("Colon missing from Header: {0}.".format(header))
+                    raise KeyError('Colon missing from Header: {0}.'.format(header))
                 
                 # Making all headers lowercase to support case insensitivity
                 header_key = header[:colon_index].lower()
@@ -171,10 +171,10 @@ class Json_Rpc_Reader(object):
                 self.headers[header_key] = header_value
             
             #Find content body in the list of headers and parse the Value
-            if (not ("content-length" in self.headers)):
-                raise LookupError("Content-Length was not found in headers received.")
+            if (not ('content-length' in self.headers)):
+                raise LookupError('Content-Length was not found in headers received.')
             
-            self.expected_content_length = int(self.headers["content-length"])
+            self.expected_content_length = int(self.headers['content-length'])
         
         except ValueError:
             # Content-length contained invalid literal for int
