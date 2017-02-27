@@ -29,4 +29,4 @@ Setting up your development environment
   python -m unittest discover -s src/mssqlscripter/mssql/scripter/tests
   ```
 
-  Additionally, you can run tests for all CLI tools and common modules using the `Run_All_Tests.bat` or `sh Run_All_Tests` script.
+  Additionally, you can run tests for all CLI tools and common modules using the `run_all_tests.bat` or `sh run_all_tests` script.
