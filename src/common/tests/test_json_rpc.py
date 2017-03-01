@@ -97,6 +97,12 @@ class Json_Rpc_Test(unittest.TestCase):
         with self.assertRaises(ValueError):
             response = json_rpc_reader.read_response()
 
+        test_stream = BytesIO()
+        json_rpc_writer = Json_Rpc_Writer(test_stream)
+        test_stream.close()
+        with self.assertRaises(ValueError):
+            json_rpc_writer.send_request(method="testMethod/DoThis", params={"Key":"Value"}, id=1)
+
     def test_trigger_buffer_resize(self):
         test_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)

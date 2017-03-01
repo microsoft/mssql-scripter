@@ -27,6 +27,9 @@ class Json_Rpc_Writer(object):
     def send_request(self, method, params, id = None):
         """
         Forms and writes a JSON RPC protocol compliant request a method and it's parameters to the stream.
+        Exceptions raised:
+            ValueError  
+                If the stream was closed externally
         """
         # Perhaps move to a different def to add some validation
         content_body = {
@@ -39,9 +42,21 @@ class Json_Rpc_Writer(object):
         json_content = json.dumps(content_body)
         header = self.HEADER.format(str(len(json_content)))
 
-        self.stream.write(header.encode('ascii'))
-        self.stream.write(json_content.encode(self.encoding))
-        self.stream.flush()
+        try:
+            self.stream.write(header.encode('ascii'))
+            self.stream.write(json_content.encode(self.encoding))
+            self.stream.flush()
+
+        except ValueError:
+            # TODO: Add telemetry of stream closed externally and reraise
+            raise
+
+    def close(self):
+        """
+            Closes the stream
+        """
+        if (not self.stream is None):
+            self.stream.close()
 
 class Json_Rpc_Reader(object):
     """
@@ -98,14 +113,14 @@ class Json_Rpc_Reader(object):
         except ValueError:
             # response has invalid json object, throw Exception TODO: log message to telemetry
             raise
-
+     
     def read_next_chunk(self):
         """
         Reads a chunk of the stream into the byte array. Buffer size is doubled if less than 25% of buffer space is available.abs
         Exceptions raised:
             EOFError
                 Stream was empty or Stream did not contain a valid header or content-body
-            IOError
+            ValueError
                 Stream was closed externally
         """
         # Check if we need to resize
@@ -128,9 +143,8 @@ class Json_Rpc_Reader(object):
                 raise EOFError("End of stream reached with no valid header or content-body")
 
             return True
-
-        except IOError as error:
-            # TODO: add to telemetry
+        except ValueError:
+            # TODO Log to telemetry and reraise
             raise
 
     def try_read_headers(self):
@@ -221,3 +235,10 @@ class Json_Rpc_Reader(object):
         # reset pointers after the shift
         self.read_offset = 0
         self.buffer_end_offset -= bytes_to_remove
+
+    def close(self):
+        """
+            Closes the stream
+        """
+        if (not self.stream is None):
+            self.stream.close()
