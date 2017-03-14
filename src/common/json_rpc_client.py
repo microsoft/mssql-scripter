@@ -164,7 +164,7 @@ class Json_Rpc_Client(object):
         # they can check for the cancellation flag
         self.request_queue.put(None)
 
-        # Wait for threads to finish with a timeout
+        # Wait for threads to finish with a timeout in seconds
         self.request_thread.join(0.2)
         self.response_thread.join(0.2)
 

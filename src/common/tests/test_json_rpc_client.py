@@ -173,7 +173,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             killed itself.
         """
         input_stream = BytesIO()
-        output_stream = BytesIO(b'Cntent-Lenth:15\r\n\r\n')
+        output_stream = BytesIO(b'Content-Lenth:15\r\n\r\n')
         output_stream.close()
 
         test_client = Json_Rpc_Client(input_stream, output_stream)
