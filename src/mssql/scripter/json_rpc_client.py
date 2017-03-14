@@ -147,8 +147,8 @@ class Json_Rpc_Client(object):
         self.request_queue.put(None)
 
         # Wait for threads to finish
-        self.request_thread.join()
-        self.response_thread.join()
+        self.request_thread.join(.200)
+        self.response_thread.join(.200)
 
         # close the underlying readers and writers
         self.reader.close()
