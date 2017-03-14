@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from mssql.scripter.json_rpc_client import Json_Rpc_Client
+from common.json_rpc_client import Json_Rpc_Client
 from io import BytesIO
 
 import unittest
@@ -140,8 +140,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         output_stream = BytesIO(b'sample output')
 
         test_client = Json_Rpc_Client(input_stream, output_stream)
-        self.assertFalse(test_client.submit_request(None, None))
-
+        with self.assertRaises(ValueError):
+            test_client.submit_request(None, None)
+            
     def test_receive_invalid_response_exception(self):
         """
             Verifies that when a invalid response is read, the response thread enqueues the Exception
@@ -235,6 +236,21 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             self.assertEqual(threading.active_count(), 2)
             test_client.shutdown()
 
+    def test_get_response_with_id(self):
+        """
+            Tests that get response with id can return either a response associated with a id or a event with no id
+        """
+        input_stream = BytesIO()
+        output_stream = BytesIO(b'Content-Length: 86\r\n\r\n{"params": {"Key": "Value"}, "jsonrpc": "2.0", "method": "testMethod/DoThis", "id": 1}')       
+
+        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client.start()
+
+        baseline = {"jsonrpc": "2.0", "params": {"Key": "Value"}, "method": "testMethod/DoThis", "id": 1}
+        response = test_client.get_response(1)
+        self.assertEqual(response, baseline)
+        test_client.shutdown()
+
     def shutdown_background_threads(self, test_client):
         """
             Utility test method used for only stopping the background threads while leaving 
@@ -246,5 +262,6 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         test_client.request_thread.join()
         test_client.response_thread.join()
         
+    
 if __name__ == '__main__':
-    unittest.main()       
+    unittest.main()    

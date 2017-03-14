@@ -246,3 +246,4 @@ class Json_Rpc_Reader(object):
         """
         if (not self.stream is None):
             self.stream.close()
+            

@@ -3,8 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from common.json_rpc import Json_Rpc_Reader
-from common.json_rpc import Json_Rpc_Writer
+from json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
 from threading import Thread
 
 import Queue
@@ -20,15 +19,16 @@ class Json_Rpc_Client(object):
         This class provides a shutdown method to ensure resources are released/closed properly.
     """
 
-    REQUEST_THREAD_NAME = 'Request_Thread'
-    RESPONSE_THREAD_NAME = 'Response_Thread'
+    REQUEST_THREAD_NAME = 'Json_Rpc_Request_Thread'
+    RESPONSE_THREAD_NAME = 'Json_Rpc_Response_Thread'
 
     def __init__(self, in_stream, out_stream):
         self.writer = Json_Rpc_Writer(in_stream)
         self.reader = Json_Rpc_Reader(out_stream)
 
         self.request_queue = Queue.Queue()
-        self.response_queue = Queue.Queue()
+        # Response map intialized with event queue
+        self.response_map= {0: Queue.Queue()}
         self.exception_queue = Queue.Queue()
 
         # Simple cancellation token boolean
@@ -50,28 +50,38 @@ class Json_Rpc_Client(object):
     def submit_request(self, method, params, id = None):
         """
             Enqueue's the request.
+            Exceptions:
+                ValueError:
+                    Request did not contain a method or parameters
         """
         if (method is None or params is None):
-            return False
+            raise ValueError("Method or Parameter was not found in request")
 
         request = {'method' : method, 'params' : params, 'id' : id}
-        self.request_queue.put(request)            
-        return True
+        self.request_queue.put(request)    
 
-    
-    def get_response(self):
+    def request_finished(self, id):
         """
-            Retrieves the latest response from the queue. Clients will use this method to get the latest response from the stream.
-            If a exception occured from either of the threads, we throw the earliest exception.
+            Cleans up the response map by removing the passed in id's entry.
+            Client is responsible for checking when a response is completed and removable.
+        """
+        if (id in self.response_map):
+            del self.response_map[id]
+
+    def get_response(self, id = 0):
+        """
+            Retrieves the latest response from the queue. 
+            First check if a exception occured and throw the latest one.
+            Second, by default we return the latest event, otherwise we return the latest response from the passed in id.
         """
         if (not self.exception_queue.empty()):
             ex = self.exception_queue.get()
             raise ex
-        
-        if (not self.response_queue.empty()):
-            response = self.response_queue.get()
-            return response
-        
+
+        if (id in self.response_map):
+            if (not self.response_map[id].empty()):
+                return self.response_map[id].get()
+
         return None
 
     def _listen_for_request(self):
@@ -112,9 +122,17 @@ class Json_Rpc_Client(object):
         while(not self.cancel):
             try:
                 response = self.reader.read_response()
-                # Enqueue the response
-                self.response_queue.put(response)
-               
+                response_id = response.get('id')
+                if (not response_id is None):
+                    # we have a id, map it with a new queue if it doesn't exist
+                    if (not response_id in self.response_map):
+                        self.response_map[response_id] = Queue.Queue()
+                    # Enqueue the response
+                    self.response_map[response_id].put(response)
+                else:
+                    # Event was returned
+                    self.response_map[0].put(response)
+
             except EOFError:
                 # Nothing was read from stream, keep trying
                 pass
@@ -129,7 +147,7 @@ class Json_Rpc_Client(object):
                 self._record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
 
-    def _record_exception(self, ex, thread_name, logger=None):
+    def _record_exception(self, ex, thread_name, logger = None):
         """
             Helper method that enqueues the exception that was thrown into the exception queue.
             Clients can provide a logger to log the exception with the associated thread name for telemetry.
