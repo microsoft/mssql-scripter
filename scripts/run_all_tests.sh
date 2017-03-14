@@ -5,4 +5,4 @@
 # --------------------------------------------------------------------------------------------
 
 python -m unittest discover -s ../src/common/tests
-python -m unittest discover -s ../src/mssql-scripter/mssql/scripter/tests
+python -m unittest discover -s ../src/mssql/scripter/tests

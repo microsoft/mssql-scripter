@@ -5,6 +5,7 @@
 
 from io import BytesIO
 from enum import Enum
+
 import json
 
 class Read_State(Enum):
@@ -13,7 +14,7 @@ class Read_State(Enum):
 
 class Json_Rpc_Writer(object):
     """
-    Writes to the supplied stream through the JSON RPC Protocol where a request is formatted through a method
+    Writes to the supplied stream through the JSON RPC Protocol. Request is formatted with a method
     name and the necessary parameters.
     """
     HEADER = 'Content-Length: {0}\r\n\r\n'
@@ -27,6 +28,9 @@ class Json_Rpc_Writer(object):
     def send_request(self, method, params, id = None):
         """
         Forms and writes a JSON RPC protocol compliant request a method and it's parameters to the stream.
+        Exceptions raised:
+            ValueError  
+                If the stream was closed externally.
         """
         # Perhaps move to a different def to add some validation
         content_body = {
@@ -39,9 +43,21 @@ class Json_Rpc_Writer(object):
         json_content = json.dumps(content_body)
         header = self.HEADER.format(str(len(json_content)))
 
-        self.stream.write(header.encode('ascii'))
-        self.stream.write(json_content.encode(self.encoding))
-        self.stream.flush()
+        try:
+            self.stream.write(header.encode('ascii'))
+            self.stream.write(json_content.encode(self.encoding))
+            self.stream.flush()
+
+        except ValueError:
+            # TODO: Add telemetry of stream closed externally and reraise
+            raise
+
+    def close(self):
+        """
+            Closes the stream.
+        """
+        if (not self.stream is None):
+            self.stream.close()
 
 class Json_Rpc_Reader(object):
     """
@@ -74,10 +90,10 @@ class Json_Rpc_Reader(object):
         """
         Reads the response from the supplied stream by chunks into a buffer until all headers and body content are read. 
 
-        Returns the response body content in JSON
+        Returns the response body content in JSON.
         Exceptions raised:
             ValueError
-                if the body-content can not be serialized to a JSON object
+                if the body-content can not be serialized to a JSON object.
         """
         # Using a mutable list to hold the value since a immutable string passed by reference won't change the value
         content = ['']
@@ -98,15 +114,15 @@ class Json_Rpc_Reader(object):
         except ValueError:
             # response has invalid json object, throw Exception TODO: log message to telemetry
             raise
-
+     
     def read_next_chunk(self):
         """
-        Reads a chunk of the stream into the byte array. Buffer size is doubled if less than 25% of buffer space is available.abs
+        Reads a chunk of the stream into the byte array. Buffer size is doubled if less than 25% of buffer space is available.
         Exceptions raised:
             EOFError
-                Stream was empty or Stream did not contain a valid header or content-body
-            IOError
-                Stream was closed externally
+                Stream was empty or Stream did not contain a valid header or content-body.
+            ValueError
+                Stream was closed externally.
         """
         # Check if we need to resize
         current_buffer_size = len(self.buffer)
@@ -124,23 +140,25 @@ class Json_Rpc_Reader(object):
             self.buffer_end_offset += length_read
 
             if (length_read == 0):
-                # Nothing was read, could be due to the server process shutting down while leaving stream open
-                raise EOFError("End of stream reached with no valid header or content-body")
+                # Nothing was read from stream
+                raise EOFError("End of stream reached, no output.")
 
             return True
-
-        except IOError as error:
-            # TODO: add to telemetry
+        except ValueError:
+            # TODO Log to telemetry and reraise
+            # Stream was closed
             raise
 
     def try_read_headers(self):
         """
-        Attempts to read the Header information from the internal buffer expending the last header contain "\r\n\r\n.
+        Attempts to read the Header information from the internal buffer expending the last header contain '\r\n\r\n'.
 
         Returns false if the header was not found.
         Exceptions:
-            LookupError The content-length header was not found
-            ValueError The content-length contained a invalid literal for int
+            LookupError 
+                The content-length header was not found.
+            ValueError 
+                The content-length contained a invalid literal for int.
         """
         # Scan the buffer up until right before the CRLFCRLF
         scan_offset = self.read_offset
@@ -221,3 +239,11 @@ class Json_Rpc_Reader(object):
         # reset pointers after the shift
         self.read_offset = 0
         self.buffer_end_offset -= bytes_to_remove
+
+    def close(self):
+        """
+            Closes the stream.
+        """
+        if (not self.stream is None):
+            self.stream.close()
+            

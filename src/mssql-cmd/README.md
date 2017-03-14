@@ -1,2 +1,0 @@
-Microsoft Sql Cmd Module
-========================
