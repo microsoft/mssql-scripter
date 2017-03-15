@@ -7,3 +7,6 @@ REM ----------------------------------------------------------------------------
 
 python -m unittest discover -s ../src/common/tests
 python -m unittest discover -s ../src/mssql/scripter/tests
+
+coverage run --concurrency=thread -m unittest discover -s ../src/common/tests
+coverage report -m

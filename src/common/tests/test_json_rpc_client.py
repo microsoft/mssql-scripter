@@ -245,6 +245,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
+        
+        # Sleeping to give background threads a chance to process response.
+        time.sleep(1)
 
         baseline = {"jsonrpc": "2.0", "params": {"Key": "Value"}, "method": "testMethod/DoThis", "id": 1}
         response = test_client.get_response(1)
