@@ -3,10 +3,10 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
+from common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
 from threading import Thread
 
-import Queue
+from queue import Queue
 
 class Json_Rpc_Client(object):
     """
@@ -26,10 +26,10 @@ class Json_Rpc_Client(object):
         self.writer = Json_Rpc_Writer(in_stream)
         self.reader = Json_Rpc_Reader(out_stream)
 
-        self.request_queue = Queue.Queue()
+        self.request_queue = Queue()
         # Response map intialized with event queue
-        self.response_map= {0: Queue.Queue()}
-        self.exception_queue = Queue.Queue()
+        self.response_map= {0: Queue()}
+        self.exception_queue = Queue()
 
         # Simple cancellation token boolean
         self.cancel = False
@@ -126,7 +126,7 @@ class Json_Rpc_Client(object):
                 if (not response_id is None):
                     # we have a id, map it with a new queue if it doesn't exist
                     if (not response_id in self.response_map):
-                        self.response_map[response_id] = Queue.Queue()
+                        self.response_map[response_id] = Queue()
                     # Enqueue the response
                     self.response_map[response_id].put(response)
                 else:
