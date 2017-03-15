@@ -40,9 +40,8 @@ class Json_Rpc_Writer(object):
             'id': id 
         }
 
-        json_content = json.dumps(content_body)
+        json_content = json.dumps(content_body, sort_keys = True)
         header = self.HEADER.format(str(len(json_content)))
-
         try:
             self.stream.write(header.encode('ascii'))
             self.stream.write(json_content.encode(self.encoding))

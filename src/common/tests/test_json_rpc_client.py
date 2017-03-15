@@ -68,7 +68,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # check stream contents
         input_stream.seek(0)
-        expected = b'Content-Length: 120\r\n\r\n{"jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}, "id": null}'
+        expected = b'Content-Length: 120\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}}'
 
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
@@ -102,9 +102,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         input_stream.seek(0)
         expected = \
-        b'Content-Length: 120\r\n\r\n{"jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}, "id": null}'\
-        b'Content-Length: 115\r\n\r\n{"jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptCollations": "True"}, "id": null}'\
-        b'Content-Length: 113\r\n\r\n{"jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDefaults": "True"}, "id": null}'
+        b'Content-Length: 120\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}}'\
+        b'Content-Length: 115\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptCollations": "True"}}'\
+        b'Content-Length: 113\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDefaults": "True"}}'
 
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
