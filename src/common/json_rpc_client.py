@@ -133,9 +133,10 @@ class Json_Rpc_Client(object):
                     # Event was returned
                     self.response_map[0].put(response)
 
-            except EOFError:
-                # Nothing was read from stream, keep trying
-                pass
+            except EOFError as error:
+                # Nothing was read from stream, break out of the loop
+                # TODO: Revisit the scenarios where the stream could for a second not have any content in it.
+                break
             except ValueError as error:
                 # If we get this error it means the stream was closed
                 # Place error into queue for main thread to access

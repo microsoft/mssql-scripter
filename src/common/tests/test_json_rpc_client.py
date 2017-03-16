@@ -43,9 +43,13 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         baseline = {"key":"value"}
 
         self.assertEqual(response, baseline)        
+        # Verify request thread is alive and running and response thread finished reading.
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 1)
+
+        # Response thread should have reach EOF during test execution which should end the response thread.
+        
 
     def test_submit_simple_request(self):
         """
@@ -59,8 +63,8 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # Verify threads are alive and running
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertFalse(test_client.response_thread.isAlive())
+        self.assertEqual(threading.active_count(), 2)
 
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptDatabaseOptions':'True'})
 
@@ -85,10 +89,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
     
-        # Verify threads are alive and running.
+        # Verify request thread is up and running and response thread is dead since it should have reached EOF.
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertFalse(test_client.response_thread.isAlive())
+        self.assertEqual(threading.active_count(), 2)
     
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptDatabaseOptions' : 'True'})
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptCollations' : 'True'})
@@ -123,8 +127,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # Verify threads are alive and running
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertEqual(threading.active_count(), 2)
+
+        # Response thread should have reach EOF during test execution which should end the response thread.
+        self.assertFalse(test_client.response_thread.isAlive())
 
         test_client.shutdown()
 
@@ -191,25 +197,26 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             test_client.shutdown()
             self.assertEqual(threading.active_count(), 1)
 
-    def test_stream_has_no_response(self):
-        """
-            Verifies that response thread is still running when the output stream has nothing
-            This simulates a subprocess not outputting to it's std out immediately.
-        """
-        input_stream = BytesIO()
-        output_stream = BytesIO()
-
-        test_client = Json_Rpc_Client(input_stream, output_stream)
-        test_client.start()
-        response = test_client.get_response()
-
-        self.assertEqual(response, None)
-        self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
-
-        test_client.shutdown()
-        self.assertEqual(threading.active_count(), 1)
+    # Disabling this test in case this scenario is valid in the future
+    #def test_stream_has_no_response(self):
+    #    """
+    #        Verifies that response thread is still running when the output stream has nothing
+    #        This simulates a subprocess not outputting to it's std out immediately.
+    #    """
+    #    input_stream = BytesIO()
+    #    output_stream = BytesIO()
+    #
+    #    test_client = Json_Rpc_Client(input_stream, output_stream)
+    #    test_client.start()
+    #    response = test_client.get_response()
+    #
+    #    self.assertEqual(response, None)
+    #    self.assertTrue(test_client.request_thread.isAlive())
+    #    self.assertTrue(test_client.response_thread.isAlive())
+    #    self.assertEqual(threading.active_count(), 3)
+    #
+    #    test_client.shutdown()
+    #    self.assertEqual(threading.active_count(), 1)
 
     def test_stream_closed_during_process(self):
         """
@@ -233,7 +240,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             self.assertEqual(exception.args, ("I/O operation on closed file.",))
             # Verify the response thread is dead
             self.assertFalse(test_client.request_thread.isAlive())
-            self.assertEqual(threading.active_count(), 2)
+            self.assertEqual(threading.active_count(), 1)
             test_client.shutdown()
 
     def test_get_response_with_id(self):
