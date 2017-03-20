@@ -6,23 +6,21 @@
 
 from abc import abstractmethod
 
+def serialize(name, parameters):
+    print("Serializing")
+    return {name: vars(parameters)}
+
+
 class Command(object):
     """
         Abstract command class that all service commands need to subclass.
         Each commands responsibilities:
-             Method name in the sql tools service
-             Typed parameters
-             Serialization and Deserialization of it's Typed response and events
+             Method name in the sql tools service.
+             Define it's types necessary for requests and responses.
+             Serialization of request parameters.
+             Deserialization of responses.
             
     """
-    def __init__(self, rpc_client, parameters):
-        self.rpc_client = rpc_client
-        # Parameters will be typed, so when submitting request we need to serialize them
-        self.paramaeters = parameters
-
-        # Should we represent this with it's own getter and make the variable private
-        self.finished = False
-
     @abstractmethod
     def execute(self):
         """
@@ -52,5 +50,12 @@ class Command(object):
     def deserialize_response(self):
         """ 
             Given a json rpc string response from json rpc client, we have to parse through the methods to deserialize to the appropriate response.
+        """
+        pass
+
+    @abstractmethod
+    def finished(self):
+        """
+            returns on the state of the command if it has finished.
         """
         pass

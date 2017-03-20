@@ -73,7 +73,7 @@ class Json_Rpc_Test(unittest.TestCase):
             test_stream = BytesIO(b'Retry-On-Failure True\r\n\r\n')
             json_rpc_reader = Json_Rpc_Reader(test_stream)
             response = json_rpc_reader.read_response()
-            print(error.msg)
+
         except KeyError as error:  
             self.assertEqual(error.args, ("Colon missing from Header: Retry-On-Failure True.",))
 
