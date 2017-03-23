@@ -122,8 +122,10 @@ class Json_Rpc_Client(object):
         while(not self.cancel):
             try:
                 response = self.reader.read_response()
-                response_id = response.get('id')
-                if (not response_id is None):
+                response_id_str = response.get('id')
+                if (not response_id_str is None):
+                    # response will be returned as a json string, so parse it to int so clients can use a int id
+                    response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
                     if (not response_id in self.response_map):
                         self.response_map[response_id] = Queue()
@@ -165,10 +167,8 @@ class Json_Rpc_Client(object):
         # they can check for the cancellation flag
         self.request_queue.put(None)
 
-        # Wait for threads to finish with a timeout in seconds
+        # Wait for request thread to finish with a timeout in seconds
         self.request_thread.join(0.2)
-        self.response_thread.join(0.2)
 
-        # close the underlying readers and writers
-        self.reader.close()
+        # close the underlying writer
         self.writer.close()
