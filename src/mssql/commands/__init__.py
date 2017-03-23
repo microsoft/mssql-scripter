@@ -11,7 +11,7 @@ def serialize(name, parameters):
     return {name: vars(parameters)}
 
 
-class Command(object):
+class Request(object):
     """
         Abstract command class that all service commands need to subclass.
         Each commands responsibilities:
