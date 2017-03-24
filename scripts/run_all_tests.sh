@@ -4,8 +4,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-python -m unittest discover -s ../src/common/tests
-python -m unittest discover -s ../src/mssql/scripter/tests
-
 coverage run --concurrency=thread -m unittest discover -s ../src/common/tests
+coverage run --concurrency=thread -m unittest discover -s ../src/mssql/requests/tests
+
 coverage report -m
