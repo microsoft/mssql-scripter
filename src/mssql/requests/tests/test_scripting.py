@@ -118,7 +118,7 @@ class Scripting_Request_Tests(unittest.TestCase):
         """
             Verifies invalid script options throw expected error.
         """
-        invalid_options = {'ANSIPadding': 'NonValid', 'AppendToFile': 'Random'}
+        invalid_options = {'ANSIPadding': 'NonValid'}
         
         invalid_server_version = {'ScriptForServerVersion': 'SQL Server 1689'}
 
