@@ -3,17 +3,14 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from mssql.commands import Request
+from mssql.requests import Request
 from future.utils import iteritems
-from json import JSONDecoder
-import json
-
 
 class Scripting_Request(Request):
     """
-        Script database command.
+        Encapsulates a scripting request against sql tools service.
     """
-    METHOD_NAME ='scripting/script'
+    METHOD_NAME = 'scripting/script'
 
     def __init__(self, id, json_rpc_client, parameters):
         """
@@ -21,21 +18,23 @@ class Scripting_Request(Request):
         """
         assert id != 0
         self.id = id
+        self.finished = False
         self.json_rpc_client = json_rpc_client
         self.params = Scripting_Params(parameters)
-        self.finished = False
         self.decoder = Scripting_Response_Decoder()
+
     def execute(self):
         """
-            Submits script db request via json rpc client with formatted parameters and id.
+            Submits scripting request via json rpc client with formatted parameters and id.
         """
         self.json_rpc_client.submit_request(self.METHOD_NAME, self.params.format(), self.id)
         
     def get_response(self):
         """
             Retrieves the events or response associated with this request and decodes to the explicit type.
-
             Get the latest event/response from the queue.
+
+            Finish state is either via a complete or error event.
         """
         # Check if there are any immediate response to the request
         response = self.json_rpc_client.get_response(self.id)
@@ -47,88 +46,26 @@ class Scripting_Request(Request):
         if (not event is None):
             event_type = self.decoder.decode_response(event)
             # Request is completed
-            if (isinstance(event_type, ScriptCompleteEvent)):
+            if (isinstance(event_type, ScriptCompleteEvent) or isinstance(event_type, ScriptErrorEvent)):
                 self.finished = True
-            
+                self.json_rpc_client.request_finished(self.id)
+
             return event_type
         
         return None
 
-    def dispose(self):
-        # Remove response queue from json rpc client
-        json_rpc_client.request_finished(self.id)
-
     def completed(self):
+        """
+            Returns current state.
+        """
         return self.finished
-
-class ScriptCancelEvent(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-
-class ScriptCompleteEvent(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-
-class ScriptErrorEvent(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-        self.message = params["message"]
-        self.diagnostic_message = params["diagnosticMessage"]
-
-class ScriptPlanNotificationEvent(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-        # TODO: We can separate out the actual object 
-        self.database_objects = params["databaseObjects"]
-        self.count = params["count"]
-
-class ScriptProgressNotificationEvent(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-        self.scripting_object = params["scriptingObject"]
-        self.status = params["status"]
-        self.count = params["count"]
-        self.total_count = params["totalCount"]
-
-class ScriptResponse(object):
-    def __init__(self, params):
-        self.operation_id = params["operationId"]
-
-class Scripting_Response_Decoder(object):
-    """
-        Responsibile for decoding json response into it's appropriate  type.
-    """
-    def __init__(self):
-        # response map 
-        self.response_dispatcher = {'scripting/scriptCancel' : ScriptCancelEvent,
-                                    'scripting/scriptComplete': ScriptCompleteEvent,
-                                    'scripting/scriptError': ScriptErrorEvent,
-                                    'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
-                                    'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
-                                    'id': ScriptResponse }
-
-    def decode_response(self, obj):
-        """
-            Based on the method name, we return the appropriate event object.
-        """
-        if ("method" in obj):
-            response_name = obj["method"]
-            if (response_name in self.response_dispatcher):
-                return self.response_dispatcher[response_name](obj["params"])
-        
-        if ("id" in obj and "result" in obj):
-            print("Found Response")
-            return self.response_dispatcher["id"](obj["result"])
-
-        #TODO: Log error 
-        # Return the json string normally
-        return obj
 
 class Scripting_Params(object):
     """
         Holds scripting database options. Used by client.
     """
     def __init__(self, parameters):
+        
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
         self.database_objects = parameters['DatabaseObjects']
@@ -226,3 +163,69 @@ class Scripting_Options(object):
         """
         return vars(self)
 
+#
+#   Various Scripting Events
+#
+class ScriptCancelEvent(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+
+class ScriptCompleteEvent(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+
+class ScriptErrorEvent(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+        self.message = params['message']
+        self.diagnostic_message = params['diagnosticMessage']
+
+class ScriptPlanNotificationEvent(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+        # TODO: We can separate out the actual objects or return a list of the objects to the client
+        self.database_objects = params['databaseObjects']
+        self.count = params['count']
+
+class ScriptProgressNotificationEvent(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+        self.scripting_object = params['scriptingObject']
+        self.status = params['status']
+        self.count = params['count']
+        self.total_count = params['totalCount']
+
+class ScriptResponse(object):
+    def __init__(self, params):
+        self.operation_id = params['operationId']
+
+class Scripting_Response_Decoder(object):
+    """
+        Responsibile for decoding json response into it's appropriate  type.
+    """
+    def __init__(self):
+        # response map 
+        self.response_dispatcher = {'scripting/scriptCancel' : ScriptCancelEvent,
+                                    'scripting/scriptComplete': ScriptCompleteEvent,
+                                    'scripting/scriptError': ScriptErrorEvent,
+                                    'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
+                                    'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
+                                    'id': ScriptResponse }
+
+    def decode_response(self, obj):
+        """
+            Based on the method name, we return the appropriate event object.
+        """
+        if ('method' in obj):
+            response_name = obj['method']
+            if (response_name in self.response_dispatcher):
+                # Handle event received
+                return self.response_dispatcher[response_name](obj['params'])
+        
+        if ('id' in obj and 'result' in obj):
+            # Handle response received
+            return self.response_dispatcher['id'](obj['result'])
+
+        #TODO: Log error 
+        # Unable to decode, return json string
+        return obj

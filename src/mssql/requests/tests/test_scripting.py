@@ -2,63 +2,50 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-import unittest
-#TODO: Clean up this import, perhaps restructure the module
-from mssql.commands.scripting_request import *
+from mssql.requests.scripting import *
 
-import subprocess
-from subprocess import PIPE
 from common.json_rpc_client import Json_Rpc_Client
 from common.json_rpc import Json_Rpc_Writer, Json_Rpc_Reader
-from io import BytesIO, StringIO
+from io import BytesIO
 
-import time
-import sys
-import json
+import unittest
+import os
 
-class Script_Database_Tests(unittest.TestCase):
-
-    def test_basic_script_database_request(self):
-        process = subprocess.Popen( [r"D:\repos\sqltoolsservice\src\Microsoft.SqlTools.ServiceLayer\bin\Debug\netcoreapp1.0\win7-x64\Microsoft.SqlTools.ServiceLayer.exe", 
-            "--enable-logging"], bufsize=0, stdin=PIPE, stdout=PIPE)
-
-        parameters = {'FilePath': 'D:\\repos\\sql-xplat-cli\\sample_db.sql', 'ConnectionString': 'Server=bro-hb; Database=AdventureWorks2014; User Id=sa; Password=Yukon900', 
-        'DatabaseObjects' : None}
-
-        rpc_client = Json_Rpc_Client(process.stdin, process.stdout)
-        rpc_client.start()
-
-        request = Scripting_Request(1, rpc_client, parameters)
-        request.execute()
-        while(not request.completed()):
-            response = request.get_response()
-            if (not response is None):
-                print(response)
-
-        
-        process.kill()
-
+class Scripting_Request_Tests(unittest.TestCase):
     """
-        TODO: Test basic script Request
-              Test Fail SCript EOFError
-              TEst all script scenarios with almost all types of objects scripted
+        Scripting request tests
     """
+    def test_succesful_scripting_response_AdventureWorks2014(self):
+        """
+            Verifies that the scripting response of a successful request is read succesfully with a sample request against AdventureWorks2014.
+        """
+        with open(self.get_test_baseline('adventureworks2014_baseline.txt'), 'r+b', buffering = 0) as response_file:
+            request_stream = BytesIO(b'')
+            rpc_client = Json_Rpc_Client(request_stream, response_file)
+            rpc_client.start()
+            # Submit a dummy request
+            parameters = {'FilePath': 'Sample_File_Path', 'ConnectionString': 'Sample_connection_string', 'DatabaseObjects' : None}
+            request = Scripting_Request(1, rpc_client, parameters)
 
+            self.verify_response_count(request = request, response_count = 1, plan_notification_count = 1, progress_count = 375, complete_count = 1, error_count = 0)
+
+            rpc_client.shutdown()
+    
     def test_scripting_response_decoder(self):
-        cancel_event = {"jsonrpc": "2.0","method": "scripting/scriptCancel","params": {"operationId": "e18b9538-a7ff-4502-9c33-ac63ed42e5a5"}}
-        complete_event = {"jsonrpc": "2.0","method": "scripting/scriptComplete","params": {"operationId": "e18b9538-a7ff-4502-9c33-ac63ed42e5a5"}}
-        error_event = {"jsonrpc": "2.0","method": "scripting/scriptError","params": {"operationId": "e18b9538-a7ff-4502-9c33-ac63ed42e5a5"
-        , "message": "Scripting error occured", "diagnosticMessage": "error occured during scripting"}}
+        cancel_event = {'jsonrpc': '2.0','method': 'scripting/scriptCancel','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
+        complete_event = {'jsonrpc': '2.0','method': 'scripting/scriptComplete','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
+        error_event = {'jsonrpc': '2.0','method': 'scripting/scriptError','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'
+        , 'message': 'Scripting error occured', 'diagnosticMessage': 'error occured during scripting'}}
         
-        progress_notification = {"jsonrpc": "2.0","method": "scripting/scriptProgressNotification","params": {"operationId": "e18b9538-a7ff-4502-9c33-ac63ed42e5a5"
-        , "status": "Completed", "count": 3, "totalCount" : 12, "scriptingObject" : {"type" : "FullTextCatalog", "schema" : "null", "name" : "SampleFullTextCatalog"}}}
+        progress_notification = {'jsonrpc': '2.0','method': 'scripting/scriptProgressNotification','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'
+        , 'status': 'Completed', 'count': 3, 'totalCount' : 12, 'scriptingObject' : {'type' : 'FullTextCatalog', 'schema' : 'null', 'name' : 'SampleFullTextCatalog'}}}
 
-        plan_notification = {"jsonrpc": "2.0","method": "scripting/scriptPlanNotification","params": {"operationId": "e18b9538-a7ff-4502-9c33-ac63ed42e5a5"\
-        , "databaseObjects" :[{
-            "type": "Database",
-            "schema": "null",
-            "name": "AdventureWorks2014"
-          }], "count" : 10}}
+        plan_notification = {'jsonrpc': '2.0','method': 'scripting/scriptPlanNotification','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'\
+        , 'databaseObjects' :[{
+            'type': 'Database',
+            'schema': 'null',
+            'name': 'AdventureWorks2014'
+          }], 'count' : 10}}
 
         decoder = Scripting_Response_Decoder()
 
@@ -73,6 +60,23 @@ class Script_Database_Tests(unittest.TestCase):
         self.assertTrue(isinstance(error_decoded, ScriptErrorEvent))
         self.assertTrue(isinstance(progress_notification_decoded, ScriptProgressNotificationEvent))
         self.assertTrue(isinstance(plan_notification_decoded, ScriptPlanNotificationEvent))
+
+    def test_scripting_response_decoder_invalid(self):
+        """
+            Verifies that the decoder could not decode to a scripting event type.
+        """
+        cancel_event = {'jsonrpc': '2.0','method': 'query/queryCancelled','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
+        complete_event = {'jsonrpc': '2.0','method': 'connect/connectionComplete','params': {'operationId': 'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
+
+        decoder = Scripting_Response_Decoder()
+
+        cancel_decoded = decoder.decode_response(cancel_event)
+        complete_decoded = decoder.decode_response(complete_event)
+
+        # both events should remain untouched.
+        self.assertTrue(isinstance(cancel_decoded, dict))
+        self.assertTrue(isinstance(complete_decoded, dict))
+
 
     def test_default_script_options(self):
         """
@@ -92,7 +96,7 @@ class Script_Database_Tests(unittest.TestCase):
 
     def test_nondefault_script_options(self):
         """
-            Verifies only optoins are updated.
+            Verifies only valid options are updated.
         """
         new_options = {'ANSIPadding': True, 'AppendToFile': True, 'TypeOfDataToScript': 'SchemaOnly', 'ScriptDropAndCreate': 'ScriptCreate', 
                     'ScriptForTheDatabaseEngineType': 'SingleInstance', 'ScriptStatistics': 'ScriptStatsNone', 'ScriptForServerVersion': 'SQL Server vNext CTP 1.0', 
@@ -130,7 +134,7 @@ class Script_Database_Tests(unittest.TestCase):
 
     def test_script_database_params_format(self):
         """
-            TODO: Update the top level parameters once sql tools service work is finalized.
+            Verifies the database parameters are formatted properly.
         """
         params = {'FilePath': 'C:\temp\sample_db.sql' , 'ConnectionString': 'Sample_connection_string' , 'DatabaseObjects': ['Person.Person'] }
         scripting_params = Scripting_Params(params)
@@ -149,37 +153,45 @@ class Script_Database_Tests(unittest.TestCase):
         self.assertEqual(formatted_params['ConnectionString'], 'Sample_connection_string')
         self.assertEqual(formatted_params['DatabaseObjects'], ['Person.Person'])
         self.assertEqual(formatted_params['ScriptOptions'], expected_script_options)
-        
-    # Test decoder works on expected responses
-    #def test_script_database_response_decoder(self):
-    #    decoder = Scripting_Response_Decoder()
-    #    response = '{"method": "test/testmethod"}'
-    #    json.loads(response, cls=Scripting_Response_Decoder)
-    #    print(response)
 
-    # Test submit simple request
-    def test_script_database_request(self):
-        pass
-        # Create the streams
-       # input_stream = BytesIO()
-       # output_stream = StringIO('{"jsonrpc": "2.0","method": "scripting/scriptProgressNotification","params": {"message": "Responding"}}')
-#
-       # # Create and start rpc client
-       # json_rpc_client = Json_Rpc_Client(input_stream, output_stream)
-       # json_rpc_client.start()
-#
-       # # Form the scripting request
-       # params = {'FilePath': 'C:\temp\sample_db.sql' , 'ConnectionString': 'Sample_connection_string' , 'Tables': ['Person.Person'] }
-       # request = Scripting_Request(1, json_rpc_client, params)
-       # 
-       # request.execute()
-       # while(not request.finished()):
-       #     response = request.get_response()
-       #     print(response)
+    def verify_response_count(self, request, response_count, plan_notification_count, progress_count, complete_count, error_count, func = None):
+        """
+            Helper to verify expected response count from a request
+        """
+        progress_notification_event = 0
+        complete_event = 0
+        response_event = 0
+        plan_notification_event = 0
+        error_event = 0
+        request.execute()
 
+        while(not request.completed()):
+            response = request.get_response()
+            if (not func is None):
+                func(self, response)
+            if (isinstance(response, ScriptProgressNotificationEvent)):
+                progress_notification_event += 1
+            elif (isinstance(response, ScriptCompleteEvent)):
+                complete_event += 1
+            elif (isinstance(response, ScriptResponse)):
+                response_event += 1
+            elif (isinstance(response, ScriptPlanNotificationEvent)):
+                plan_notification_event += 1
+            elif (isinstance(response, ScriptErrorEvent)):
+                error_event += 1
 
-    # Test read response
-    # Test state is updated
+        self.assertEqual(response_event, response_count)
+        self.assertEqual(plan_notification_event, plan_notification_count)
+        self.assertEqual(progress_notification_event, progress_count)
+        self.assertEqual(complete_event, complete_count)
+        self.assertEqual(error_event, error_count)
+
+    def get_test_baseline(self, file_name):
+        """
+            Helper method to get baseline file.
+        """
+        return os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'scripting_baselines', file_name))
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
+    
