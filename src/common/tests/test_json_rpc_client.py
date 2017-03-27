@@ -43,13 +43,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         baseline = {"key":"value"}
 
         self.assertEqual(response, baseline)        
-        # Verify request thread is alive and running and response thread finished reading.
+        # All background threads should be shut down
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 1)
-
-        # Response thread should have reach EOF during test execution which should end the response thread.
-        
 
     def test_submit_simple_request(self):
         """
@@ -197,26 +194,26 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             test_client.shutdown()
             self.assertEqual(threading.active_count(), 1)
 
-    # Disabling this test in case this scenario is valid in the future
-    #def test_stream_has_no_response(self):
-    #    """
-    #        Verifies that response thread is still running when the output stream has nothing
-    #        This simulates a subprocess not outputting to it's std out immediately.
-    #    """
-    #    input_stream = BytesIO()
-    #    output_stream = BytesIO()
-    #
-    #    test_client = Json_Rpc_Client(input_stream, output_stream)
-    #    test_client.start()
-    #    response = test_client.get_response()
-    #
-    #    self.assertEqual(response, None)
-    #    self.assertTrue(test_client.request_thread.isAlive())
-    #    self.assertTrue(test_client.response_thread.isAlive())
-    #    self.assertEqual(threading.active_count(), 3)
-    #
-    #    test_client.shutdown()
-    #    self.assertEqual(threading.active_count(), 1)
+    @unittext.skip("Disabling until scenario is valid")
+    def test_stream_has_no_response(self):
+        """
+            Verifies that response thread is still running when the output stream has nothing
+            This simulates a subprocess not outputting to it's std out immediately.
+        """
+        input_stream = BytesIO()
+        output_stream = BytesIO()
+    
+        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client.start()
+        response = test_client.get_response()
+    
+        self.assertEqual(response, None)
+        self.assertTrue(test_client.request_thread.isAlive())
+        self.assertTrue(test_client.response_thread.isAlive())
+        self.assertEqual(threading.active_count(), 3)
+    
+        test_client.shutdown()
+        self.assertEqual(threading.active_count(), 1)
 
     def test_stream_closed_during_process(self):
         """
