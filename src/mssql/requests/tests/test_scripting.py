@@ -193,5 +193,5 @@ class Scripting_Request_Tests(unittest.TestCase):
         return os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'scripting_baselines', file_name))
 
 if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+    unittest.main()
     

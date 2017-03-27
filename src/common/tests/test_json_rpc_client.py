@@ -194,7 +194,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             test_client.shutdown()
             self.assertEqual(threading.active_count(), 1)
 
-    @unittext.skip("Disabling until scenario is valid")
+    @unittest.skip("Disabling until scenario is valid")
     def test_stream_has_no_response(self):
         """
             Verifies that response thread is still running when the output stream has nothing
