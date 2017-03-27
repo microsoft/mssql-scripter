@@ -40,9 +40,8 @@ class Json_Rpc_Writer(object):
             'id': id 
         }
 
-        json_content = json.dumps(content_body)
+        json_content = json.dumps(content_body, sort_keys = True)
         header = self.HEADER.format(str(len(json_content)))
-
         try:
             self.stream.write(header.encode('ascii'))
             self.stream.write(json_content.encode(self.encoding))
@@ -85,6 +84,7 @@ class Json_Rpc_Reader(object):
         self.expected_content_length = 0
         self.headers = {}
         self.read_state = Read_State.Header
+        self.needs_more_data = True
 
     def read_response(self):
         """
@@ -97,24 +97,29 @@ class Json_Rpc_Reader(object):
         """
         # Using a mutable list to hold the value since a immutable string passed by reference won't change the value
         content = ['']
-        while (self.read_next_chunk()):
-            # If we can't read a header, read the next chunk
-            if (self.read_state is Read_State.Header and not self.try_read_headers()):
-                continue
-            # If we read the header, try the content. If that fails, read the next chunk
-            if (self.read_state is Read_State.Content and not self.try_read_content(content)):
-                continue
-            # We have the  content
-            break
-        
-        # Resize buffer and remove bytes we have read
-        self.trim_buffer_and_resize(self.read_offset)
         try:
+            while (not self.needs_more_data or self.read_next_chunk()):
+                # We should have all the data we need to form a message in the buffer.
+                # If we need more data to form the next message, this flag will be reset by a attempt to form a header or content
+                self.needs_more_data = False
+                # If we can't read a header, read the next chunk
+                if (self.read_state is Read_State.Header and not self.try_read_headers()):
+                    self.needs_more_data = True
+                    continue
+                # If we read the header, try the content. If that fails, read the next chunk
+                if (self.read_state is Read_State.Content and not self.try_read_content(content)):
+                    self.needs_more_data = True
+                    continue
+                # We have the  content
+                break
+            
+            # Resize buffer and remove bytes we have read
+            self.trim_buffer_and_resize(self.read_offset)
             return json.loads(content[0])
         except ValueError:
             # response has invalid json object, throw Exception TODO: log message to telemetry
             raise
-     
+
     def read_next_chunk(self):
         """
         Reads a chunk of the stream into the byte array. Buffer size is doubled if less than 25% of buffer space is available.
@@ -244,6 +249,6 @@ class Json_Rpc_Reader(object):
         """
             Closes the stream.
         """
-        if (not self.stream is None):
+        if (not self.stream.closed):
             self.stream.close()
             

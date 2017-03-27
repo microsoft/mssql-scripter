@@ -3,10 +3,10 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
+from common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
 from threading import Thread
 
-import Queue
+from queue import Queue
 
 class Json_Rpc_Client(object):
     """
@@ -26,10 +26,10 @@ class Json_Rpc_Client(object):
         self.writer = Json_Rpc_Writer(in_stream)
         self.reader = Json_Rpc_Reader(out_stream)
 
-        self.request_queue = Queue.Queue()
+        self.request_queue = Queue()
         # Response map intialized with event queue
-        self.response_map= {0: Queue.Queue()}
-        self.exception_queue = Queue.Queue()
+        self.response_map= {0: Queue()}
+        self.exception_queue = Queue()
 
         # Simple cancellation token boolean
         self.cancel = False
@@ -122,20 +122,23 @@ class Json_Rpc_Client(object):
         while(not self.cancel):
             try:
                 response = self.reader.read_response()
-                response_id = response.get('id')
-                if (not response_id is None):
+                response_id_str = response.get('id')
+                if (not response_id_str is None):
+                    # response will be returned as a json string, so parse it to int so clients can use a int id
+                    response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
                     if (not response_id in self.response_map):
-                        self.response_map[response_id] = Queue.Queue()
+                        self.response_map[response_id] = Queue()
                     # Enqueue the response
                     self.response_map[response_id].put(response)
                 else:
                     # Event was returned
                     self.response_map[0].put(response)
 
-            except EOFError:
-                # Nothing was read from stream, keep trying
-                pass
+            except EOFError as error:
+                # Nothing was read from stream, break out of the loop
+                # TODO: Revisit the scenarios where the stream could for a second not have any content in it.
+                break
             except ValueError as error:
                 # If we get this error it means the stream was closed
                 # Place error into queue for main thread to access
@@ -164,10 +167,8 @@ class Json_Rpc_Client(object):
         # they can check for the cancellation flag
         self.request_queue.put(None)
 
-        # Wait for threads to finish with a timeout in seconds
+        # Wait for request thread to finish with a timeout in seconds
         self.request_thread.join(0.2)
-        self.response_thread.join(0.2)
 
-        # close the underlying readers and writers
-        self.reader.close()
+        # close the underlying writer
         self.writer.close()

@@ -43,6 +43,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         baseline = {"key":"value"}
 
         self.assertEqual(response, baseline)        
+        # All background threads should be shut down
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 1)
@@ -59,8 +60,8 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # Verify threads are alive and running
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertFalse(test_client.response_thread.isAlive())
+        self.assertEqual(threading.active_count(), 2)
 
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptDatabaseOptions':'True'})
 
@@ -68,8 +69,8 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # check stream contents
         input_stream.seek(0)
-        expected = 'Content-Length: 120\r\n\r\n{"params": {"ScriptDatabaseOptions": "True"}, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "id": null}'
-        
+        expected = b'Content-Length: 120\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}}'
+
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
@@ -85,10 +86,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
     
-        # Verify threads are alive and running.
+        # Verify request thread is up and running and response thread is dead since it should have reached EOF.
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertFalse(test_client.response_thread.isAlive())
+        self.assertEqual(threading.active_count(), 2)
     
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptDatabaseOptions' : 'True'})
         test_client.submit_request('scriptingService/ScriptDatabase', {'ScriptCollations' : 'True'})
@@ -102,9 +103,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         input_stream.seek(0)
         expected = \
-        'Content-Length: 120\r\n\r\n{"params": {"ScriptDatabaseOptions": "True"}, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "id": null}'\
-        'Content-Length: 115\r\n\r\n{"params": {"ScriptCollations": "True"}, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "id": null}'\
-        'Content-Length: 113\r\n\r\n{"params": {"ScriptDefaults": "True"}, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "id": null}'
+        b'Content-Length: 120\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDatabaseOptions": "True"}}'\
+        b'Content-Length: 115\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptCollations": "True"}}'\
+        b'Content-Length: 113\r\n\r\n{"id": null, "jsonrpc": "2.0", "method": "scriptingService/ScriptDatabase", "params": {"ScriptDefaults": "True"}}'
 
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
@@ -123,8 +124,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         # Verify threads are alive and running
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
+        self.assertEqual(threading.active_count(), 2)
+
+        # Response thread should have reach EOF during test execution which should end the response thread.
+        self.assertFalse(test_client.response_thread.isAlive())
 
         test_client.shutdown()
 
@@ -191,6 +194,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             test_client.shutdown()
             self.assertEqual(threading.active_count(), 1)
 
+    @unittest.skip("Disabling until scenario is valid")
     def test_stream_has_no_response(self):
         """
             Verifies that response thread is still running when the output stream has nothing
@@ -198,16 +202,16 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
         input_stream = BytesIO()
         output_stream = BytesIO()
-
+    
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
         response = test_client.get_response()
-
+    
         self.assertEqual(response, None)
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertTrue(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 3)
-
+    
         test_client.shutdown()
         self.assertEqual(threading.active_count(), 1)
 
@@ -233,7 +237,7 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             self.assertEqual(exception.args, ("I/O operation on closed file.",))
             # Verify the response thread is dead
             self.assertFalse(test_client.request_thread.isAlive())
-            self.assertEqual(threading.active_count(), 2)
+            self.assertEqual(threading.active_count(), 1)
             test_client.shutdown()
 
     def test_get_response_with_id(self):
@@ -245,6 +249,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
+        
+        # Sleeping to give background threads a chance to process response.
+        time.sleep(1)
 
         baseline = {"jsonrpc": "2.0", "params": {"Key": "Value"}, "method": "testMethod/DoThis", "id": 1}
         response = test_client.get_response(1)
