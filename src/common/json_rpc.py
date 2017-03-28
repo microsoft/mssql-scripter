@@ -7,6 +7,9 @@ from io import BytesIO
 from enum import Enum
 
 import json
+import logging
+
+logger = logging.getLogger('common.json_rpc')
 
 class Read_State(Enum):
     Header = 1
@@ -47,9 +50,10 @@ class Json_Rpc_Writer(object):
             self.stream.write(json_content.encode(self.encoding))
             self.stream.flush()
 
-        except ValueError:
+        except ValueError as ex:
             # TODO: Add telemetry of stream closed externally and reraise
-            raise
+            logger.debug('Send Request encountered exception {0}'.format(ex))
+            raise ex
 
     def close(self):
         """
@@ -116,9 +120,10 @@ class Json_Rpc_Reader(object):
             # Resize buffer and remove bytes we have read
             self.trim_buffer_and_resize(self.read_offset)
             return json.loads(content[0])
-        except ValueError:
+        except ValueError as ex:
             # response has invalid json object, throw Exception TODO: log message to telemetry
-            raise
+            logger.debug('JSON RPC Reader on read_response() encountered exception: {0}'.format(ex))
+            raise ex
 
     def read_next_chunk(self):
         """
@@ -146,13 +151,14 @@ class Json_Rpc_Reader(object):
 
             if (length_read == 0):
                 # Nothing was read from stream
+                logger.debug('JSON RPC Reader reached end of stream')
                 raise EOFError("End of stream reached, no output.")
 
             return True
-        except ValueError:
-            # TODO Log to telemetry and reraise
+        except ValueError as ex:
+            logger.debug('JSON RPC Reader on read_next_chunk encountered exception: {0}'.format(ex))
             # Stream was closed
-            raise
+            raise ex
 
     def try_read_headers(self):
         """
@@ -185,6 +191,7 @@ class Json_Rpc_Reader(object):
                 colon_index = header.find(':')
 
                 if (colon_index == -1):
+                    logger.debug('JSON RPC Reader encountered missing colons in try_read_headers()')
                     raise KeyError('Colon missing from Header: {0}.'.format(header))
                 
                 # Making all headers lowercase to support case insensitivity
@@ -195,6 +202,7 @@ class Json_Rpc_Reader(object):
             
             #Find content body in the list of headers and parse the Value
             if (not ('content-length' in self.headers)):
+                logger.debug('JSON RPC Reader did not find Content-Length in the headers')
                 raise LookupError('Content-Length was not found in headers received.')
             
             self.expected_content_length = int(self.headers['content-length'])

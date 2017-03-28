@@ -6,6 +6,10 @@
 from mssql.requests import Request
 from future.utils import iteritems
 
+import logging
+
+logger = logging.getLogger('mssql.requests.scripting')
+
 class Scripting_Request(Request):
     """
         Encapsulates a scripting request against sql tools service.
@@ -27,6 +31,7 @@ class Scripting_Request(Request):
         """
             Submits scripting request via json rpc client with formatted parameters and id.
         """
+        logger.info('Submitting scripting request id: {0}'.format(self.id))
         self.json_rpc_client.submit_request(self.METHOD_NAME, self.params.format(), self.id)
         
     def get_response(self):
@@ -38,21 +43,23 @@ class Scripting_Request(Request):
         """
         # Check if there are any immediate response to the request
         response = self.json_rpc_client.get_response(self.id)
+        decoded_response = None
+
         if (not response is None):
-            return self.decoder.decode_response(response)
-        
+            decoded_response = self.decoder.decode_response(response)
+            logger.debug('Scripting request received response: {0}'.format(decoded_response))
         # No response, check for events
         event = self.json_rpc_client.get_response()
         if (not event is None):
-            event_type = self.decoder.decode_response(event)
+            decoded_response = self.decoder.decode_response(event)
+            logger.debug('Scripting request received response: {0}'.format(decoded_response))
             # Request is completed
-            if (isinstance(event_type, ScriptCompleteEvent) or isinstance(event_type, ScriptErrorEvent)):
+            if (isinstance(decoded_response, ScriptCompleteEvent) or isinstance(decoded_response, ScriptErrorEvent)):
                 self.finished = True
                 self.json_rpc_client.request_finished(self.id)
-
-            return event_type
+            
         
-        return None
+        return decoded_response
 
     def completed(self):
         """
@@ -65,10 +72,10 @@ class Scripting_Params(object):
         Holds scripting database options. Used by client.
     """
     def __init__(self, parameters):
-        
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
-        self.database_objects = parameters['DatabaseObjects']
+        #TODO: Renable when this option is supported
+        #self.database_objects = parameters['DatabaseObjects']
         self.scripting_options = Scripting_Options(parameters)  
 
     def format(self):
@@ -77,7 +84,8 @@ class Scripting_Params(object):
         """
         return {'FilePath' : self.file_path,
                 'ConnectionString' : self.connection_string,
-                'DatabaseObjects' : self.database_objects,
+                # TODO: Renable when support is added
+                #'DatabaseObjects' : self.database_objects,
                 'ScriptOptions' : self.scripting_options.get_options()}
 
 class Scripting_Options(object):
@@ -226,6 +234,6 @@ class Scripting_Response_Decoder(object):
             # Handle response received
             return self.response_dispatcher['id'](obj['result'])
 
-        #TODO: Log error 
+        logger.debug('Unable to decode response to a event type: {0}'.format(obj))
         # Unable to decode, return json string
         return obj

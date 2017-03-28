@@ -151,7 +151,8 @@ class Scripting_Request_Tests(unittest.TestCase):
 
         self.assertEqual(formatted_params['FilePath'], 'C:\temp\sample_db.sql')
         self.assertEqual(formatted_params['ConnectionString'], 'Sample_connection_string')
-        self.assertEqual(formatted_params['DatabaseObjects'], ['Person.Person'])
+        # Reenable assertion below when the option is supported
+        #self.assertEqual(formatted_params['DatabaseObjects'], ['Person.Person'])
         self.assertEqual(formatted_params['ScriptOptions'], expected_script_options)
 
     def verify_response_count(self, request, response_count, plan_notification_count, progress_count, complete_count, error_count, func = None):

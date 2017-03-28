@@ -2,16 +2,53 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
+import subprocess
+import sys
+import logging
+import logging.config
 
-from mssql.commands.script_db_command import Script_Database_Command
-from common.json_rpc_client import Json_Rpc_Client
+logging.basicConfig(filename='mssql_scripter.log', filemode='w',format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
-def main(args): 
-    input_stream
-    json_rpc_client =
-    command = Script_Database_Command()
+from mssql.client import Sql_Tools_Client
+from mssql.scripter import *
+from subprocess import PIPE
+
+def main(): 
+    """
+        Main entry point to the MSSQL-Scripter. 
+
+    """
+    # Initialize the parser 
+    parser = initialize_parser()
+    # Parse the parameters
+    parameters = parser.parse_args()
+        
+    # Start the tools Service
+    # TODO: Add helper to find the actual install location
+    tools_service_process = subprocess.Popen([r"D:\repos\sql-xplat-cli\sqltoolsservice\Microsoft.SqlTools.ServiceLayer.exe",
+        "--enable-logging"], bufsize = 0, stdin = PIPE, stdout = PIPE)
+
+    # Start the sql_tools_client
+    sql_tools_client = Sql_Tools_Client(tools_service_process.stdin, tools_service_process.stdout)
+
+    # Create the scripting request
+    scripting_request = sql_tools_client.create_request_factory('scripting_request', vars(parameters))
+    scripting_request.execute()
+
+    while(not scripting_request.completed()):
+        # Process the responses 
+        response = scripting_request.get_response()
+        if (not response is None):
+            handle_response(response)
+
+    # Once the response is complete
+    with open(parameters.FilePath, 'r', encoding = 'utf-16') as script_file:
+        sys.stdout.write(script_file.read())
+    
+    # May need to add a timer here
+    sql_tools_client.shutdown()
+    tools_service_process.kill()
 
 if __name__ == "__main__":
     # execute only if run as a script
-
-    main(None)
+    main()

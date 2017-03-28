@@ -5,8 +5,11 @@
 
 from common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
 from threading import Thread
-
 from queue import Queue
+
+import logging
+
+logger = logging.getLogger('common.json_rpc_client')
 
 class Json_Rpc_Client(object):
     """
@@ -150,12 +153,12 @@ class Json_Rpc_Client(object):
                 self._record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
 
-    def _record_exception(self, ex, thread_name, logger = None):
+    def _record_exception(self, ex, thread_name):
         """
             Helper method that enqueues the exception that was thrown into the exception queue.
             Clients can provide a logger to log the exception with the associated thread name for telemetry.
         """
-        #TODO If logger is not null, log the exception with the thread NameError
+        logger.debug("Thread: {0} encountered exception {1}".format(thread_name, ex))
         self.exception_queue.put(ex)
 
     def shutdown(self):
