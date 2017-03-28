@@ -4,7 +4,8 @@
 # --------------------------------------------------------------------------------------------
 import abc
 
-ABC = abc.ABCMeta('ABC', (object,), {}) # compatibile with Python 2 *and* 3
+ABC = abc.ABCMeta('ABC', (object,), {})  # compatibile with Python 2 *and* 3
+
 
 class Request(ABC):
     """
@@ -14,7 +15,7 @@ class Request(ABC):
              Define it's types necessary for requests and responses.
              Serialization of request parameters.
              Deserialization of responses.
-            
+
     """
     @abc.abstractmethod
     def execute(self):

@@ -11,9 +11,10 @@ import logging
 
 logger = logging.getLogger('common.json_rpc_client')
 
+
 class Json_Rpc_Client(object):
     """
-        This class maintains the responsibilities of orchestrating the async read and write process with json rpc protocol 
+        This class maintains the responsibilities of orchestrating the async read and write process with json rpc protocol
         by using background threads.
 
         The two main threads are the request and response threads which operate on the background and sole responsibility is
@@ -31,7 +32,7 @@ class Json_Rpc_Client(object):
 
         self.request_queue = Queue()
         # Response map intialized with event queue
-        self.response_map= {0: Queue()}
+        self.response_map = {0: Queue()}
         self.exception_queue = Queue()
 
         # Simple cancellation token boolean
@@ -39,18 +40,22 @@ class Json_Rpc_Client(object):
 
     def start(self):
         """
-            Starts the background threads to listen for responses and requests from the underlying 
+            Starts the background threads to listen for responses and requests from the underlying
             streams. Encapsulated into it's own method for future async extensions without threads.
         """
-        self.request_thread = Thread(target = self._listen_for_request, name = self.REQUEST_THREAD_NAME)
+        self.request_thread = Thread(
+            target=self._listen_for_request,
+            name=self.REQUEST_THREAD_NAME)
         self.request_thread.daemon = True
         self.request_thread.start()
-        
-        self.response_thread = Thread(target = self._listen_for_response, name = self.RESPONSE_THREAD_NAME)
+
+        self.response_thread = Thread(
+            target=self._listen_for_response,
+            name=self.RESPONSE_THREAD_NAME)
         self.response_thread.daemon = True
         self.response_thread.start()
 
-    def submit_request(self, method, params, id = None):
+    def submit_request(self, method, params, id=None):
         """
             Enqueue's the request.
             Exceptions:
@@ -60,8 +65,8 @@ class Json_Rpc_Client(object):
         if (method is None or params is None):
             raise ValueError("Method or Parameter was not found in request")
 
-        request = {'method' : method, 'params' : params, 'id' : id}
-        self.request_queue.put(request)    
+        request = {'method': method, 'params': params, 'id': id}
+        self.request_queue.put(request)
 
     def request_finished(self, id):
         """
@@ -71,9 +76,9 @@ class Json_Rpc_Client(object):
         if (id in self.response_map):
             del self.response_map[id]
 
-    def get_response(self, id = 0):
+    def get_response(self, id=0):
         """
-            Retrieves the latest response from the queue. 
+            Retrieves the latest response from the queue.
             First check if a exception occured and throw the latest one.
             Second, by default we return the latest event, otherwise we return the latest response from the passed in id.
         """
@@ -96,12 +101,15 @@ class Json_Rpc_Client(object):
         """
         while(not self.cancel):
             try:
-                # Calling a blocking get on the queue keeps CPU usage at a 
+                # Calling a blocking get on the queue keeps CPU usage at a
                 # minimum versus non blocking or with a timeout
                 request = self.request_queue.get()
-                
-                if (not request is None):
-                    self.writer.send_request(method=request['method'], params=request['params'], id=request['id'])
+
+                if (request is not None):
+                    self.writer.send_request(
+                        method=request['method'],
+                        params=request['params'],
+                        id=request['id'])
 
             except ValueError as error:
                 # Stream is closed, break out of the loop
@@ -115,22 +123,23 @@ class Json_Rpc_Client(object):
 
             Both exceptions below if thrown require the loop to exit.
             Exceptions:
-                ValueError 
+                ValueError
                     The stream was closed. Exit the thread immediately.
-                LookupError 
+                LookupError
                     No valid header with content-length was found.
-                EOFError 
+                EOFError
                     The stream may not contain any bytes yet, so retry.
         """
         while(not self.cancel):
             try:
                 response = self.reader.read_response()
                 response_id_str = response.get('id')
-                if (not response_id_str is None):
-                    # response will be returned as a json string, so parse it to int so clients can use a int id
+                if (response_id_str is not None):
+                    # response will be returned as a json string, so parse it
+                    # to int so clients can use a int id
                     response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
-                    if (not response_id in self.response_map):
+                    if (response_id not in self.response_map):
                         self.response_map[response_id] = Queue()
                     # Enqueue the response
                     self.response_map[response_id].put(response)
@@ -140,7 +149,8 @@ class Json_Rpc_Client(object):
 
             except EOFError as error:
                 # Nothing was read from stream, break out of the loop
-                # TODO: Revisit the scenarios where the stream could for a second not have any content in it.
+                # TODO: Revisit the scenarios where the stream could for a
+                # second not have any content in it.
                 break
             except ValueError as error:
                 # If we get this error it means the stream was closed
@@ -158,7 +168,9 @@ class Json_Rpc_Client(object):
             Helper method that enqueues the exception that was thrown into the exception queue.
             Clients can provide a logger to log the exception with the associated thread name for telemetry.
         """
-        logger.debug("Thread: {0} encountered exception {1}".format(thread_name, ex))
+        logger.debug(
+            "Thread: {0} encountered exception {1}".format(
+                thread_name, ex))
         self.exception_queue.put(ex)
 
     def shutdown(self):
@@ -166,7 +178,7 @@ class Json_Rpc_Client(object):
             Signals to the threads to close after handling it's request/response.
         """
         self.cancel = True
-        # Enqueue None to optimistically unblock background threads so 
+        # Enqueue None to optimistically unblock background threads so
         # they can check for the cancellation flag
         self.request_queue.put(None)
 
