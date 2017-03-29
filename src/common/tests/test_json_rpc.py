@@ -11,30 +11,41 @@ from common.json_rpc import Read_State
 from io import BytesIO
 import unittest
 
+
 class Json_Rpc_Test(unittest.TestCase):
     """
         Test cases to verify different request and response scenarios ranging from invalid input to expected exceptions thrown.
     """
+
     def test_basic_response(self):
         test_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
-        
+
         json_rpc_reader.close()
         self.assertTrue(test_stream.closed)
 
     def test_basic_request(self):
         test_stream = BytesIO()
         json_rpc_writer = Json_Rpc_Writer(test_stream)
-        json_rpc_writer.send_request(method="testMethod/DoThis", params={"Key":"Value"}, id=1)
+        json_rpc_writer.send_request(
+            method="testMethod/DoThis",
+            params={
+                "Key": "Value"},
+            id=1)
 
         # Use JSON RPC reader to read request
         test_stream.seek(0)
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"jsonrpc": "2.0", "params": {"Key": "Value"}, "method": "testMethod/DoThis", "id": 1}
+        baseline = {
+            "jsonrpc": "2.0",
+            "params": {
+                "Key": "Value"},
+            "method": "testMethod/DoThis",
+            "id": 1}
         self.assertEqual(response, baseline)
 
         json_rpc_reader.close()
@@ -43,29 +54,45 @@ class Json_Rpc_Test(unittest.TestCase):
     def test_nested_request(self):
         test_stream = BytesIO()
         json_rpc_writer = Json_Rpc_Writer(test_stream)
-        json_rpc_writer.send_request(method="testMethod/DoThis", params={"Key":"Value", "key2": {"key3":"value3", "key4":"value4"}}, id=1)
+        json_rpc_writer.send_request(
+            method="testMethod/DoThis",
+            params={
+                "Key": "Value",
+                "key2": {
+                    "key3": "value3",
+                    "key4": "value4"}},
+            id=1)
 
         # Use JSON RPC reader to read request
         test_stream.seek(0)
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"jsonrpc": "2.0", "params": {"Key":"Value", "key2": {"key3":"value3", "key4":"value4"}}, "method": "testMethod/DoThis", "id": 1}
+        baseline = {
+            "jsonrpc": "2.0",
+            "params": {
+                "Key": "Value",
+                "key2": {
+                    "key3": "value3",
+                    "key4": "value4"}},
+            "method": "testMethod/DoThis",
+            "id": 1}
         self.assertEqual(response, baseline)
 
         json_rpc_reader.close()
         self.assertTrue(test_stream.closed)
 
     def test_response_multiple_headers(self):
-        test_stream = BytesIO(b'Content-Length: 15\r\nHeader2: content2\r\nHeader3: content3\r\n\r\n{"key":"value"}')
+        test_stream = BytesIO(
+            b'Content-Length: 15\r\nHeader2: content2\r\nHeader3: content3\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
 
         json_rpc_reader.close()
         self.assertTrue(test_stream.closed)
 
-    def test_incorrect_header_formats(self):       
+    def test_incorrect_header_formats(self):
         # Verify end of stream thrown with invalid header
         with self.assertRaises(EOFError):
             test_stream = BytesIO(b'Content-Length: 15\r\n{"key":"value"}')
@@ -78,7 +105,8 @@ class Json_Rpc_Test(unittest.TestCase):
             json_rpc_reader = Json_Rpc_Reader(test_stream)
             response = json_rpc_reader.read_response()
         except LookupError as error:
-            self.assertEqual(error.args, ("Content-Length was not found in headers received.",))
+            self.assertEqual(
+                error.args, ("Content-Length was not found in headers received.",))
             json_rpc_reader.close()
             self.assertTrue(test_stream.closed)
         # Missing colon
@@ -89,8 +117,9 @@ class Json_Rpc_Test(unittest.TestCase):
             json_rpc_reader.close()
             self.assertTrue(test_stream.closed)
 
-        except KeyError as error:  
-            self.assertEqual(error.args, ("Colon missing from Header: Retry-On-Failure True.",))
+        except KeyError as error:
+            self.assertEqual(
+                error.args, ("Colon missing from Header: Retry-On-Failure True.",))
 
     def test_invalid_json_response(self):
         # Verify error thrown with invalid JSON
@@ -105,11 +134,15 @@ class Json_Rpc_Test(unittest.TestCase):
             test_stream = BytesIO(b'Content-Length: X\r\n\r\n{"key":"value"}')
             json_rpc_reader = Json_Rpc_Reader(test_stream)
             response = json_rpc_reader.read_response()
-            
+
     def test_stream_closes_during_read_and_write(self):
         test_stream = BytesIO()
         json_rpc_writer = Json_Rpc_Writer(test_stream)
-        json_rpc_writer.send_request(method="testMethod/DoThis", params={"Key":"Value"}, id=1)
+        json_rpc_writer.send_request(
+            method="testMethod/DoThis",
+            params={
+                "Key": "Value"},
+            id=1)
 
         # reset the stream
         test_stream.seek(0)
@@ -123,7 +156,11 @@ class Json_Rpc_Test(unittest.TestCase):
         json_rpc_writer = Json_Rpc_Writer(test_stream)
         test_stream.close()
         with self.assertRaises(ValueError):
-            json_rpc_writer.send_request(method="testMethod/DoThis", params={"Key":"Value"}, id=1)
+            json_rpc_writer.send_request(
+                method="testMethod/DoThis",
+                params={
+                    "Key": "Value"},
+                id=1)
 
     def test_trigger_buffer_resize(self):
         test_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
@@ -133,20 +170,21 @@ class Json_Rpc_Test(unittest.TestCase):
         # Initial size set to 2 bytes
         self.assertEqual(len(json_rpc_reader.buffer), 2)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
         # Verify message buffer was reset to it's default max size
         self.assertEqual(len(json_rpc_reader.buffer), 8192)
-        
+
     def test_max_buffer_resize(self):
         test_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)
-        # Double buffer size to max to verify resize takes leftover size which should be larger than default max buffer size
+        # Double buffer size to max to verify resize takes leftover size which
+        # should be larger than default max buffer size
         json_rpc_reader.buffer = bytearray(16384)
         # Verify initial buffer size was set
         self.assertEqual(len(json_rpc_reader.buffer), 16384)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
         # Verify buffer size decreased by bytes_read
         self.assertEqual(len(json_rpc_reader.buffer), 16347)
@@ -166,14 +204,15 @@ class Json_Rpc_Test(unittest.TestCase):
         test_stream = BytesIO(b'CONTENT-LENGTH: 15\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
 
         test_stream = BytesIO(b'CoNtEnT-lEngTh: 15\r\n\r\n{"key":"value"}')
         json_rpc_reader = Json_Rpc_Reader(test_stream)
         response = json_rpc_reader.read_response()
-        baseline = {"key":"value"}
+        baseline = {"key": "value"}
         self.assertEqual(response, baseline)
+
 
 if __name__ == '__main__':
     unittest.main()

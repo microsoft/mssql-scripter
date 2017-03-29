@@ -6,6 +6,11 @@
 from mssql.requests import Request
 from future.utils import iteritems
 
+import logging
+
+logger = logging.getLogger('mssql.requests.scripting')
+
+
 class Scripting_Request(Request):
     """
         Encapsulates a scripting request against sql tools service.
@@ -27,8 +32,10 @@ class Scripting_Request(Request):
         """
             Submits scripting request via json rpc client with formatted parameters and id.
         """
-        self.json_rpc_client.submit_request(self.METHOD_NAME, self.params.format(), self.id)
-        
+        logger.info('Submitting scripting request id: {0}'.format(self.id))
+        self.json_rpc_client.submit_request(
+            self.METHOD_NAME, self.params.format(), self.id)
+
     def get_response(self):
         """
             Retrieves the events or response associated with this request and decodes to the explicit type.
@@ -38,21 +45,25 @@ class Scripting_Request(Request):
         """
         # Check if there are any immediate response to the request
         response = self.json_rpc_client.get_response(self.id)
-        if (not response is None):
-            return self.decoder.decode_response(response)
-        
+        decoded_response = None
+
+        if (response is not None):
+            decoded_response = self.decoder.decode_response(response)
+            logger.debug(
+                'Scripting request received response: {0}'.format(decoded_response))
         # No response, check for events
         event = self.json_rpc_client.get_response()
-        if (not event is None):
-            event_type = self.decoder.decode_response(event)
+        if (event is not None):
+            decoded_response = self.decoder.decode_response(event)
+            logger.debug(
+                'Scripting request received response: {0}'.format(decoded_response))
             # Request is completed
-            if (isinstance(event_type, ScriptCompleteEvent) or isinstance(event_type, ScriptErrorEvent)):
+            if (isinstance(decoded_response, ScriptCompleteEvent)
+                    or isinstance(decoded_response, ScriptErrorEvent)):
                 self.finished = True
                 self.json_rpc_client.request_finished(self.id)
 
-            return event_type
-        
-        return None
+        return decoded_response
 
     def completed(self):
         """
@@ -64,39 +75,61 @@ class Scripting_Params(object):
     """
         Holds scripting database options. Used by client.
     """
+
     def __init__(self, parameters):
-        
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
-        self.database_objects = parameters['DatabaseObjects']
-        self.scripting_options = Scripting_Options(parameters)  
+        # TODO: Renable when this option is supported
+        #self.scripting_objects = parameters['ScriptingObjects']
+        self.scripting_options = Scripting_Options(parameters)
 
     def format(self):
         """
             Returns a dictionary of script database parameters nested with it's sql tools service equivalent class name.
         """
-        return {'FilePath' : self.file_path,
-                'ConnectionString' : self.connection_string,
-                'DatabaseObjects' : self.database_objects,
-                'ScriptOptions' : self.scripting_options.get_options()}
+        return {'FilePath': self.file_path,
+                'ConnectionString': self.connection_string,
+                # TODO: Renable when support is added
+                #'DatabaseObjects' : self.database_objects,
+                'ScriptOptions': self.scripting_options.get_options()}
+
 
 class Scripting_Options(object):
     """
         Holds various scripting options that are available in the script database wizard in SSMS.
     """
-    scripting_option_map = {        
-        'TypeOfDataToScript' : ['SchemaAndData', 'DataOnly', 'SchemaOnly'],
-        'ScriptDropAndCreate' : ['ScriptCreate', 'ScriptDrop', 'ScriptCreateDrop'],
-        'ScriptForTheDatabaseEngineType' : ['SingleInstance', 'SqlAzure'],
-        'ScriptStatistics' : ['ScriptStatsAll', 'ScriptStatsNone', 'ScriptStatsDll'],
-        'ScriptForServerVersion' : ['SQL Server 2005', 'SQL Server 2008', 'SQL Server 2008 R2', 
-                                    'SQL Server 2012', 'SQL Server 2014', 'SQL Server 2016',
-                                    'SQL Server vNext CTP 1.0'],
-        'ScriptForTheDatabaseEngineEdition' : ['Microsoft SQL Server Standard Edition', 'Microsoft SQL Server Personal Edition'
-                                               'Microsoft SQL Server Express Edition', 'Microsoft SQL Server Enterprise Edition',
-                                               'Microsoft SQL Server Stretch Database Edition'] }
+    scripting_option_map = {
+        'TypeOfDataToScript': [
+            'SchemaAndData',
+            'DataOnly',
+            'SchemaOnly'],
+        'ScriptDropAndCreate': [
+            'ScriptCreate',
+            'ScriptDrop',
+            'ScriptCreateDrop'],
+        'ScriptForTheDatabaseEngineType': [
+            'SingleInstance',
+            'SqlAzure'],
+        'ScriptStatistics': [
+            'ScriptStatsAll',
+            'ScriptStatsNone',
+            'ScriptStatsDll'],
+        'ScriptForServerVersion': [
+            'SQL Server 2005',
+            'SQL Server 2008',
+            'SQL Server 2008 R2',
+            'SQL Server 2012',
+            'SQL Server 2014',
+            'SQL Server 2016',
+            'SQL Server vNext CTP 1.0'],
+        'ScriptForTheDatabaseEngineEdition': [
+            'Microsoft SQL Server Standard Edition',
+            'Microsoft SQL Server Personal Edition'
+            'Microsoft SQL Server Express Edition',
+            'Microsoft SQL Server Enterprise Edition',
+            'Microsoft SQL Server Stretch Database Edition']}
 
-    def __init__(self, parameters = None):
+    def __init__(self, parameters=None):
         """
             Initializes database options with default values. If parameters were passed in, script options will only update valid ones.
         """
@@ -139,7 +172,7 @@ class Scripting_Options(object):
         self.ScriptForServerVersion = 'SQL Server vNext CTP 1.0'
         self.ScriptForTheDatabaseEngineEdition = 'Microsoft SQL Server Standard Edition'
 
-        if (not parameters is None):
+        if (parameters is not None):
             self.update_options(parameters)
 
     def update_options(self, parameters):
@@ -147,13 +180,17 @@ class Scripting_Options(object):
             Updates options from passed in parameters only if they are valid.
         """
         default_options = vars(self)
-        for option, value in iteritems(parameters):         
+        for option, value in iteritems(parameters):
             if (option in default_options):
                 if (option in self.scripting_option_map):
-                    if (not value in self.scripting_option_map[option]):
-                        raise ValueError('Option: {0} has invalid value: {1}'.format(option, value))
+                    if (value not in self.scripting_option_map[option]):
+                        raise ValueError(
+                            'Option: {0} has invalid value: {1}'.format(
+                                option, value))
                 elif (not isinstance(value, bool)):
-                    raise ValueError('Option: {0} has unexpected value type" {1}'.format(option, value))
+                    raise ValueError(
+                        'Option: {0} has unexpected value type" {1}'.format(
+                            option, value))
                 # set the value if we pass all the checks
                 default_options[option] = value
 
@@ -166,6 +203,7 @@ class Scripting_Options(object):
 #
 #   Various Scripting Events
 #
+
 class ScriptCancelEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
@@ -183,7 +221,8 @@ class ScriptErrorEvent(object):
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
-        # TODO: We can separate out the actual objects or return a list of the objects to the client
+        # TODO: We can separate out the actual objects or return a list of the
+        # objects to the client
         self.database_objects = params['databaseObjects']
         self.count = params['count']
 
@@ -203,14 +242,16 @@ class Scripting_Response_Decoder(object):
     """
         Responsibile for decoding json response into it's appropriate  type.
     """
+
     def __init__(self):
-        # response map 
-        self.response_dispatcher = {'scripting/scriptCancel' : ScriptCancelEvent,
-                                    'scripting/scriptComplete': ScriptCompleteEvent,
-                                    'scripting/scriptError': ScriptErrorEvent,
-                                    'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
-                                    'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
-                                    'id': ScriptResponse }
+        # response map
+        self.response_dispatcher = {
+            'scripting/scriptCancel': ScriptCancelEvent,
+            'scripting/scriptComplete': ScriptCompleteEvent,
+            'scripting/scriptError': ScriptErrorEvent,
+            'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
+            'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
+            'id': ScriptResponse}
 
     def decode_response(self, obj):
         """
@@ -221,11 +262,12 @@ class Scripting_Response_Decoder(object):
             if (response_name in self.response_dispatcher):
                 # Handle event received
                 return self.response_dispatcher[response_name](obj['params'])
-        
+
         if ('id' in obj and 'result' in obj):
             # Handle response received
             return self.response_dispatcher['id'](obj['result'])
 
-        #TODO: Log error 
+        logger.debug(
+            'Unable to decode response to a event type: {0}'.format(obj))
         # Unable to decode, return json string
         return obj
