@@ -71,7 +71,6 @@ class Scripting_Request(Request):
         """
         return self.finished
 
-
 class Scripting_Params(object):
     """
         Holds scripting database options. Used by client.
@@ -205,23 +204,19 @@ class Scripting_Options(object):
 #   Various Scripting Events
 #
 
-
 class ScriptCancelEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
 
-
 class ScriptCompleteEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
-
 
 class ScriptErrorEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
         self.message = params['message']
         self.diagnostic_message = params['diagnosticMessage']
-
 
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
@@ -231,7 +226,6 @@ class ScriptPlanNotificationEvent(object):
         self.database_objects = params['databaseObjects']
         self.count = params['count']
 
-
 class ScriptProgressNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
@@ -240,11 +234,9 @@ class ScriptProgressNotificationEvent(object):
         self.count = params['count']
         self.total_count = params['totalCount']
 
-
 class ScriptResponse(object):
     def __init__(self, params):
         self.operation_id = params['operationId']
-
 
 class Scripting_Response_Decoder(object):
     """

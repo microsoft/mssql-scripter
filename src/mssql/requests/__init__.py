@@ -6,7 +6,6 @@ import abc
 
 ABC = abc.ABCMeta('ABC', (object,), {})  # compatibile with Python 2 *and* 3
 
-
 class Request(ABC):
     """
         Abstract command class that all service commands need to subclass.

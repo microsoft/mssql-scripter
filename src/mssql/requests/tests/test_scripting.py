@@ -16,11 +16,11 @@ class Scripting_Request_Tests(unittest.TestCase):
     """
         Scripting request tests
     """
-
     def test_succesful_scripting_response_AdventureWorks2014(self):
         """
             Verifies that the scripting response of a successful request is read succesfully with a sample request against AdventureWorks2014.
         """
+
         with open(self.get_test_baseline('adventureworks2014_baseline.txt'), 'r+b', buffering=0) as response_file:
             request_stream = BytesIO(b'')
             rpc_client = Json_Rpc_Client(request_stream, response_file)
@@ -230,7 +230,6 @@ class Scripting_Request_Tests(unittest.TestCase):
             Verifies invalid script options throw expected error.
         """
         invalid_options = {'ANSIPadding': 'NonValid'}
-
         invalid_server_version = {'ScriptForServerVersion': 'SQL Server 1689'}
 
         try:

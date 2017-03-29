@@ -215,16 +215,16 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
         input_stream = BytesIO()
         output_stream = BytesIO()
-
+    
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
         response = test_client.get_response()
-
+    
         self.assertEqual(response, None)
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertTrue(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 3)
-
+    
         test_client.shutdown()
         self.assertEqual(threading.active_count(), 1)
 
@@ -266,6 +266,9 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
 
         test_client = Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
+        
+        # Sleeping to give background threads a chance to process response.
+        time.sleep(1)
 
         # Sleeping to give background threads a chance to process response.
         time.sleep(1)
