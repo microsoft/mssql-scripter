@@ -56,7 +56,7 @@ def initialize_parser():
         Initializes the parser with supported scripting options.
     """
     parser = argparse.ArgumentParser(
-        description='MSSQL-Scripter tool used for scripting out databases')
+        description='mssql-scripter tool used for scripting out databases')
 
     # Top-Level required parameters
     parser.add_argument(

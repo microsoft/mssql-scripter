@@ -4,11 +4,9 @@
 # --------------------------------------------------------------------------------------------
 
 
-from common.json_rpc import Json_Rpc_Reader
-from common.json_rpc import Json_Rpc_Writer
-from common.json_rpc import Read_State
-
+from mssql.common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer, Read_State
 from io import BytesIO
+
 import unittest
 
 

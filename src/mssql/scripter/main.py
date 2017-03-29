@@ -15,9 +15,8 @@ def main():
         Main entry point to the MSSQL-Scripter.
 
     """
-    # Initialize the parser
+
     parser = initialize_parser()
-    # Parse the parameters
     parameters = parser.parse_args()
 
     # Start the tools Service
@@ -36,7 +35,7 @@ def main():
         tools_service_process.stdout)
 
     # Create the scripting request
-    scripting_request = sql_tools_client.create_request_factory(
+    scripting_request = sql_tools_client.create_request(
         'scripting_request', vars(parameters))
     scripting_request.execute()
 
@@ -54,7 +53,3 @@ def main():
     sql_tools_client.shutdown()
     tools_service_process.kill()
 
-
-if __name__ == "__main__":
-    # execute only if run as a script
-    main()

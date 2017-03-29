@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
+from mssql.common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
 from threading import Thread
 from queue import Queue
 

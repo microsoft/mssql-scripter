@@ -81,7 +81,7 @@ class Scripting_Params(object):
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
         # TODO: Renable when this option is supported
-        #self.database_objects = parameters['DatabaseObjects']
+        #self.scripting_objects = parameters['scriptingObjects']
         self.scripting_options = Scripting_Options(parameters)
 
     def format(self):

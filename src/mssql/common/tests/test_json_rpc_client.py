@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from common.json_rpc_client import Json_Rpc_Client
+from mssql.common.json_rpc_client import Json_Rpc_Client
 from io import BytesIO
 
 import unittest

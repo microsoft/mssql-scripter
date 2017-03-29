@@ -4,8 +4,8 @@
 # --------------------------------------------------------------------------------------------
 from mssql.requests.scripting import *
 
-from common.json_rpc_client import Json_Rpc_Client
-from common.json_rpc import Json_Rpc_Writer, Json_Rpc_Reader
+from mssql.common.json_rpc_client import Json_Rpc_Client
+from mssql.common.json_rpc import Json_Rpc_Writer, Json_Rpc_Reader
 from io import BytesIO
 
 import unittest
