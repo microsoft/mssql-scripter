@@ -36,7 +36,7 @@ def main():
         tools_service_process.stdout)
 
     # Create the scripting request
-    scripting_request = sql_tools_client.create_request_factory(
+    scripting_request = sql_tools_client.create_request(
         'scripting_request', vars(parameters))
     scripting_request.execute()
 

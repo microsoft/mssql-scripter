@@ -28,7 +28,7 @@ class Sql_Tools_Client(object):
 
         logger.info('Sql Tools Client Initialized')
 
-    def create_request_factory(self, request_type, parameters):
+    def create_request(self, request_type, parameters):
         """
             Factory method to create the specified command with the passed in type.
             Command is initialized with the rpc client within it.
