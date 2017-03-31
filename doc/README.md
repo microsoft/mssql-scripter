@@ -21,12 +21,12 @@ Setting up your development environment
 
   To test the common modules of the CLI:
   ```BatchFile
-  python -m unittest discover -s src/common/tests
+  python -m unittest discover -s mssql-scripter/mssql/common/tests
   ```
  
   To test the scripter module of the CLI:
   ```BatchFile
-  python -m unittest discover -s src/mssqlscripter/mssql/scripter/tests
+  python -m unittest discover -s mssql-scripter/mssql/scripter/tests
   ```
 
   Additionally, you can run tests for all CLI tools and common modules using the `run_all_tests.bat` or `sh run_all_tests` script.
