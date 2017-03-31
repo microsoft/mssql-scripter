@@ -7,12 +7,7 @@ import enum
 import json
 import logging
 
-<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc.py
 logger = logging.getLogger('mssql-scripter.common.json_rpc')
-=======
-logger = logging.getLogger('common.json_rpc')
-
->>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc.py
 
 
 class Read_State(enum.Enum):
