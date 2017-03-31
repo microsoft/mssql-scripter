@@ -1,0 +1,757 @@
+Content-Length: 90
+
+{"jsonrpc":"2.0","id":"1","result":{"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 8880
+
+{"jsonrpc":"2.0","method":"scripting/scriptPlanNotification","params":{"databaseObjects":[{"type":"Database","schema":null,"name":"AdventureWorks2014"},{"type":"Schema","schema":null,"name":"HumanResources"},{"type":"Schema","schema":null,"name":"Person"},{"type":"Schema","schema":null,"name":"Production"},{"type":"Schema","schema":null,"name":"Purchasing"},{"type":"Schema","schema":null,"name":"Sales"},{"type":"FullTextCatalog","schema":null,"name":"AW2014FullTextCatalog"},{"type":"XmlSchemaCollection","schema":"HumanResources","name":"HRResumeSchemaCollection"},{"type":"XmlSchemaCollection","schema":"Person","name":"AdditionalContactInfoSchemaCollection"},{"type":"XmlSchemaCollection","schema":"Person","name":"IndividualSurveySchemaCollection"},{"type":"XmlSchemaCollection","schema":"Production","name":"ManuInstructionsSchemaCollection"},{"type":"XmlSchemaCollection","schema":"Production","name":"ProductDescriptionSchemaCollection"},{"type":"XmlSchemaCollection","schema":"Sales","name":"StoreSurveySchemaCollection"},{"type":"UserDefinedDataType","schema":"dbo","name":"AccountNumber"},{"type":"UserDefinedDataType","schema":"dbo","name":"Flag"},{"type":"UserDefinedDataType","schema":"dbo","name":"Name"},{"type":"UserDefinedDataType","schema":"dbo","name":"NameStyle"},{"type":"UserDefinedDataType","schema":"dbo","name":"OrderNumber"},{"type":"UserDefinedDataType","schema":"dbo","name":"Phone"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetAccountingEndDate"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetAccountingStartDate"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetContactInformation"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetDocumentStatusText"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductDealerPrice"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductListPrice"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductStandardCost"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetPurchaseOrderStatusText"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetSalesOrderStatusText"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetStock"},{"type":"Table","schema":"Person","name":"BusinessEntityContact"},{"type":"Table","schema":"Person","name":"ContactType"},{"type":"Table","schema":"Person","name":"EmailAddress"},{"type":"Table","schema":"Person","name":"Person"},{"type":"Table","schema":"Person","name":"PersonPhone"},{"type":"Table","schema":"Person","name":"PhoneNumberType"},{"type":"Table","schema":"Sales","name":"Store"},{"type":"View","schema":"Sales","name":"vStoreWithContacts"},{"type":"Table","schema":"Person","name":"Address"},{"type":"Table","schema":"Person","name":"AddressType"},{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},{"type":"Table","schema":"Person","name":"CountryRegion"},{"type":"Table","schema":"Person","name":"StateProvince"},{"type":"View","schema":"Sales","name":"vStoreWithAddresses"},{"type":"Table","schema":"Purchasing","name":"Vendor"},{"type":"View","schema":"Purchasing","name":"vVendorWithContacts"},{"type":"View","schema":"Purchasing","name":"vVendorWithAddresses"},{"type":"View","schema":"Person","name":"vAdditionalContactInfo"},{"type":"Table","schema":"HumanResources","name":"Employee"},{"type":"View","schema":"HumanResources","name":"vEmployee"},{"type":"Table","schema":"HumanResources","name":"Department"},{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},{"type":"View","schema":"HumanResources","name":"vEmployeeDepartment"},{"type":"Table","schema":"HumanResources","name":"Shift"},{"type":"View","schema":"HumanResources","name":"vEmployeeDepartmentHistory"},{"type":"UserDefinedFunction","schema":"dbo","name":"ufnLeadingZeros"},{"type":"Table","schema":"Sales","name":"Customer"},{"type":"View","schema":"Sales","name":"vIndividualCustomer"},{"type":"View","schema":"Sales","name":"vPersonDemographics"},{"type":"Table","schema":"HumanResources","name":"JobCandidate"},{"type":"View","schema":"HumanResources","name":"vJobCandidate"},{"type":"View","schema":"HumanResources","name":"vJobCandidateEmployment"},{"type":"View","schema":"HumanResources","name":"vJobCandidateEducation"},{"type":"Table","schema":"Production","name":"ProductModel"},{"type":"View","schema":"Production","name":"vProductModelCatalogDescription"},{"type":"View","schema":"Production","name":"vProductModelInstructions"},{"type":"Table","schema":"Sales","name":"SalesPerson"},{"type":"Table","schema":"Sales","name":"SalesTerritory"},{"type":"View","schema":"Sales","name":"vSalesPerson"},{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},{"type":"View","schema":"Sales","name":"vSalesPersonSalesByFiscalYears"},{"type":"View","schema":"Sales","name":"vStoreWithDemographics"},{"type":"Table","schema":"Production","name":"ProductDescription"},{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},{"type":"Table","schema":"Production","name":"Product"},{"type":"View","schema":"Production","name":"vProductAndDescription"},{"type":"View","schema":"Person","name":"vStateProvinceCountryRegion"},{"type":"Table","schema":"dbo","name":"AWBuildVersion"},{"type":"Table","schema":"dbo","name":"DatabaseLog"},{"type":"Table","schema":"dbo","name":"ErrorLog"},{"type":"Table","schema":"HumanResources","name":"EmployeePayHistory"},{"type":"Table","schema":"Person","name":"BusinessEntity"},{"type":"Table","schema":"Person","name":"Password"},{"type":"Table","schema":"Production","name":"BillOfMaterials"},{"type":"Table","schema":"Production","name":"Culture"},{"type":"Table","schema":"Production","name":"Document"},{"type":"Table","schema":"Production","name":"Illustration"},{"type":"Table","schema":"Production","name":"Location"},{"type":"Table","schema":"Production","name":"ProductCategory"},{"type":"Table","schema":"Production","name":"ProductCostHistory"},{"type":"Table","schema":"Production","name":"ProductDocument"},{"type":"Table","schema":"Production","name":"ProductInventory"},{"type":"Table","schema":"Production","name":"ProductListPriceHistory"},{"type":"Table","schema":"Production","name":"ProductModelIllustration"},{"type":"Table","schema":"Production","name":"ProductPhoto"},{"type":"Table","schema":"Production","name":"ProductProductPhoto"},{"type":"Table","schema":"Production","name":"ProductReview"},{"type":"Table","schema":"Production","name":"ProductSubcategory"},{"type":"Table","schema":"Production","name":"ScrapReason"},{"type":"Table","schema":"Production","name":"TransactionHistory"},{"type":"Table","schema":"Production","name":"TransactionHistoryArchive"},{"type":"Table","schema":"Production","name":"UnitMeasure"},{"type":"Table","schema":"Production","name":"WorkOrder"},{"type":"Table","schema":"Production","name":"WorkOrderRouting"},{"type":"Table","schema":"Purchasing","name":"ProductVendor"},{"type":"Table","schema":"Purchasing","name":"PurchaseOrderDetail"},{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},{"type":"Table","schema":"Purchasing","name":"ShipMethod"},{"type":"Table","schema":"Sales","name":"CountryRegionCurrency"},{"type":"Table","schema":"Sales","name":"CreditCard"},{"type":"Table","schema":"Sales","name":"Currency"},{"type":"Table","schema":"Sales","name":"CurrencyRate"},{"type":"Table","schema":"Sales","name":"PersonCreditCard"},{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},{"type":"Table","schema":"Sales","name":"SalesOrderHeaderSalesReason"},{"type":"Table","schema":"Sales","name":"SalesPersonQuotaHistory"},{"type":"Table","schema":"Sales","name":"SalesReason"},{"type":"Table","schema":"Sales","name":"SalesTaxRate"},{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},{"type":"Table","schema":"Sales","name":"SpecialOffer"},{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},{"type":"StoredProcedure","schema":"dbo","name":"uspGetBillOfMaterials"},{"type":"StoredProcedure","schema":"dbo","name":"uspGetEmployeeManagers"},{"type":"StoredProcedure","schema":"dbo","name":"uspGetManagerEmployees"},{"type":"StoredProcedure","schema":"dbo","name":"uspGetWhereUsedProductID"},{"type":"StoredProcedure","schema":"dbo","name":"uspLogError"},{"type":"StoredProcedure","schema":"dbo","name":"uspPrintError"},{"type":"StoredProcedure","schema":"dbo","name":"uspSearchCandidateResumes"},{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeeHireInfo"},{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeeLogin"},{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeePersonalInfo"},{"type":"DdlTrigger","schema":null,"name":"ddlDatabaseTriggerLog"}],"count":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Database","schema":null,"name":"AdventureWorks2014"},"status":"Progress","count":0,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Schema","schema":null,"name":"HumanResources"},"status":"Completed","count":1,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 243
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Schema","schema":null,"name":"Person"},"status":"Completed","count":2,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Schema","schema":null,"name":"Production"},"status":"Completed","count":3,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Schema","schema":null,"name":"Purchasing"},"status":"Completed","count":4,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 242
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Schema","schema":null,"name":"Sales"},"status":"Completed","count":5,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"FullTextCatalog","schema":null,"name":"AW2014FullTextCatalog"},"status":"Completed","count":6,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 286
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"HumanResources","name":"HRResumeSchemaCollection"},"status":"Completed","count":7,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 291
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"Person","name":"AdditionalContactInfoSchemaCollection"},"status":"Completed","count":8,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 286
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"Person","name":"IndividualSurveySchemaCollection"},"status":"Completed","count":9,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 291
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"Production","name":"ManuInstructionsSchemaCollection"},"status":"Completed","count":10,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 293
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"Production","name":"ProductDescriptionSchemaCollection"},"status":"Completed","count":11,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"XmlSchemaCollection","schema":"Sales","name":"StoreSurveySchemaCollection"},"status":"Completed","count":12,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 265
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"AccountNumber"},"status":"Completed","count":13,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"Flag"},"status":"Completed","count":14,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"Name"},"status":"Completed","count":15,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"NameStyle"},"status":"Completed","count":16,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"OrderNumber"},"status":"Completed","count":17,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedDataType","schema":"dbo","name":"Phone"},"status":"Completed","count":18,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 275
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetAccountingEndDate"},"status":"Completed","count":19,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 277
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetAccountingStartDate"},"status":"Completed","count":20,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 276
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetContactInformation"},"status":"Completed","count":21,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 276
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetDocumentStatusText"},"status":"Completed","count":22,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 276
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductDealerPrice"},"status":"Completed","count":23,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 274
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductListPrice"},"status":"Completed","count":24,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 277
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetProductStandardCost"},"status":"Completed","count":25,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetPurchaseOrderStatusText"},"status":"Completed","count":26,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 278
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetSalesOrderStatusText"},"status":"Completed","count":27,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnGetStock"},"status":"Completed","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"ContactType"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"EmailAddress"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PersonPhone"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PhoneNumberType"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 244
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Store"},"status":"Progress","count":28,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vStoreWithContacts"},"status":"Completed","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Address"},"status":"Progress","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"AddressType"},"status":"Progress","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Progress","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"CountryRegion"},"status":"Progress","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Progress","count":29,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vStoreWithAddresses"},"status":"Completed","count":30,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"Vendor"},"status":"Progress","count":30,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Purchasing","name":"vVendorWithContacts"},"status":"Completed","count":31,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Purchasing","name":"vVendorWithAddresses"},"status":"Completed","count":32,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Person","name":"vAdditionalContactInfo"},"status":"Completed","count":33,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":33,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vEmployee"},"status":"Completed","count":34,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Department"},"status":"Progress","count":34,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 273
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},"status":"Progress","count":34,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vEmployeeDepartment"},"status":"Completed","count":35,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Shift"},"status":"Progress","count":35,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 274
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vEmployeeDepartmentHistory"},"status":"Completed","count":36,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"UserDefinedFunction","schema":"dbo","name":"ufnLeadingZeros"},"status":"Completed","count":37,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Progress","count":37,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vIndividualCustomer"},"status":"Completed","count":38,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vPersonDemographics"},"status":"Completed","count":39,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"JobCandidate"},"status":"Progress","count":39,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vJobCandidate"},"status":"Completed","count":40,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 271
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vJobCandidateEmployment"},"status":"Completed","count":41,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 270
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"HumanResources","name":"vJobCandidateEducation"},"status":"Completed","count":42,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModel"},"status":"Progress","count":42,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 275
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Production","name":"vProductModelCatalogDescription"},"status":"Completed","count":43,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Production","name":"vProductModelInstructions"},"status":"Completed","count":44,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":44,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":44,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vSalesPerson"},"status":"Completed","count":45,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":45,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vSalesPersonSalesByFiscalYears"},"status":"Completed","count":46,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Sales","name":"vStoreWithDemographics"},"status":"Completed","count":47,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDescription"},"status":"Progress","count":47,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},"status":"Progress","count":47,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":47,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 266
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Production","name":"vProductAndDescription"},"status":"Completed","count":48,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"View","schema":"Person","name":"vStateProvinceCountryRegion"},"status":"Completed","count":49,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"dbo","name":"AWBuildVersion"},"status":"Progress","count":49,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 249
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"dbo","name":"DatabaseLog"},"status":"Completed","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 245
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"dbo","name":"ErrorLog"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 266
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeePayHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntity"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Password"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Culture"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Illustration"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Location"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCategory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCostHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDocument"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductListPriceHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 268
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelIllustration"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductPhoto"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductProductPhoto"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductReview"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductSubcategory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ScrapReason"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistoryArchive"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"UnitMeasure"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrder"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrderRouting"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ProductVendor"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderDetail"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ShipMethod"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CountryRegionCurrency"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 249
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CreditCard"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Currency"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CurrencyRate"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"PersonCreditCard"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 266
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeaderSalesReason"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPersonQuotaHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesReason"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTaxRate"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOffer"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},"status":"Progress","count":50,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"dbo","name":"AWBuildVersion"},"status":"Completed","count":51,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"dbo","name":"ErrorLog"},"status":"Completed","count":52,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Department"},"status":"Completed","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 273
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 266
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeePayHistory"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"JobCandidate"},"status":"Progress","count":53,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Shift"},"status":"Completed","count":54,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Address"},"status":"Progress","count":54,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Address"},"status":"Progress","count":54,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"AddressType"},"status":"Progress","count":54,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"AddressType"},"status":"Completed","count":55,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntity"},"status":"Progress","count":55,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntity"},"status":"Completed","count":56,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Progress","count":56,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Progress","count":56,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Progress","count":56,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Progress","count":56,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"ContactType"},"status":"Completed","count":57,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"CountryRegion"},"status":"Completed","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"EmailAddress"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"EmailAddress"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Password"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Password"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PersonPhone"},"status":"Progress","count":58,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PhoneNumberType"},"status":"Completed","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":59,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Culture"},"status":"Completed","count":60,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Progress","count":60,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Progress","count":60,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Progress","count":60,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Progress","count":60,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Illustration"},"status":"Completed","count":61,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Location"},"status":"Progress","count":61,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Location"},"status":"Progress","count":61,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Location"},"status":"Completed","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCategory"},"status":"Progress","count":62,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCategory"},"status":"Completed","count":63,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCostHistory"},"status":"Progress","count":63,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDescription"},"status":"Progress","count":63,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDescription"},"status":"Completed","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDocument"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductListPriceHistory"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModel"},"status":"Progress","count":64,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModel"},"status":"Completed","count":65,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 268
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelIllustration"},"status":"Progress","count":65,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},"status":"Progress","count":65,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductPhoto"},"status":"Completed","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductProductPhoto"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductProductPhoto"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductReview"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductReview"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductSubcategory"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductSubcategory"},"status":"Progress","count":66,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ScrapReason"},"status":"Completed","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistory"},"status":"Progress","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistory"},"status":"Progress","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistory"},"status":"Progress","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistoryArchive"},"status":"Progress","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistoryArchive"},"status":"Progress","count":67,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 270
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistoryArchive"},"status":"Completed","count":68,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"UnitMeasure"},"status":"Completed","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrder"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrderRouting"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ProductVendor"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderDetail"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ShipMethod"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ShipMethod"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ShipMethod"},"status":"Progress","count":69,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ShipMethod"},"status":"Completed","count":70,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"Vendor"},"status":"Progress","count":70,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"Vendor"},"status":"Progress","count":70,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"Vendor"},"status":"Progress","count":70,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CountryRegionCurrency"},"status":"Progress","count":70,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CreditCard"},"status":"Completed","count":71,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Currency"},"status":"Completed","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CurrencyRate"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"PersonCreditCard"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 266
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeaderSalesReason"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 250
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPersonQuotaHistory"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPersonQuotaHistory"},"status":"Progress","count":72,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesReason"},"status":"Completed","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTaxRate"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTaxRate"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTaxRate"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOffer"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOffer"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOffer"},"status":"Progress","count":73,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOffer"},"status":"Completed","count":74,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},"status":"Progress","count":74,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},"status":"Progress","count":74,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 244
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Store"},"status":"Progress","count":74,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 244
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Store"},"status":"Progress","count":74,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"Employee"},"status":"Completed","count":75,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 273
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},"status":"Progress","count":75,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 273
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},"status":"Progress","count":75,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 274
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeeDepartmentHistory"},"status":"Completed","count":76,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"EmployeePayHistory"},"status":"Completed","count":77,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"HumanResources","name":"JobCandidate"},"status":"Completed","count":78,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Address"},"status":"Completed","count":79,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Progress","count":79,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Progress","count":79,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityAddress"},"status":"Completed","count":80,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Progress","count":80,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Progress","count":80,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"BusinessEntityContact"},"status":"Completed","count":81,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"EmailAddress"},"status":"Completed","count":82,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 249
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Password"},"status":"Completed","count":83,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 247
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"Person"},"status":"Completed","count":84,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PersonPhone"},"status":"Progress","count":84,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"PersonPhone"},"status":"Completed","count":85,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Progress","count":85,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 254
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Person","name":"StateProvince"},"status":"Completed","count":86,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":86,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Progress","count":86,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"BillOfMaterials"},"status":"Completed","count":87,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Document"},"status":"Completed","count":88,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":88,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":88,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Progress","count":88,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"Product"},"status":"Completed","count":89,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductCostHistory"},"status":"Completed","count":90,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDocument"},"status":"Progress","count":90,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductDocument"},"status":"Completed","count":91,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Progress","count":91,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductInventory"},"status":"Completed","count":92,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 268
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductListPriceHistory"},"status":"Completed","count":93,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 268
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelIllustration"},"status":"Progress","count":93,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 269
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelIllustration"},"status":"Completed","count":94,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},"status":"Progress","count":94,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 281
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},"status":"Progress","count":94,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 282
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductModelProductDescriptionCulture"},"status":"Completed","count":95,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductProductPhoto"},"status":"Progress","count":95,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductProductPhoto"},"status":"Completed","count":96,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductReview"},"status":"Completed","count":97,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"ProductSubcategory"},"status":"Completed","count":98,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 263
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"TransactionHistory"},"status":"Completed","count":99,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrder"},"status":"Progress","count":99,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrder"},"status":"Completed","count":100,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrderRouting"},"status":"Progress","count":100,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Production","name":"WorkOrderRouting"},"status":"Completed","count":101,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ProductVendor"},"status":"Progress","count":101,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 258
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ProductVendor"},"status":"Progress","count":101,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"ProductVendor"},"status":"Completed","count":102,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderDetail"},"status":"Progress","count":102,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 265
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderDetail"},"status":"Completed","count":103,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":103,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Progress","count":103,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 265
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"PurchaseOrderHeader"},"status":"Completed","count":104,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Purchasing","name":"Vendor"},"status":"Completed","count":105,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CountryRegionCurrency"},"status":"Progress","count":105,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CountryRegionCurrency"},"status":"Completed","count":106,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CurrencyRate"},"status":"Progress","count":106,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"CurrencyRate"},"status":"Completed","count":107,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Progress","count":107,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 248
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Progress","count":107,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 249
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Customer"},"status":"Completed","count":108,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"PersonCreditCard"},"status":"Progress","count":108,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"PersonCreditCard"},"status":"Completed","count":109,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Progress","count":109,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderDetail"},"status":"Completed","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 256
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Progress","count":110,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeader"},"status":"Completed","count":111,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 267
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeaderSalesReason"},"status":"Progress","count":111,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 268
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesOrderHeaderSalesReason"},"status":"Completed","count":112,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 251
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Progress","count":112,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 252
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPerson"},"status":"Completed","count":113,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesPersonQuotaHistory"},"status":"Completed","count":114,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 253
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTaxRate"},"status":"Completed","count":115,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 255
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritory"},"status":"Completed","count":116,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 261
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},"status":"Progress","count":116,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SalesTerritoryHistory"},"status":"Completed","count":117,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 257
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"ShoppingCartItem"},"status":"Completed","count":118,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},"status":"Progress","count":118,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"SpecialOfferProduct"},"status":"Completed","count":119,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 245
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Store"},"status":"Progress","count":119,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 246
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Table","schema":"Sales","name":"Store"},"status":"Completed","count":120,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 270
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspGetBillOfMaterials"},"status":"Completed","count":121,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 271
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspGetEmployeeManagers"},"status":"Completed","count":122,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 271
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspGetManagerEmployees"},"status":"Completed","count":123,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 273
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspGetWhereUsedProductID"},"status":"Completed","count":124,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 260
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspLogError"},"status":"Completed","count":125,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 262
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspPrintError"},"status":"Completed","count":126,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 274
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"dbo","name":"uspSearchCandidateResumes"},"status":"Completed","count":127,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 285
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeeHireInfo"},"status":"Completed","count":128,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 282
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeeLogin"},"status":"Completed","count":129,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 289
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"StoredProcedure","schema":"HumanResources","name":"uspUpdateEmployeePersonalInfo"},"status":"Completed","count":130,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 264
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"DdlTrigger","schema":null,"name":"ddlDatabaseTriggerLog"},"status":"Completed","count":131,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 259
+
+{"jsonrpc":"2.0","method":"scripting/scriptProgressNotification","params":{"scriptingObject":{"type":"Database","schema":null,"name":"AdventureWorks2014"},"status":"Completed","count":132,"totalCount":132,"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}Content-Length: 117
+
+{"jsonrpc":"2.0","method":"scripting/scriptComplete","params":{"operationId":"5118da7b-535c-45f4-ac08-b30b324402da"}}

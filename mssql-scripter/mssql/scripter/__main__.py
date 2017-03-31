@@ -1,10 +1,19 @@
-#!/usr/bin/env bash
 # --------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/common/tests
-coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/contracts/tests
+import sys
+import os
 
-coverage report -m
+import mssql.scripter.main
+
+try:
+    # TODO: Start telemetry here
+    args = sys.argv[1:]
+    exit_code = mssql.scripter.main.main(args)
+
+    # TODO: Log telemetry based on exit code
+    sys.exit(exit_code)
+except KeyboardInterrupt:
+    sys.exit(1)

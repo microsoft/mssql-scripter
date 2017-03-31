@@ -1,2 +1,0 @@
-Microsoft Sql Scripter Module
-=============================
