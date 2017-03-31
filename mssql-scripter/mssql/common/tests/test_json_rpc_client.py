@@ -3,13 +3,11 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from mssql.common.json_rpc_client import Json_Rpc_Client
-from io import BytesIO
-
+import mssql.common.json_rpc_client as json_rpc_client
 import unittest
 import threading
 import time
-
+import io
 
 class Json_Rpc_Client_Tests(unittest.TestCase):
 
@@ -17,10 +15,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Test that verifies requests sent to the json rpc client are enqueued succesfully.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'sample output')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'sample output')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.submit_request(
             'scriptingService/ScriptDatabase', {'ScriptDatabaseOptions': 'True'})
 
@@ -33,10 +31,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Test that verifies a response was successfully read/enqueued and dequeued from the response queue.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         self.shutdown_background_threads(test_client)
@@ -54,10 +52,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Verifies that we are able to submit a request successfully via the json rpc client.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         # Verify threads are alive and running
@@ -83,10 +81,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Verifies we can successfully submit multiple requests.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         # Verify request thread is up and running and response thread is dead
@@ -124,10 +122,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Verifies we can gracefully shutdown.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         # Verify threads are alive and running
@@ -148,10 +146,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Verifies that a request with a null method or parameter is not enqueued.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'sample output')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'sample output')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         with self.assertRaises(ValueError):
             test_client.submit_request(None, None)
 
@@ -160,10 +158,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             Verifies that when a invalid response is read, the response thread enqueues the Exception
             into the exception queue for the main thread to access and kills itself.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Cntent-Lenth:15\r\n\r\n')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Cntent-Lenth:15\r\n\r\n')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         try:
@@ -186,11 +184,11 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             Verifies that when the response stream is closed that the proper exception is enqueued and that the worker thread
             killed itself.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Lenth:15\r\n\r\n')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Lenth:15\r\n\r\n')
         output_stream.close()
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         try:
@@ -213,10 +211,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             Verifies that response thread is still running when the output stream has nothing
             This simulates a subprocess not outputting to it's std out immediately.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO()
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO()
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
         response = test_client.get_response()
 
@@ -233,10 +231,10 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             Verifies that when a request stream is closed that the request thread enqueues the exception
             and terminates itself by breaking out of it's loop.
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
         input_stream.close()
         test_client.submit_request(
@@ -260,11 +258,11 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Tests that get response with id can return either a response associated with a id or a event with no id
         """
-        input_stream = BytesIO()
-        output_stream = BytesIO(
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO(
             b'Content-Length: 86\r\n\r\n{"params": {"Key": "Value"}, "jsonrpc": "2.0", "method": "testMethod/DoThis", "id": 1}')
 
-        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
 
         # Sleeping to give background threads a chance to process response.

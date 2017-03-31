@@ -4,7 +4,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-coverage run --concurrency=thread -m unittest discover -s ../src/mssql/common/tests
-coverage run --concurrency=thread -m unittest discover -s ../src/mssql/requests/tests
+coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/common/tests
+coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/contracts/tests
 
 coverage report -m

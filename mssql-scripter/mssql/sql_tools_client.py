@@ -3,12 +3,12 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from common.json_rpc_client import Json_Rpc_Client
-from mssql.requests.scripting import *
+from mssql.common.json_rpc_client import Json_Rpc_Client
+from mssql.contracts.scripting import *
 
 import logging
 
-logger = logging.getLogger('mssql.client')
+logger = logging.getLogger('mssql-scripter.sql_tools_client')
 
 
 class Sql_Tools_Client(object):

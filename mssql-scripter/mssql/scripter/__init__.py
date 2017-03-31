@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 import argparse
 import sys
-
+import platform
 
 def handle_response(response):
     """

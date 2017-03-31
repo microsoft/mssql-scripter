@@ -6,24 +6,24 @@ import subprocess
 import sys
 
 from mssql.scripter import scripter_logging, handle_response, initialize_parser
-from mssql.client import Sql_Tools_Client
+from mssql.sql_tools_client import Sql_Tools_Client
 from subprocess import PIPE
 
 
-def main():
+def main(args):
     """
         Main entry point to the MSSQL-Scripter.
 
     """
 
     parser = initialize_parser()
-    parameters = parser.parse_args()
+    parameters = parser.parse_args(args)
 
     # Start the tools Service
     # TODO: Add helper to find the actual install location
     tools_service_process = subprocess.Popen(
         [
-            r"D:\repos\sql-xplat-cli\sqltoolsservice\Microsoft.SqlTools.ServiceLayer.exe",
+            r"D:\repos\sql-xplat-cli\src\mssql\sqltoolsservice\Microsoft.SqlTools.ServiceLayer.exe",
             "--enable-logging"],
         bufsize=0,
         stdin=PIPE,
@@ -53,3 +53,5 @@ def main():
     sql_tools_client.shutdown()
     tools_service_process.kill()
 
+if __name__ =='__main__':
+    main()

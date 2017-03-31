@@ -3,11 +3,10 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from mssql.common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
-from threading import Thread
-from queue import Queue
-
+import mssql.common.json_rpc as json_rpc
 import logging
+import queue
+import threading
 
 logger = logging.getLogger('common.json_rpc_client')
 
@@ -27,13 +26,13 @@ class Json_Rpc_Client(object):
     RESPONSE_THREAD_NAME = 'Json_Rpc_Response_Thread'
 
     def __init__(self, in_stream, out_stream):
-        self.writer = Json_Rpc_Writer(in_stream)
-        self.reader = Json_Rpc_Reader(out_stream)
+        self.writer = json_rpc.Json_Rpc_Writer(in_stream)
+        self.reader = json_rpc.Json_Rpc_Reader(out_stream)
 
-        self.request_queue = Queue()
+        self.request_queue = queue.Queue()
         # Response map intialized with event queue
-        self.response_map = {0: Queue()}
-        self.exception_queue = Queue()
+        self.response_map = {0: queue.Queue()}
+        self.exception_queue = queue.Queue()
 
         # Simple cancellation token boolean
         self.cancel = False
@@ -43,13 +42,13 @@ class Json_Rpc_Client(object):
             Starts the background threads to listen for responses and requests from the underlying
             streams. Encapsulated into it's own method for future async extensions without threads.
         """
-        self.request_thread = Thread(
+        self.request_thread = threading.Thread(
             target=self._listen_for_request,
             name=self.REQUEST_THREAD_NAME)
         self.request_thread.daemon = True
         self.request_thread.start()
 
-        self.response_thread = Thread(
+        self.response_thread = threading.Thread(
             target=self._listen_for_response,
             name=self.RESPONSE_THREAD_NAME)
         self.response_thread.daemon = True
@@ -140,7 +139,7 @@ class Json_Rpc_Client(object):
                     response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
                     if (response_id not in self.response_map):
-                        self.response_map[response_id] = Queue()
+                        self.response_map[response_id] = queue.Queue()
                     # Enqueue the response
                     self.response_map[response_id].put(response)
                 else:
@@ -169,7 +168,7 @@ class Json_Rpc_Client(object):
             Clients can provide a logger to log the exception with the associated thread name for telemetry.
         """
         logger.debug(
-            "Thread: {0} encountered exception {1}".format(
+            "threading.Thread: {0} encountered exception {1}".format(
                 thread_name, ex))
         self.exception_queue.put(ex)
 

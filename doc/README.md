@@ -8,12 +8,12 @@ Setting up your development environment
   
   ##### Windows
   ```BatchFile
-  set PYTHONPATH=<clone root>\src;%PYTHONPATH%
+  set PYTHONPATH=<clone root>\mssql-scripter;%PYTHONPATH%
   ```
   
   ##### OSX/Ubuntu (bash)
   ```Shell
-  export PYTHONPATH=<clone root>/src:${PYTHONPATH}
+  export PYTHONPATH=<clone root>/mssql-scripter:${PYTHONPATH}
   ```
 ## Running Tests:
 #### Command line

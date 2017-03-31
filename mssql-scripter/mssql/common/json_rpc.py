@@ -3,16 +3,14 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from io import BytesIO
-from enum import Enum
-
+import enum
 import json
 import logging
 
-logger = logging.getLogger('common.json_rpc')
+logger = logging.getLogger('mssql-scripter.common.json_rpc')
 
 
-class Read_State(Enum):
+class Read_State(enum.Enum):
     Header = 1
     Content = 2
 

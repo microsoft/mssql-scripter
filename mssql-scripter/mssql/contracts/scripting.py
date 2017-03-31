@@ -3,12 +3,12 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from mssql.requests import Request
+from mssql.contracts import Request
 from future.utils import iteritems
 
 import logging
 
-logger = logging.getLogger('mssql.requests.scripting')
+logger = logging.getLogger('mssql-scripter.contracts.scripting')
 
 
 class Scripting_Request(Request):

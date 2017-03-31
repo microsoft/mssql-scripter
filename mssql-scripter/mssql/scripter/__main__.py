@@ -10,7 +10,7 @@ import mssql.scripter.main
 
 try:
     # TODO: Start telemetry here
-    args = sys.argsv[1:]
+    args = sys.argv[1:]
     exit_code = mssql.scripter.main.main(args)
 
     # TODO: Log telemetry based on exit code

@@ -1,4 +1,0 @@
-# Include the sql tools service
-# TODO Logic for platform specific versions
-recursive-include mssql/sqltoolsservice *
-include LICENSE.txt

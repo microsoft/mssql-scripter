@@ -2,7 +2,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-from mssql.requests.scripting import *
+from mssql.contracts.scripting import *
 
 from mssql.common.json_rpc_client import Json_Rpc_Client
 from mssql.common.json_rpc import Json_Rpc_Writer, Json_Rpc_Reader

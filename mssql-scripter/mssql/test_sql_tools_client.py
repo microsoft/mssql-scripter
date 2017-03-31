@@ -7,7 +7,7 @@ import unittest
 import threading
 
 from mssql.client import Sql_Tools_Client
-from mssql.requests.scripting import *
+from mssql.contracts.scripting import *
 from io import BytesIO, BufferedReader
 
 
