@@ -3,10 +3,18 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
 import mssql.common.json_rpc as json_rpc
 import logging
 import queue
 import threading
+=======
+from common.json_rpc import Json_Rpc_Reader, Json_Rpc_Writer
+from threading import Thread
+from queue import Queue
+
+import logging
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
 
 logger = logging.getLogger('common.json_rpc_client')
 
@@ -29,10 +37,17 @@ class Json_Rpc_Client(object):
         self.writer = json_rpc.Json_Rpc_Writer(in_stream)
         self.reader = json_rpc.Json_Rpc_Reader(out_stream)
 
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
         self.request_queue = queue.Queue()
         # Response map intialized with event queue
         self.response_map = {0: queue.Queue()}
         self.exception_queue = queue.Queue()
+=======
+        self.request_queue = Queue()
+        # Response map intialized with event queue
+        self.response_map = {0: Queue()}
+        self.exception_queue = Queue()
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
 
         # Simple cancellation token boolean
         self.cancel = False
@@ -42,13 +57,21 @@ class Json_Rpc_Client(object):
             Starts the background threads to listen for responses and requests from the underlying
             streams. Encapsulated into it's own method for future async extensions without threads.
         """
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
         self.request_thread = threading.Thread(
+=======
+        self.request_thread = Thread(
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
             target=self._listen_for_request,
             name=self.REQUEST_THREAD_NAME)
         self.request_thread.daemon = True
         self.request_thread.start()
 
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
         self.response_thread = threading.Thread(
+=======
+        self.response_thread = Thread(
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
             target=self._listen_for_response,
             name=self.RESPONSE_THREAD_NAME)
         self.response_thread.daemon = True
@@ -139,7 +162,11 @@ class Json_Rpc_Client(object):
                     response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
                     if (response_id not in self.response_map):
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
                         self.response_map[response_id] = queue.Queue()
+=======
+                        self.response_map[response_id] = Queue()
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
                     # Enqueue the response
                     self.response_map[response_id].put(response)
                 else:
@@ -168,7 +195,11 @@ class Json_Rpc_Client(object):
             Clients can provide a logger to log the exception with the associated thread name for telemetry.
         """
         logger.debug(
+<<<<<<< HEAD:mssql-scripter/mssql/common/json_rpc_client.py
             "threading.Thread: {0} encountered exception {1}".format(
+=======
+            "Thread: {0} encountered exception {1}".format(
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/json_rpc_client.py
                 thread_name, ex))
         self.exception_queue.put(ex)
 

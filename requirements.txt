@@ -3,3 +3,7 @@ future==0.16.0
 pip==9.0.1
 setuptools==30.4.0
 coverage==4.3.4
+<<<<<<< HEAD
+=======
+jsonpickle==0.9.4
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d

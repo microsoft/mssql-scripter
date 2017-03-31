@@ -9,6 +9,7 @@ import threading
 import time
 import io
 
+
 class Json_Rpc_Client_Tests(unittest.TestCase):
 
     def test_request_enqueued(self):
@@ -22,6 +23,13 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         test_client.submit_request(
             'scriptingService/ScriptDatabase', {'ScriptDatabaseOptions': 'True'})
 
+<<<<<<< HEAD:mssql-scripter/mssql/common/tests/test_json_rpc_client.py
+=======
+        test_client = Json_Rpc_Client(input_stream, output_stream)
+        test_client.submit_request(
+            'scriptingService/ScriptDatabase', {'ScriptDatabaseOptions': 'True'})
+
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/tests/test_json_rpc_client.py
         request = test_client.request_queue.get()
 
         self.assertEqual(request['method'], 'scriptingService/ScriptDatabase')
@@ -81,10 +89,17 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Verifies we can successfully submit multiple requests.
         """
+<<<<<<< HEAD:mssql-scripter/mssql/common/tests/test_json_rpc_client.py
         input_stream = io.BytesIO()
         output_stream = io.BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
 
         test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
+=======
+        input_stream = BytesIO()
+        output_stream = BytesIO(b'Content-Length: 15\r\n\r\n{"key":"value"}')
+
+        test_client = Json_Rpc_Client(input_stream, output_stream)
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/tests/test_json_rpc_client.py
         test_client.start()
 
         # Verify request thread is up and running and response thread is dead
@@ -211,18 +226,25 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
             Verifies that response thread is still running when the output stream has nothing
             This simulates a subprocess not outputting to it's std out immediately.
         """
+<<<<<<< HEAD:mssql-scripter/mssql/common/tests/test_json_rpc_client.py
         input_stream = io.BytesIO()
         output_stream = io.BytesIO()
 
         test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
+=======
+        input_stream = BytesIO()
+        output_stream = BytesIO()
+    
+        test_client = Json_Rpc_Client(input_stream, output_stream)
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/tests/test_json_rpc_client.py
         test_client.start()
         response = test_client.get_response()
-
+    
         self.assertEqual(response, None)
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertTrue(test_client.response_thread.isAlive())
         self.assertEqual(threading.active_count(), 3)
-
+    
         test_client.shutdown()
         self.assertEqual(threading.active_count(), 1)
 
@@ -258,12 +280,20 @@ class Json_Rpc_Client_Tests(unittest.TestCase):
         """
             Tests that get response with id can return either a response associated with a id or a event with no id
         """
+<<<<<<< HEAD:mssql-scripter/mssql/common/tests/test_json_rpc_client.py
         input_stream = io.BytesIO()
         output_stream = io.BytesIO(
+=======
+        input_stream = BytesIO()
+        output_stream = BytesIO(
+>>>>>>> 279f4b4c01cb6d4497b29b29eda4f46af2de8a1d:src/common/tests/test_json_rpc_client.py
             b'Content-Length: 86\r\n\r\n{"params": {"Key": "Value"}, "jsonrpc": "2.0", "method": "testMethod/DoThis", "id": 1}')
 
         test_client = json_rpc_client.Json_Rpc_Client(input_stream, output_stream)
         test_client.start()
+        
+        # Sleeping to give background threads a chance to process response.
+        time.sleep(1)
 
         # Sleeping to give background threads a chance to process response.
         time.sleep(1)
