@@ -6,7 +6,7 @@
 import unittest
 import threading
 
-from mssql.client import Sql_Tools_Client
+from mssql.sql_tools_client import Sql_Tools_Client
 from mssql.contracts.scripting import *
 from io import BytesIO, BufferedReader
 
@@ -34,7 +34,7 @@ class Sql_Tools_Client_Test(unittest.TestCase):
             'FilePath': 'Sample_File_Path',
             'ConnectionString': 'Sample_connection_string',
             'DatabaseObjects': None}
-        request = tools_client.create_request_factory(
+        request = tools_client.create_request(
             'scripting_request', parameters)
 
         # Assert request is scripting request and hasn't started

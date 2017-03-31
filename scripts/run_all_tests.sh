@@ -6,5 +6,6 @@
 
 coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/common/tests
 coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/contracts/tests
+coverage run --concurrency=thread -m unittest discover -s ../mssql-scripter/mssql/tests
 
 coverage report -m

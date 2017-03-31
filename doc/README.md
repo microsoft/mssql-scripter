@@ -12,7 +12,7 @@ Setting up your development environment
   ```
   
   ##### OSX/Ubuntu (bash)
-  ```Shellcls
+  ```Shell
   export PYTHONPATH=<clone root>/mssql-scripter:${PYTHONPATH}
   ```
 ## Running Tests:
