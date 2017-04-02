@@ -90,3 +90,6 @@ ENV/
 
 # DS Store
 .DS_Store
+
+# sqltoolsservice binaries
+/mssql-scripter/mssql/sqltoolsservice/*
