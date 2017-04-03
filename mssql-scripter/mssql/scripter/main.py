@@ -4,6 +4,8 @@
 # --------------------------------------------------------------------------------------------
 import subprocess
 import sys
+import os.path
+import io
 
 from mssql.scripter import scripter_logging, handle_response, initialize_parser
 from mssql.sql_tools_client import Sql_Tools_Client
@@ -12,27 +14,32 @@ from subprocess import PIPE
 
 def main(args):
     """
-        Main entry point to the MSSQL-Scripter.
+        Main entry point to mssql-scripter.
 
     """
 
     parser = initialize_parser()
     parameters = parser.parse_args(args)
 
+    # Resolve the path to the tool service
+    basepath = os.path.dirname(__file__)
+    tools_service_path = os.path.abspath(
+        os.path.join(basepath, "..", "sqltoolsservice", "Microsoft.SqlTools.ServiceLayer"))
+    
     # Start the tools Service
-    # TODO: Add helper to find the actual install location
     tools_service_process = subprocess.Popen(
-        [
-            r"D:\repos\sql-xplat-cli\src\mssql\sqltoolsservice\Microsoft.SqlTools.ServiceLayer.exe",
-            "--enable-logging"],
+        [tools_service_path, "--enable-logging"],
         bufsize=0,
         stdin=PIPE,
         stdout=PIPE)
 
+    # Wrap stdout from 2.7 compat
+    stdout_wrapped = io.open(tools_service_process.stdout.fileno(), 'rb', closefd=False)
+
     # Start the sql_tools_client
     sql_tools_client = Sql_Tools_Client(
         tools_service_process.stdin,
-        tools_service_process.stdout)
+        stdout_wrapped)
 
     # Create the scripting request
     scripting_request = sql_tools_client.create_request(
