@@ -13,7 +13,7 @@ import tempfile
 # Check repo if in dev mode.
 TOOLS_SERVICE_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..', 'sqltoolsservice'))
 if (not os.path.exists(TOOLS_SERVICE_DIR)):
-    # Production mode
+    # Production mode.
     TOOLS_SERVICE_DIR=site.getsitepackages()[0]
 
 def get_native_tools_service_path():
@@ -85,9 +85,8 @@ def initialize_parser():
         help='Connection string of database to script')
         
     parser.add_argument(
-        '--FilePath',
-        help='target file to store the script of the database',
-        default=tempfile.mkstemp(prefix='mssql-scripter-temp')[1])
+        'FilePath',
+        help='target file to store the script of the database')
 
     # General boolean Scripting Options
     parser.add_argument('--ANSIPadding', help='', default=False)

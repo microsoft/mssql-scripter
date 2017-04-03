@@ -60,8 +60,6 @@ def main(args):
     with io.open(parameters.FilePath, 'r', encoding='utf-16') as script_file:
         sys.stdout.write(script_file.read())
 
-    if ('mssql-scripter-temp' in parameters.FilePath):
-        os.remove(parameters.FilePath)
     # May need to add a timer here
     sql_tools_client.shutdown()
     tools_service_process.kill()

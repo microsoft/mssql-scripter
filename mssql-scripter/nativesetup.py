@@ -61,7 +61,10 @@ LINUX_DISTRO_WITH_VERSION = {
         },
 }
 try:
-    site_packages_dir = site.getsitepackages()[0]
+    for path in site.getsitepackages():
+        if (path.endswith('site-packages')):
+            site_packages_dir = path
+            break
 except AttributeError:
     # getsitepackages() does not work in virtual environment for python 2.
     # TODO: Add support for production use in a virtual env.
