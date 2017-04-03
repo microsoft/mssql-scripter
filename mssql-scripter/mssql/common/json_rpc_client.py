@@ -5,7 +5,7 @@
 
 import mssql.common.json_rpc as json_rpc
 import logging
-import queue
+from queue import Queue
 import threading
 
 logger = logging.getLogger('common.json_rpc_client')
@@ -29,10 +29,10 @@ class Json_Rpc_Client(object):
         self.writer = json_rpc.Json_Rpc_Writer(in_stream)
         self.reader = json_rpc.Json_Rpc_Reader(out_stream)
 
-        self.request_queue = queue.Queue()
+        self.request_queue = Queue()
         # Response map intialized with event queue
-        self.response_map = {0: queue.Queue()}
-        self.exception_queue = queue.Queue()
+        self.response_map = {0: Queue()}
+        self.exception_queue = Queue()
 
         # Simple cancellation token boolean
         self.cancel = False
@@ -139,7 +139,7 @@ class Json_Rpc_Client(object):
                     response_id = int(response_id_str)
                     # we have a id, map it with a new queue if it doesn't exist
                     if (response_id not in self.response_map):
-                        self.response_map[response_id] = queue.Queue()
+                        self.response_map[response_id] = Queue()
                     # Enqueue the response
                     self.response_map[response_id].put(response)
                 else:
