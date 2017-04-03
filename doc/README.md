@@ -1,6 +1,6 @@
 Setting up your development environment
 ========================================
-1.  Add `<clone root>\src` to your PYTHONPATH environment variable:
+1.  Add `<clone root>\mssql-scripter` to your PYTHONPATH environment variable:
   
   ##### Windows
   ```BatchFile
