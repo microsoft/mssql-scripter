@@ -53,7 +53,7 @@ def main(args):
             handle_response(response)
 
     # Once the response is complete
-    with open(parameters.FilePath, 'r', encoding='utf-16') as script_file:
+    with io.open(parameters.FilePath, 'r', encoding='utf-16') as script_file:
         sys.stdout.write(script_file.read())
 
     # May need to add a timer here
