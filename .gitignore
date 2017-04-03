@@ -93,3 +93,6 @@ ENV/
 
 # sqltoolsservice binaries
 /mssql-scripter/mssql/sqltoolsservice/*
+
+# VSCode configuration
+.vscode/*
