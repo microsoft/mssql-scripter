@@ -4,10 +4,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
 import sys
-import os
-import platform as _platform
+import nativesetup
 
 from setuptools import setup
 from setuptools.command.install import install
@@ -15,38 +13,25 @@ from setuptools.command.install import install
 # TODO: Decide on versioning
 VERSION = "0.1.1.dev"
 
-# TODO Find linux distro based on https://www.freedesktop.org/software/systemd/man/os-release.html
+
 class Install_Native_Dependencies(install):
-    #   win7-x64
-    #   win7-x86
-    #   osx.10.11-x64
-    #   ubuntu.14.04-x64
-    #   ubuntu.16.04-x64
-    #   centos.7-x64
-    #   rhel.7.2-x64
-    #   debian.8-x64
-    #   fedora.23-x64
-    #   opensuse.13.2-x64
+    """
+        Downloads and Installs native sql tools service if platform is supported.
+    """
 
     def run(self):
 
-        current_platform = _platform.system()
-        architecture = _platform.architecture()
-        version = _platform.version()
+        native_dependency_link = nativesetup.get_sqltoolsservice_download_url()
 
-        print('------------DEBUG-------------\n')
-        print('platform: {0}'.format(current_platform))
-        print('architecture: {0}'.format(architecture))
-        print('version: {0}'.format(version))
+        # Only install if sql tools service is supported.
+        # TODO: Throw exception if we can't install
+        if (native_dependency_link):
+            # We only install if sql tools service is supported on this platform. 
+            # Install sql tools service only if the install was successful; this prevents a dangling sqltoolsservice folder
+            # when mssql-scripter was not installed succesfully.
+            install.run(self)
+            nativesetup.install_sql_tools_service(native_dependency_link)
 
-        if (current_platform == 'windows'):
-            pass
-        elif (current_platform == 'Darwin'):
-            pass
-        elif (current_platform == 'Linux'):
-            pass
-
-        install.run(self)
 
 CLASSIFIERS = [
     'Development Status :: 2 - Pre-Alpha',
@@ -60,10 +45,18 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'License :: OSI Approved :: MIT License',
+
+
 ]
 
 DEPENDENCIES = [
     'pip',
+    'future',
+    'site'
+]
+
+SETUP_DEPENDENCIES = [
+    'requests',
     'future'
 ]
 
@@ -71,7 +64,8 @@ if sys.version_info < (3, 4):
     DEPENDENCIES.append('enum34')
 
 setup(
-    cmdclass={'install' : Install_Native_Dependencies},
+    setup_requires=SETUP_DEPENDENCIES,
+    install_requires=DEPENDENCIES,
     name='mssql-scripter',
     version=VERSION,
     description='Microsoft SQL Scripter Command-Line Tool',
@@ -81,7 +75,7 @@ setup(
     url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
     classifiers=CLASSIFIERS,
-    #include_package_data=True,
+    include_package_data=True,
     scripts=[
         'mssql-scripter',
         'mssql-scripter.bat'
@@ -91,6 +85,5 @@ setup(
         'mssql.scripter',
         'mssql.contracts',
         'mssql.common'],
-    install_requires=DEPENDENCIES
+    cmdclass={'install': Install_Native_Dependencies},
 )
-

@@ -1,10 +1,6 @@
 Setting up your development environment
 ========================================
-1.	Install the dependencies via pip with the script below.
-  ```Shell
-  python scripts/dev_setup.py
-  ```
-2.  Add `<clone root>\src` to your PYTHONPATH environment variable:
+1.  Add `<clone root>\mssql-scripter` to your PYTHONPATH environment variable:
   
   ##### Windows
   ```BatchFile
@@ -14,6 +10,11 @@ Setting up your development environment
   ##### OSX/Ubuntu (bash)
   ```Shell
   export PYTHONPATH=<clone root>/mssql-scripter:${PYTHONPATH}
+  ```
+  
+2.	Install the dependencies via pip with the script below.
+  ```Shell
+  python scripts/dev_setup.py
   ```
 ## Running Tests:
 #### Command line
@@ -30,3 +31,4 @@ Setting up your development environment
   ```
 
   Additionally, you can run tests for all CLI tools and common modules using the `run_all_tests.bat` or `sh run_all_tests` script.
+
