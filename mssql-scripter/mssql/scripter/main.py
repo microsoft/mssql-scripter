@@ -57,13 +57,14 @@ def main(args):
         if (response):
             scripter.handle_response(response, parameters.DisplayProgress)
 
-    with io.open(parameters.FilePath, 'r', encoding='utf-16') as script_file:
+    with io.open(parameters.FilePath, encoding='utf-16') as script_file:
         for line in script_file.readlines():
             sys.stdout.write(line)
     
     # Remove the temp file if we generated one.
     if (parameters.FilePath.startswith('mssqlscripter_')):
         os.remove(parameters.FilePath)
+
 
     # May need to add a timer here
     sql_tools_client.shutdown()
