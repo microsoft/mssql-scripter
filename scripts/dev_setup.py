@@ -30,12 +30,11 @@ def exec_command(command):
 
 
 def install_native_sqltoolsservice():
-    download_link = nativesetup.get_native_dependency_path(
-        nativesetup.get_native_runtime_id())
+    download_link = nativesetup.get_sqltoolsservice_download_url()
 
     if (download_link):
         # This platform supports it, install into the repo
-        nativesetup.install_native_sql_tools_service(
+        nativesetup.install_sql_tools_service(
             download_link, tools_service_target_dir)
         print('Sql Tools Service was succesfully installed.')
         return
