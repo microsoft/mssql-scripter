@@ -21,7 +21,6 @@ def main(args):
     parser = scripter.initialize_parser()
     parameters = parser.parse_args(args)
 
-    print(parameters.FilePath)
     sql_tools_service_path = scripter.get_native_tools_service_path()
 
     # Start the tools Service
@@ -56,7 +55,7 @@ def main(args):
 
         if (response):
             scripter.handle_response(response, parameters.DisplayProgress)
-
+    
     with io.open(parameters.FilePath, encoding='utf-16') as script_file:
         for line in script_file.readlines():
             sys.stdout.write(line)
