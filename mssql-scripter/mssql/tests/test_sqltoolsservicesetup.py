@@ -4,29 +4,29 @@
 # --------------------------------------------------------------------------------------------
 
 import unittest
-import nativesetup
+import sqltoolsservicesetup
 
 
-class TestNativeSetup(unittest.TestCase):
+class TestSqlToolsServiceSetup(unittest.TestCase):
 
     def test_native_dependency_download_path(self):
         """
             Verifies correct download link is return based on platform and architecture.
         """
-        windows_32_id = nativesetup._get_native_runtime_id(
+        windows_32_id = sqltoolsservicesetup._get_runtime_id(
             system='Windows', architecture='32bit')
-        windows_64_id = nativesetup._get_native_runtime_id(
+        windows_64_id = sqltoolsservicesetup._get_runtime_id(
             system='Windows', architecture='64bit')
-        mac_64_id = nativesetup._get_native_runtime_id(
+        mac_64_id = sqltoolsservicesetup._get_runtime_id(
             system='Darwin', architecture='64bit')
 
         self.assertEqual(windows_32_id, 'Windows_7_86')
         self.assertEqual(windows_64_id, 'Windows_7_64')
         self.assertEqual(mac_64_id, 'OSX_10_11_64')
 
-        windows_32_link = nativesetup.get_sqltoolsservice_download_url(windows_32_id) 
-        windows_64_link = nativesetup.get_sqltoolsservice_download_url(windows_64_id)
-        mac_64_link = nativesetup.get_sqltoolsservice_download_url(mac_64_id)
+        windows_32_link = sqltoolsservicesetup.get_download_url(windows_32_id) 
+        windows_64_link = sqltoolsservicesetup.get_download_url(windows_64_id)
+        mac_64_link = sqltoolsservicesetup.get_download_url(mac_64_id)
 
         self.assertTrue(
             'microsoft.sqltools.servicelayer-win-x86-netcoreapp1.0.zip' in windows_32_link)
@@ -122,12 +122,21 @@ class TestNativeSetup(unittest.TestCase):
             'ID=MakeBelieve`\n'
         )
 
-        self.assertEqual('Ubuntu_14', nativesetup._get_linux_distro_runtime_id(distro_ubuntu_14_04))
-        self.assertEqual('Fedora_23',nativesetup._get_linux_distro_runtime_id(distro_fedora_23))
-        self.assertEqual('Debian_8', nativesetup._get_linux_distro_runtime_id(distro_debian_8))
-        self.assertEqual('CentOS_7', nativesetup._get_linux_distro_runtime_id(distro_centos_7))
-        self.assertEqual('Ubuntu_16', nativesetup._get_linux_distro_runtime_id(distro_kde_neon_5_8))
-        self.assertEqual(None, nativesetup._get_linux_distro_runtime_id(distro_unknown_no_id_like))
+        ubuntu = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_ubuntu_14_04)
+        fedora = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_fedora_23)
+        debian = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_debian_8)
+        centos = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_centos_7)
+        kde_neon = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_kde_neon_5_8)
+        unknown = sqltoolsservicesetup._get_linux_distro_runtime_id(distro_unknown_no_id_like)
+
+        self.assertEqual('Ubuntu_14', ubuntu)
+        self.assertEqual('Fedora_23', fedora)
+        self.assertEqual('Debian_8', debian)
+        self.assertEqual('CentOS_7', centos)
+        self.assertEqual('Ubuntu_16', kde_neon)
+        self.assertEqual(None, unknown)
+
+        #TODO: Add test for checking linux download links
 
 if __name__ == '__main__':
     unittest.main()

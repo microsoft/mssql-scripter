@@ -7,7 +7,7 @@ from __future__ import print_function
 
 import sys
 import os
-import nativesetup
+import sqltoolsservicesetup
 from subprocess import check_call, CalledProcessError
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', '..'))
@@ -29,17 +29,15 @@ def exec_command(command):
         sys.exit(1)
 
 
-def install_native_sqltoolsservice():
-    download_link = nativesetup.get_native_dependency_path(
-        nativesetup.get_native_runtime_id())
+def install_sqltoolsservice():
+    download_url = sqltoolsservicesetup.get_download_url()
 
-    if (download_link):
+    if (download_url):
         # This platform supports it, install into the repo
-        nativesetup.install_native_sql_tools_service(
-            download_link, tools_service_target_dir)
+        sqltoolsservicesetup.install(download_url, tools_service_target_dir)
         print('Sql Tools Service was succesfully installed.')
         return
-
+    #TODO: Add debug details about the platform
     print('Error: Sql Tools Service is not supported on this platform.')
 
 
@@ -51,6 +49,6 @@ exec_command('pip install -r dev_requirements.txt')
 
 # install platform specific sql tools service to repo.
 print('Installing native Sql Tools Service...')
-install_native_sqltoolsservice()
+install_sqltoolsservice()
 
 print('Finished dev setup.')
