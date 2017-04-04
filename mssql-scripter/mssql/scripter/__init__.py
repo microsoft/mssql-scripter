@@ -85,8 +85,9 @@ def initialize_parser():
         help='Connection string of database to script')
         
     parser.add_argument(
-        'FilePath',
-        help='target file to store the script of the database')
+        '--FilePath',
+        help='target file to store the script of the database',
+        default=tempfile.NamedTemporaryFile(prefix='mssqlscripter_', delete=False).name)
 
     # General boolean Scripting Options
     parser.add_argument('--ANSIPadding', help='', default=False)
