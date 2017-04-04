@@ -5,7 +5,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 import sys
-import nativesetup
+import sqltoolsservicesetup
 
 from setuptools import setup
 from setuptools.command.install import install
@@ -21,16 +21,16 @@ class Install_Native_Dependencies(install):
 
     def run(self):
 
-        native_dependency_link = nativesetup.get_sqltoolsservice_download_url()
+        sqltoolsservice_url = sqltoolsservicesetup.get_download_url()
 
         # Only install if sql tools service is supported.
         # TODO: Throw exception if we can't install
-        if (native_dependency_link):
+        if (sqltoolsservice_url):
             # We only install if sql tools service is supported on this platform. 
             # Install sql tools service only if the install was successful; this prevents a dangling sqltoolsservice folder
             # when mssql-scripter was not installed succesfully.
             install.run(self)
-            nativesetup.install_sql_tools_service(native_dependency_link)
+            sqltoolsservicesetup.install(sqltoolsservice_url)
 
 
 CLASSIFIERS = [

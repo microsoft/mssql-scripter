@@ -72,7 +72,7 @@ except AttributeError:
 
 TOOLS_SERVICE_TARGET_DIR = os.path.join(site_packages_dir, 'mssql', 'sqltoolservice')
 
-def _get_native_runtime_id(
+def _get_runtime_id(
         system=_platform.system(),
         architecture=_platform.architecture()[0],
         version=_platform.version()):
@@ -96,14 +96,14 @@ def _get_native_runtime_id(
 
     return run_time_id
 
-def get_sqltoolsservice_download_url(run_time_id=_get_native_runtime_id()):
+def get_download_url(run_time_id=_get_runtime_id()):
     """
         Retrieves the download link on a supported run time id.
     """
     if (run_time_id and run_time_id in PLATFORM_FILE_NAMES):
         return PLATFORM_FILE_NAMES[run_time_id]
 
-def install_sql_tools_service(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
+def install(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
     """
         Installs native sql tools service to either site-packages/mssql/sqltoolsservice or custom directory.
     """

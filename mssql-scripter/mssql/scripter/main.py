@@ -57,8 +57,9 @@ def main(args):
             scripter.handle_response(response, parameters.DisplayProgress)
 
     # Once the response is complete
-    with io.open(parameters.FilePath, 'r', encoding='utf-16') as script_file:
-        sys.stdout.write(script_file.read())
+    with io.open(parameters.FilePath, encoding='utf-16') as script_file:
+        for line in script_file.readlines():
+            sys.stdout.write(line)
 
     # May need to add a timer here
     sql_tools_client.shutdown()
