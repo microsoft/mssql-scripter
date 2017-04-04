@@ -21,14 +21,16 @@ class Install_Native_Dependencies(install):
 
     def run(self):
 
-        runtime_id = nativesetup.get_native_runtime_id()
-        native_dependecy_link = nativesetup.get_native_dependency_path(
-            runtime_id)
+        native_dependency_link = nativesetup.get_sqltoolsservice_download_url()
 
         # Only install if sql tools service is supported.
-        if (native_dependecy_link):
+        # TODO: Throw exception if we can't install
+        if (native_dependency_link):
+            # We only install if sql tools service is supported on this platform. 
+            # Install sql tools service only if the install was successful; this prevents a dangling sqltoolsservice folder
+            # when mssql-scripter was not installed succesfully.
             install.run(self)
-            nativesetup.install_native_sql_tools_service(native_dependecy_link)
+            nativesetup.install_sql_tools_service(native_dependency_link)
 
 
 CLASSIFIERS = [

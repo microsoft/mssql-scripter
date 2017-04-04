@@ -72,7 +72,7 @@ except AttributeError:
 
 TOOLS_SERVICE_TARGET_DIR = os.path.join(site_packages_dir, 'mssql', 'sqltoolservice')
 
-def get_native_runtime_id(
+def _get_native_runtime_id(
         system=_platform.system(),
         architecture=_platform.architecture()[0],
         version=_platform.version()):
@@ -96,14 +96,14 @@ def get_native_runtime_id(
 
     return run_time_id
 
-def get_native_dependency_path(run_time_id):
+def get_sqltoolsservice_download_url(run_time_id=_get_native_runtime_id()):
     """
         Retrieves the download link on a supported run time id.
     """
     if (run_time_id and run_time_id in PLATFORM_FILE_NAMES):
         return PLATFORM_FILE_NAMES[run_time_id]
 
-def install_native_sql_tools_service(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
+def install_sql_tools_service(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
     """
         Installs native sql tools service to either site-packages/mssql/sqltoolsservice or custom directory.
     """
@@ -127,7 +127,9 @@ def install_native_sql_tools_service(download_file_path, target_directory=TOOLS_
 
     compressed_file.extractall(target_directory)
 
-def get_linux_distro_from_file(non_default_file=None):
+
+
+def _get_linux_distro_from_file(non_default_file=None):
     """
         Find linux distro based on
         https://www.freedesktop.org/software/systemd/man/os-release.html.
@@ -145,7 +147,7 @@ def get_linux_distro_from_file(non_default_file=None):
         content = os_release_file.read()
         return get_linux_distro_runtime_id(content)
 
-def get_linux_distro_runtime_id(content):
+def _get_linux_distro_runtime_id(content):
     """
         Will parse content for linux distro run time id.
      """
@@ -167,19 +169,19 @@ def get_linux_distro_runtime_id(content):
         if (name and version and id_like):
             break
     # First try the distribution name
-    run_time_id = get_runtime_id_helper(name, version)
+    run_time_id = _get_runtime_id_helper(name, version)
 
     # If we don't understand it, try the 'ID_LIKE' field
     if (run_time_id is None and id_like):
         for name in id_like:
-            run_time_id = get_runtime_id_helper(name, version)
+            run_time_id = _get_runtime_id_helper(name, version)
             if (run_time_id):
                 break
 
     return run_time_id
 
 
-def get_runtime_id_helper(name, version):
+def _get_runtime_id_helper(name, version):
     """
         Checks if linux distro name and version match to a supported package.
     """

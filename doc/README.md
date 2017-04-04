@@ -31,3 +31,4 @@ Setting up your development environment
   ```
 
   Additionally, you can run tests for all CLI tools and common modules using the `run_all_tests.bat` or `sh run_all_tests` script.
+
