@@ -7,7 +7,6 @@ import os
 import platform
 import site
 import sys
-import tempfile
 
 
 # Check repo if in dev mode.
@@ -87,7 +86,7 @@ def initialize_parser():
     parser.add_argument(
         '--FilePath',
         help='target file to store the script of the database',
-        default=tempfile.NamedTemporaryFile(prefix='mssqlscripter_', delete=False).name)
+        default=None)
 
     # General boolean Scripting Options
     parser.add_argument('--ANSIPadding', help='', default=False)
