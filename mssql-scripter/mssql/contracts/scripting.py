@@ -32,7 +32,8 @@ class Scripting_Request(Request):
         """
             Submits scripting request via json rpc client with formatted parameters and id.
         """
-        logger.info('Submitting scripting request id: {0}'.format(self.id))
+        logger.info('Submitting scripting request id: {} with targetfile: {}'.format(self.id, self.params.file_path))
+        
         self.json_rpc_client.submit_request(
             self.METHOD_NAME, self.params.format(), self.id)
 

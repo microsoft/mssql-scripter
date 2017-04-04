@@ -8,7 +8,7 @@ import logging
 from queue import Queue
 import threading
 
-logger = logging.getLogger('common.json_rpc_client')
+logger = logging.getLogger('mssql-scripter.common.json_rpc_client')
 
 
 class Json_Rpc_Client(object):
