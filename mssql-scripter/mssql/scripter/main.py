@@ -33,7 +33,7 @@ def main(args):
 
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
-    if (not sql_tools_service_path):
+    if (not os.path.exists(sql_tools_service_path)):
         sys.stdout.write('{} does not exist. mssql-scripter may be corrupted, please reinstall.'.format(sql_tools_service_path))
         sys.exit()
 
