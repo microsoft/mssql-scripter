@@ -18,7 +18,10 @@ TOOLS_SERVICE_DIR = os.path.abspath(
         'sqltoolsservice'))
 if (not os.path.exists(TOOLS_SERVICE_DIR)):
     # Production mode.
-    TOOLS_SERVICE_DIR = site.getsitepackages()[0]
+    for path in site.getsitepackages():
+        if (path.endswith('site-packages')):
+            TOOLS_SERVICE_DIR = path
+            break
 
 
 def get_sql_tools_service_path():
