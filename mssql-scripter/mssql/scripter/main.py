@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 
+
 import scripter_logging
 import mssql.scripter as scripter
 from mssql.sql_tools_client import Sql_Tools_Client
@@ -21,7 +22,7 @@ def main(args):
     """
     parser = scripter.initialize_parser()
     parameters = parser.parse_args(args)
-    
+
     temp_file_path = None
     if (not parameters.FilePath):
         # Generate and track the temp file.
@@ -32,6 +33,9 @@ def main(args):
 
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
+    if (not sql_tools_service_path):
+        sys.stdout.write('{} does not exist. mssql-scripter may be corrupted, please reinstall.'.format(sql_tools_service_path))
+        sys.exit()
 
     # Start the tools Service
     tools_service_process = subprocess.Popen(

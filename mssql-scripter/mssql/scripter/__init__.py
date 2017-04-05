@@ -2,6 +2,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
+
 import argparse
 import os
 import platform
@@ -20,7 +21,7 @@ if (not os.path.exists(TOOLS_SERVICE_DIR)):
     # Production mode.
     for path in site.getsitepackages():
         if (path.endswith('site-packages')):
-            TOOLS_SERVICE_DIR = path
+            TOOLS_SERVICE_DIR = os.path.join(path, 'mssql', 'sqltoolsservice')
             break
 
 
@@ -28,10 +29,12 @@ def get_sql_tools_service_path():
     """
         Retrieves Sql tools service program path.
     """
-    tools_service_program = 'Microsoft.SqlTools.ServiceLayer{}'.format(
+    sql_tools_service_file_name = 'Microsoft.SqlTools.ServiceLayer{}'.format(
         '.exe' if (platform.system() == 'Windows') else '')
+    
+    sql_tools_service_path = os.path.join(TOOLS_SERVICE_DIR, sql_tools_service_file_name)
 
-    return os.path.join(TOOLS_SERVICE_DIR, tools_service_program)
+    return sql_tools_service_path 
 
 
 def handle_response(response, display=False):
@@ -82,7 +85,6 @@ def handle_response(response, display=False):
 
     if (response_name in response_handlers):
         return response_handlers[response_name](response, display)
-
 
 def initialize_parser():
     """
@@ -252,7 +254,7 @@ def initialize_parser():
         action='store_const',
         const='ScriptCreateDrop',
         default='ScriptCreate')
-
+    #TODO: Update this to be updated behind the scenes base on the target server version.
     parser.add_argument(
         '--ScriptForTheDatabaseEngineType',
         choices=[
@@ -267,7 +269,7 @@ def initialize_parser():
             'ScriptStatsNone',
             'ScriptStatsDll'],
         default='ScriptStatsNone')
-    # TODO: Server version and editio need to be revisited.
+    # TODO: Server version and edition need to be revisited.
     parser.add_argument(
         '--target-server-version',
         dest='ScriptForServerVersion',
@@ -278,13 +280,16 @@ def initialize_parser():
             'SQL Server 2012',
             'SQL Server 2014',
             'SQL Server 2016',
-            'SQL Server vNext CTP 1.0'],
+            'SQL Server vNext CTP',
+            'Azure SQLDB V12'],
         default='SQL Server 2016')
 
     parser.add_argument(
         '--target-server-edition',
         dest='ScriptForTheDatabaseEngineEdition',
         choices=[
+            'Microsoft Azure Data Warehouse Edition'
+            'Microsoft Azure SQL Database Edition',
             'Microsoft SQL Server Standard Edition',
             'Microsoft SQL Server Personal Edition'
             'Microsoft SQL Server Express Edition',
@@ -317,7 +322,12 @@ def initialize_parser():
         action='store_true',
         help='',
         default=False)
-    #parser.add_argument('--ScriptFullTextIndexes', default=False)
+    parser.add_argument(
+        '--full-text-indexes', 
+        dest='ScriptFullTextIndexes', 
+        action='store_true', 
+        help='', 
+        default=False)
     parser.add_argument(
         '--indexes',
         dest='ScriptIndexes',
@@ -345,7 +355,8 @@ def initialize_parser():
 
     # Configuration Options
     parser.add_argument(
-        '--DisplayProgress',
+        '--display-progress',
+        dest='DisplayProgress',
         action='store_true',
         help='',
         default=False)
@@ -353,3 +364,4 @@ def initialize_parser():
     # parser.add_argument('-GenerateLog', default=False)
 
     return parser
+
