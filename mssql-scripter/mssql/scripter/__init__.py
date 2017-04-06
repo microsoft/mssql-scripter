@@ -143,7 +143,7 @@ def initialize_parser():
         help='',
         default=False)
     parser.add_argument(
-        '--include-dependency',
+        '--include-dependencies',
         dest='GenerateScriptForDependentObjects',
         action='store_true',
         help='',
@@ -180,7 +180,7 @@ def initialize_parser():
         default=False)
     parser.add_argument(
         '--collation',
-        dest='SciptionCollations',
+        dest='ScriptCollations',
         action='store_true',
         help='',
         default=False)
@@ -274,13 +274,13 @@ def initialize_parser():
         choices=[
             '2005',
             '2008',
-            '2008 R2',
+            '2008R2',
             '2012',
             '2014',
             '2016',
-            'vNext CTP',
-            'Azure DB',
-            'Azure DW'],
+            'vNext',
+            'AzureDB',
+            'AzureDW'],
         default='2016')
 
     parser.add_argument(
@@ -294,7 +294,8 @@ def initialize_parser():
             'Stretch'],
         default='Enterprise')
     parser.add_argument(
-        '--ScriptForTheDatabaseEngineType',
+        '--database-engine-type',
+        dest='ScriptForTheDatabaseEngineType',
         help=argparse.SUPPRESS,
         # This parameter is determined based on engine edition and version in
         # the background. User cannot select it.
@@ -376,8 +377,8 @@ def map_server_options(parameters):
         Maps short form to long form name and maps Azure versions to their appropriate editions.
     """
     azure_server_edition_map = {
-        'Azure DB': 'Microsoft Azure SQL Database Edition',
-        'Azure DW': 'Microsoft Azure Data Warehouse Edition',
+        'AzureDB': 'Microsoft Azure SQL Database Edition',
+        'AzureDW': 'Microsoft Azure Data Warehouse Edition',
     }
 
     on_prem_server_edition_map = {
@@ -391,11 +392,11 @@ def map_server_options(parameters):
     on_prem_server_version_map = {
         '2005': 'SQL Server 2005',
         '2008': 'SQL Server 2008',
-        '2008-R2': 'SQL Server 2008 R2',
+        '2008R2': 'SQL Server 2008 R2',
         '2012': 'SQL Server 2012',
         '2014': 'SQL Server 2014',
         '2016': 'SQL Server 2016',
-        'vNext-CTP': 'SQL Server vNext CTP',
+        'vNext': 'SQL Server vNext CTP',
     }
 
     target_server_version = parameters.ScriptForServerVersion
