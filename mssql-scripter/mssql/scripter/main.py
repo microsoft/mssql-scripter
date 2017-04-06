@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 
+
 import scripter_logging
 import mssql.scripter as scripter
 from mssql.sql_tools_client import Sql_Tools_Client
@@ -19,17 +20,19 @@ def main(args):
         Main entry point to mssql-scripter.
 
     """
-
     parser = scripter.initialize_parser()
     parameters = parser.parse_args(args)
+
+    scripter.map_server_options(parameters)
 
     temp_file_path = None
     if (not parameters.FilePath):
         # Generate and track the temp file.
-        temp_file_path = tempfile.NamedTemporaryFile(prefix='mssqlscripter_', delete=False).name
+        temp_file_path = tempfile.NamedTemporaryFile(
+            prefix='mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
-    sql_tools_service_path = scripter.get_native_tools_service_path()
+    sql_tools_service_path = scripter.get_sql_tools_service_path()
 
     # Start the tools Service
     tools_service_process = subprocess.Popen(
@@ -63,15 +66,14 @@ def main(args):
 
         if (response):
             scripter.handle_response(response, parameters.DisplayProgress)
-    
+
     with io.open(parameters.FilePath, encoding='utf-16') as script_file:
         for line in script_file.readlines():
             sys.stdout.write(line)
-    
+
     # Remove the temp file if we generated one.
     if (temp_file_path):
         os.remove(temp_file_path)
-
 
     # May need to add a timer here
     sql_tools_client.shutdown()

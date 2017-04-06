@@ -15,5 +15,8 @@ try:
 
     # TODO: Log telemetry based on exit code
     sys.exit(exit_code)
-except KeyboardInterrupt:
+except EnvironmentError as error:
+    sys.stdout.write(str(e))
     sys.exit(1)
+except KeyboardInterrupt:
+    sys.exit(2)
