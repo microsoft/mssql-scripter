@@ -129,7 +129,9 @@ class Scripting_Options(object):
             'Microsoft SQL Server Personal Edition'
             'Microsoft SQL Server Express Edition',
             'Microsoft SQL Server Enterprise Edition',
-            'Microsoft SQL Server Stretch Database Edition']}
+            'Microsoft SQL Server Stretch Database Edition',
+            'Microsoft Azure SQL Database Edition',
+            'Microsoft Azure Data Warehouse Edition',]}
 
     def __init__(self, parameters=None):
         """

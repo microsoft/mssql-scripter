@@ -31,10 +31,15 @@ def get_sql_tools_service_path():
     """
     sql_tools_service_file_name = 'Microsoft.SqlTools.ServiceLayer{}'.format(
         '.exe' if (platform.system() == 'Windows') else '')
-    
-    sql_tools_service_path = os.path.join(TOOLS_SERVICE_DIR, sql_tools_service_file_name)
 
-    return sql_tools_service_path 
+    sql_tools_service_path = os.path.join(
+        TOOLS_SERVICE_DIR, sql_tools_service_file_name)
+
+    if (not os.path.exists(sql_tools_service_path)):
+        raise EnvironmentError(
+            '{} does not exist. mssql-scripter may be corrupted, please reinstall.'.format(sql_tools_service_path))
+
+    return sql_tools_service_path
 
 
 def handle_response(response, display=False):
@@ -85,6 +90,7 @@ def handle_response(response, display=False):
 
     if (response_name in response_handlers):
         return response_handlers[response_name](response, display)
+
 
 def initialize_parser():
     """
@@ -254,49 +260,48 @@ def initialize_parser():
         action='store_const',
         const='ScriptCreateDrop',
         default='ScriptCreate')
-    #TODO: Update this to be updated behind the scenes base on the target server version.
-    parser.add_argument(
-        '--ScriptForTheDatabaseEngineType',
-        choices=[
-            'SingleInstance',
-            'SqlAzure'],
-        default='SingleInstance')
 
     parser.add_argument(
         '--statistics',
-        choices=[
-            'ScriptStatsAll',
-            'ScriptStatsNone',
-            'ScriptStatsDll'],
+        dest='ScriptStatistics',
+        action='store_const',
+        const='ScriptStatsAll',
         default='ScriptStatsNone')
-    # TODO: Server version and edition need to be revisited.
+
     parser.add_argument(
         '--target-server-version',
         dest='ScriptForServerVersion',
         choices=[
-            'SQL Server 2005',
-            'SQL Server 2008',
-            'SQL Server 2008 R2',
-            'SQL Server 2012',
-            'SQL Server 2014',
-            'SQL Server 2016',
-            'SQL Server vNext CTP',
-            'Azure SQLDB V12'],
-        default='SQL Server 2016')
+            '2005',
+            '2008',
+            '2008 R2',
+            '2012',
+            '2014',
+            '2016',
+            'vNext CTP',
+            'Azure DB',
+            'Azure DW'],
+        default='2016')
 
     parser.add_argument(
         '--target-server-edition',
         dest='ScriptForTheDatabaseEngineEdition',
         choices=[
-            'Microsoft Azure Data Warehouse Edition'
-            'Microsoft Azure SQL Database Edition',
-            'Microsoft SQL Server Standard Edition',
-            'Microsoft SQL Server Personal Edition'
-            'Microsoft SQL Server Express Edition',
-            'Microsoft SQL Server Enterprise Edition',
-            'Microsoft SQL Server Stretch Database Edition'],
-        default='Microsoft SQL Server Standard Edition')
-
+            'Standard',
+            'Personal'
+            'Express',
+            'Enterprise',
+            'Stretch'],
+        default='Enterprise')
+    parser.add_argument(
+        '--ScriptForTheDatabaseEngineType',
+        help=argparse.SUPPRESS,
+        # This parameter is determined based on engine edition and version in
+        # the background. User cannot select it.
+        action='store_const',
+        const='SingleInstance',
+        default='SingleInstance'
+    )
     # Table/View Options
     parser.add_argument(
         '--change-tracking',
@@ -323,10 +328,10 @@ def initialize_parser():
         help='',
         default=False)
     parser.add_argument(
-        '--full-text-indexes', 
-        dest='ScriptFullTextIndexes', 
-        action='store_true', 
-        help='', 
+        '--full-text-indexes',
+        dest='ScriptFullTextIndexes',
+        action='store_true',
+        help='',
         default=False)
     parser.add_argument(
         '--indexes',
@@ -365,3 +370,48 @@ def initialize_parser():
 
     return parser
 
+
+def map_server_options(parameters):
+    """
+        Maps short form to long form name and maps Azure versions to their appropriate editions.
+    """
+    azure_server_edition_map = {
+        'Azure DB': 'Microsoft Azure SQL Database Edition',
+        'Azure DW': 'Microsoft Azure Data Warehouse Edition',
+    }
+
+    on_prem_server_edition_map = {
+        'Standard': 'Microsoft SQL Server Standard Edition',
+        'Personal': 'Microsoft SQL Server Personal Edition',
+        'Express': 'Microsoft SQL Server Express Edition',
+        'Enterprise': 'Microsoft SQL Server Enterprise Edition',
+        'Stretch': 'Microsoft SQL Server Stretch Database Edition',
+    }
+
+    on_prem_server_version_map = {
+        '2005': 'SQL Server 2005',
+        '2008': 'SQL Server 2008',
+        '2008-R2': 'SQL Server 2008 R2',
+        '2012': 'SQL Server 2012',
+        '2014': 'SQL Server 2014',
+        '2016': 'SQL Server 2016',
+        'vNext-CTP': 'SQL Server vNext CTP',
+    }
+
+    target_server_version = parameters.ScriptForServerVersion
+    target_server_edition = parameters.ScriptForTheDatabaseEngineEdition
+    # When targetting Azure, only the edition matters.
+    if ('Azure' in target_server_version):
+        # SMO ignores this value when it is targetting Azure.
+        parameters.ScriptForServerVersion = 'SQL Server 2016'
+        parameters.ScriptForTheDatabaseEngineEdition = azure_server_edition_map[
+            target_server_version]
+        parameters.ScriptForTheDatabaseEngineType = 'SqlAzure'
+
+    else:
+        parameters.ScriptForServerVersion = on_prem_server_version_map[target_server_version]
+        parameters.ScriptForTheDatabaseEngineEdition = on_prem_server_edition_map[
+            target_server_edition]
+        parameters.ScriptForTheDatabaseEngineType = 'SingleInstance'
+
+    return parameters

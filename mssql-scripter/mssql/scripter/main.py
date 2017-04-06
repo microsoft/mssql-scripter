@@ -23,6 +23,8 @@ def main(args):
     parser = scripter.initialize_parser()
     parameters = parser.parse_args(args)
 
+    scripter.map_server_options(parameters)
+
     temp_file_path = None
     if (not parameters.FilePath):
         # Generate and track the temp file.
@@ -30,12 +32,7 @@ def main(args):
             prefix='mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
-
-
     sql_tools_service_path = scripter.get_sql_tools_service_path()
-    if (not os.path.exists(sql_tools_service_path)):
-        sys.stdout.write('{} does not exist. mssql-scripter may be corrupted, please reinstall.'.format(sql_tools_service_path))
-        sys.exit()
 
     # Start the tools Service
     tools_service_process = subprocess.Popen(
@@ -77,7 +74,6 @@ def main(args):
     # Remove the temp file if we generated one.
     if (temp_file_path):
         os.remove(temp_file_path)
-
 
     # May need to add a timer here
     sql_tools_client.shutdown()
