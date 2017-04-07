@@ -70,7 +70,7 @@ except AttributeError:
     # TODO: Add support for production use in a virtual env.
     pass
 
-TOOLS_SERVICE_TARGET_DIR = os.path.join(site_packages_dir, 'mssql', 'sqltoolservice')
+TOOLS_SERVICE_TARGET_DIR = os.path.join(site_packages_dir, 'mssql', 'sqltoolsservice')
 
 def _get_runtime_id(
         system=_platform.system(),
