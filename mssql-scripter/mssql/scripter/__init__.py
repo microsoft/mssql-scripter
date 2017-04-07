@@ -9,6 +9,7 @@ import platform
 import site
 import sys
 
+import mssql.contracts.scripting as scripting
 
 # Check repo if in dev mode.
 TOOLS_SERVICE_DIR = os.path.abspath(
@@ -101,8 +102,10 @@ def initialize_parser():
         description='mssql-scripter tool used for scripting out databases')
 
     parser.add_argument(
-        'ConnectionString',
-        help='Connection string of database to script')
+        '--connection-string',
+        dest='ConnectionString',
+        help='Connection string of database to script',
+        required=True)
 
     parser.add_argument(
         '-f', '--file',
@@ -110,6 +113,20 @@ def initialize_parser():
         metavar='',
         help='',
         default=None)
+
+    parser.add_argument(
+        '--include-objects',
+        dest='IncludeObjects',
+        nargs='*',
+        type=str
+    )
+
+    parser.add_argument(
+        '--exclude-objects',
+        dest='ExcludeObjects',
+        nargs='*',
+        type=str
+    )
 
     # General boolean Scripting Options
     parser.add_argument(
@@ -371,6 +388,35 @@ def initialize_parser():
 
     return parser
 
+def map_scripting_criteria(parameters):
+    include = scripting.ScriptingObjects()
+    exclude = scripting.ScriptingObjects()
+
+    if parameters.IncludeObjects:
+        for item in parameters.IncludeObjects:
+            index = item.find('.')
+            if (index > 0):
+                schema = item[0:index]
+                name = item[index+1:]
+            else:
+                schema=None
+                name = item
+            include.add_scripting_object(schema=schema, name=name)
+            
+    parameters.IncludeObjects = include
+        
+    if parameters.ExcludeObjects:
+        for item in parameters.ExcludeObjects:
+            index = item.find('.')
+            if (index > 0):
+                schema = item[0:index]
+                name = item[index+1:]
+            else:
+                schema=None
+                name = item
+            exclude.add_scripting_object(schema=schema, name=name)
+
+    parameters.ExcludeObjects = exclude
 
 def map_server_options(parameters):
     """

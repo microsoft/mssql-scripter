@@ -85,6 +85,10 @@ class Scripting_Params(object):
         #self.scripting_objects = parameters['scriptingObjects']
         self.scripting_options = Scripting_Options(parameters)
 
+        # List of scripting objects.
+        self.include_objects = parameters['IncludeObjects']
+        self.exclude_objects = parameters['ExcludeObjects']
+
     def format(self):
         """
             Returns a dictionary of script database parameters nested with it's sql tools service equivalent class name.
@@ -93,7 +97,26 @@ class Scripting_Params(object):
                 'ConnectionString': self.connection_string,
                 # TODO: Renable when support is added
                 #'DatabaseObjects' : self.database_objects,
+                'IncludeObjectCriteria' : self.include_objects.format(),
+                'ExcludeObjectCriteria' : self.exclude_objects.format(),
                 'ScriptOptions': self.scripting_options.get_options()}
+
+class ScriptingObjects(object):
+
+    def __init__(self):
+        self.list_of_objects = []
+
+    def add_scripting_object(self, script_type=None, schema=None, name=None):
+        object_dict = {
+            'Type' : script_type,
+            'Schema' : schema,
+            'Name' : name
+        }
+
+        self.list_of_objects.append(object_dict)
+
+    def format(self):
+        return self.list_of_objects
 
 
 class Scripting_Options(object):

@@ -23,6 +23,7 @@ def main(args):
     parser = scripter.initialize_parser()
     parameters = parser.parse_args(args)
 
+    scripter.map_scripting_criteria(parameters)
     scripter.map_server_options(parameters)
 
     temp_file_path = None
