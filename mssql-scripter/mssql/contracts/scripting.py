@@ -86,8 +86,8 @@ class Scripting_Params(object):
         self.scripting_options = Scripting_Options(parameters)
 
         # List of scripting objects.
-        self.include_objects = parameters['IncludeObjects']
-        self.exclude_objects = parameters['ExcludeObjects']
+        self.include_objects = parameters['IncludeObjects'] if 'IncludeObjects' in parameters else None
+        self.exclude_objects = parameters['ExcludeObjects'] if 'ExcludeObjects' in parameters else None
 
     def format(self):
         """
@@ -97,8 +97,8 @@ class Scripting_Params(object):
                 'ConnectionString': self.connection_string,
                 # TODO: Renable when support is added
                 #'DatabaseObjects' : self.database_objects,
-                'IncludeObjectCriteria' : self.include_objects.format(),
-                'ExcludeObjectCriteria' : self.exclude_objects.format(),
+                'IncludeObjectCriteria' : self.include_objects.format() if self.include_objects else None,
+                'ExcludeObjectCriteria' : self.exclude_objects.format() if self.exclude_objects else None,
                 'ScriptOptions': self.scripting_options.get_options()}
 
 class ScriptingObjects(object):
