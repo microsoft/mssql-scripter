@@ -25,7 +25,7 @@ class JsonRpcWriter(object):
 
     def __init__(self, stream, encoding=None):
         self.stream = stream
-        self.encoding = encoding or 'UTF-8'
+        self.encoding = encoding or u'UTF-8'
 
     def send_request(self, method, params, id=None):
         """
@@ -67,14 +67,14 @@ class JsonRpcReader(object):
     """
     Read JSON RPC Response message from a stream.
     """
-    # \r\n
+    # \r\n.
     CR = 13
     LF = 10
     BUFFER_RESIZE_TRIGGER = 0.25
     DEFAULT_BUFFER_SIZE = 8192
 
     def __init__(self, stream, encoding=None):
-        self.encoding = encoding or 'UTF-8'
+        self.encoding = encoding or u'UTF-8'
         self.stream = stream
         self.buffer = bytearray(self.DEFAULT_BUFFER_SIZE)
         # Pointer to end of buffer content.

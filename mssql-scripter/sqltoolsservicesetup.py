@@ -161,7 +161,7 @@ def _get_linux_distro_runtime_id(content):
 
     # Try to find name, version and id_like best effort.
     for line in content.splitlines():
-        key, value = line.rstrip().split('=')
+        key, value = line.rstrip().split(u'=')
         value = value.strip('"')
         if key == u'ID':
             name = value
