@@ -9,10 +9,9 @@ import subprocess
 import sys
 import tempfile
 
-
-import scripter_logging
+import mssql.scripter.scripterlogging
 import mssql.scripter as scripter
-from mssql.sql_tools_client import Sql_Tools_Client
+from mssql.sqltoolsclient import SqlToolsClient
 
 
 def main(args):
@@ -26,10 +25,10 @@ def main(args):
     scripter.map_server_options(parameters)
 
     temp_file_path = None
-    if (not parameters.FilePath):
+    if not parameters.FilePath:
         # Generate and track the temp file.
         temp_file_path = tempfile.NamedTemporaryFile(
-            prefix='mssqlscripter_', delete=False).name
+            prefix=u'mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
@@ -38,7 +37,7 @@ def main(args):
     tools_service_process = subprocess.Popen(
         [
             sql_tools_service_path,
-            "--enable-logging"],
+            u'--enable-logging'],
         bufsize=0,
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE)
@@ -49,22 +48,22 @@ def main(args):
     # on readinto().
     std_out_wrapped = io.open(
         tools_service_process.stdout.fileno(),
-        'rb',
+        u'rb',
         buffering=0,
         closefd=False)
 
-    sql_tools_client = Sql_Tools_Client(
+    sql_tools_client = SqlToolsClient(
         tools_service_process.stdin,
         std_out_wrapped)
 
     scripting_request = sql_tools_client.create_request(
-        'scripting_request', vars(parameters))
+        u'scripting_request', vars(parameters))
     scripting_request.execute()
 
-    while(not scripting_request.completed()):
+    while not scripting_request.completed():
         response = scripting_request.get_response()
 
-        if (response):
+        if response:
             scripter.handle_response(response, parameters.DisplayProgress)
 
     with io.open(parameters.FilePath, encoding='utf-16') as script_file:
@@ -72,7 +71,7 @@ def main(args):
             sys.stdout.write(line)
 
     # Remove the temp file if we generated one.
-    if (temp_file_path):
+    if temp_file_path:
         os.remove(temp_file_path)
 
     # May need to add a timer here
@@ -80,5 +79,5 @@ def main(args):
     tools_service_process.kill()
 
 
-if __name__ == '__main__':
+if __name__ == u'__main__':
     main(sys.argv[1:])
