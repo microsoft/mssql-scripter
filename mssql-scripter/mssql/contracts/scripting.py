@@ -46,27 +46,43 @@ class Scripting_Request(Request):
 
             Finish state is either via a complete or error event.
         """
-        # Check if there are any immediate response to the request
-        response = self.json_rpc_client.get_response(self.id)
-        decoded_response = None
+        # Check if there are any immediate response to the request.
+        try:
+            response = self.json_rpc_client.get_response(self.id)
+            decoded_response = None
 
-        if (response is not None):
-            decoded_response = self.decoder.decode_response(response)
-            logger.debug(
-                'Scripting request received response: {0}'.format(decoded_response))
-        # No response, check for events
-        event = self.json_rpc_client.get_response()
-        if (event is not None):
-            decoded_response = self.decoder.decode_response(event)
-            logger.debug(
-                'Scripting request received response: {0}'.format(decoded_response))
-            # Request is completed
-            if (isinstance(decoded_response, ScriptCompleteEvent)
-                    or isinstance(decoded_response, ScriptErrorEvent)):
-                self.finished = True
-                self.json_rpc_client.request_finished(self.id)
+            if response:
+                decoded_response = self.decoder.decode_response(response)
+                logger.debug(
+                    u'Scripting request received response: {}'.format(decoded_response))
+            # No response, check for events
+            event = self.json_rpc_client.get_response()
+            if event:
+                decoded_response = self.decoder.decode_response(event)
+                logger.debug(
+                    u'Scripting request received response: {}'.format(decoded_response))
+                # Request is completed
+                if (isinstance(decoded_response, ScriptCompleteEvent)
+                        or isinstance(decoded_response, ScriptErrorEvent)):
+                    self.finished = True
+                    self.json_rpc_client.request_finished(self.id)
 
-        return decoded_response
+            return decoded_response
+
+        except Exception as error:
+            # Log exception and return a scripting error event.
+            logger.debug(
+                u'Scripting request received a exception:{}'.format(error))
+            self.finished = True
+            self.json_rpc_client.request_finished(self.id)
+
+            exception = {
+                u'operationId': self.id,
+                u'message': u'Scripting request encountered a exception',
+                u'diagnosticMessage': error.args,
+            }
+
+            return ScriptErrorEvent(exception)
 
     def completed(self):
         """
