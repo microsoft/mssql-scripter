@@ -29,8 +29,8 @@ class Scripting_Request_Tests(unittest.TestCase):
             parameters = {
                 'FilePath': 'Sample_File_Path',
                 'ConnectionString': 'Sample_connection_string',
-                'IncludeObjectCriteria' : None,
-                'ExcludeObjectCriteria' : None,
+                'IncludeObjectCriteria': None,
+                'ExcludeObjectCriteria': None,
                 'DatabaseObjects': None}
             request = Scripting_Request(1, rpc_client, parameters)
 
@@ -43,6 +43,25 @@ class Scripting_Request_Tests(unittest.TestCase):
                 error_count=0)
 
             rpc_client.shutdown()
+
+    def test_scripting_criteria_parameters(self):
+        """
+            Verify scripting objects are properly parsed.
+        """
+        include_objects = ['schema1.table1', 'table2']
+        include_criteria = ScriptingObjects(include_objects)
+        include_formatted = include_criteria.format()
+
+        scripting_object_1 = include_formatted[0]
+        scripting_object_2 = include_formatted[1]
+
+        self.assertEqual(scripting_object_1['Schema'], 'schema1')
+        self.assertEqual(scripting_object_1['Name'], 'table1')
+        self.assertEqual(scripting_object_1['Type'], None)
+
+        self.assertEqual(scripting_object_2['Schema'], None)
+        self.assertEqual(scripting_object_2['Name'], 'table2')
+        self.assertEqual(scripting_object_2['Type'], None)
 
     def test_scripting_response_decoder(self):
         cancel_event = {
@@ -256,8 +275,8 @@ class Scripting_Request_Tests(unittest.TestCase):
         params = {
             'FilePath': 'C:\temp\sample_db.sql',
             'ConnectionString': 'Sample_connection_string',
-            'IncludeObjectCriteria' : [],
-            'ExcludeObjectCriteria' : [],
+            'IncludeObjectCriteria': [],
+            'ExcludeObjectCriteria': [],
             'DatabaseObjects': ['Person.Person']}
         scripting_params = Scripting_Params(params)
 

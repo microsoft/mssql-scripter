@@ -32,8 +32,10 @@ class Scripting_Request(Request):
         """
             Submits scripting request via json rpc client with formatted parameters and id.
         """
-        logger.info('Submitting scripting request id: {} with targetfile: {}'.format(self.id, self.params.file_path))
-        
+        logger.info(
+            'Submitting scripting request id: {} with targetfile: {}'.format(
+                self.id, self.params.file_path))
+
         self.json_rpc_client.submit_request(
             self.METHOD_NAME, self.params.format(), self.id)
 
@@ -82,12 +84,14 @@ class Scripting_Params(object):
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
         # TODO: Renable when this option is supported
-        #self.scripting_objects = parameters['scriptingObjects']
+        #self.database_objects = parameters['DatabaseObjects']
         self.scripting_options = Scripting_Options(parameters)
 
         # List of scripting objects.
-        self.include_objects = parameters['IncludeObjects'] if 'IncludeObjects' in parameters else None
-        self.exclude_objects = parameters['ExcludeObjects'] if 'ExcludeObjects' in parameters else None
+        self.include_objects = ScriptingObjects(
+            parameters['IncludeObjects'] if 'IncludeObjects' in parameters else None)
+        self.exclude_objects = ScriptingObjects(
+            parameters['ExcludeObjects'] if 'ExcludeObjects' in parameters else None)
 
     def format(self):
         """
@@ -97,20 +101,34 @@ class Scripting_Params(object):
                 'ConnectionString': self.connection_string,
                 # TODO: Renable when support is added
                 #'DatabaseObjects' : self.database_objects,
-                'IncludeObjectCriteria' : self.include_objects.format() if self.include_objects else None,
-                'ExcludeObjectCriteria' : self.exclude_objects.format() if self.exclude_objects else None,
+                'IncludeObjectCriteria': self.include_objects.format(),
+                'ExcludeObjectCriteria': self.exclude_objects.format(),
                 'ScriptOptions': self.scripting_options.get_options()}
 
-class ScriptingObjects(object):
 
-    def __init__(self):
+class ScriptingObjects(object):
+    """
+        Represent a database object via it's type, schema, and name.
+    """
+
+    def __init__(self, scripting_objects):
         self.list_of_objects = []
+        if scripting_objects:
+            for item in scripting_objects:
+                index = item.find('.')
+                if index > 0:
+                    schema = item[0:index]
+                    name = item[index + 1:]
+                else:
+                    schema = None
+                    name = item
+                self.add_scripting_object(schema=schema, name=name)
 
     def add_scripting_object(self, script_type=None, schema=None, name=None):
         object_dict = {
-            'Type' : script_type,
-            'Schema' : schema,
-            'Name' : name
+            'Type': script_type,
+            'Schema': schema,
+            'Name': name
         }
 
         self.list_of_objects.append(object_dict)
@@ -154,7 +172,7 @@ class Scripting_Options(object):
             'Microsoft SQL Server Enterprise Edition',
             'Microsoft SQL Server Stretch Database Edition',
             'Microsoft Azure SQL Database Edition',
-            'Microsoft Azure Data Warehouse Edition',]}
+            'Microsoft Azure Data Warehouse Edition', ]}
 
     def __init__(self, parameters=None):
         """
