@@ -83,8 +83,6 @@ class Scripting_Params(object):
     def __init__(self, parameters):
         self.file_path = parameters['FilePath']
         self.connection_string = parameters['ConnectionString']
-        # TODO: Renable when this option is supported
-        #self.database_objects = parameters['DatabaseObjects']
         self.scripting_options = Scripting_Options(parameters)
 
         # List of scripting objects.
@@ -99,8 +97,6 @@ class Scripting_Params(object):
         """
         return {'FilePath': self.file_path,
                 'ConnectionString': self.connection_string,
-                # TODO: Renable when support is added
-                #'DatabaseObjects' : self.database_objects,
                 'IncludeObjectCriteria': self.include_objects.format(),
                 'ExcludeObjectCriteria': self.exclude_objects.format(),
                 'ScriptOptions': self.scripting_options.get_options()}
@@ -125,6 +121,9 @@ class ScriptingObjects(object):
                 self.add_scripting_object(schema=schema, name=name)
 
     def add_scripting_object(self, script_type=None, schema=None, name=None):
+        """
+            Serialize scripting object into a JSON Scripting object.
+        """
         object_dict = {
             'Type': script_type,
             'Schema': schema,
