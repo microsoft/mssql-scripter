@@ -151,9 +151,7 @@ class Json_Rpc_Client(object):
                     self.response_map[0].put(response)
 
             except EOFError as error:
-                # Production would not reach EOF error as it would block.
-                # Exception is expected in testing scenario with Byte or file
-                # stream.
+                # Thread fails once we reach EOF.
                 break
             except ValueError as error:
                 # If we get this error it means the stream was closed
