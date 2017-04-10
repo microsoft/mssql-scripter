@@ -69,7 +69,7 @@ def main(args):
 
     with io.open(parameters.FilePath, encoding='utf-16') as script_file:
         for line in script_file.readlines():
-            sys.stdout.write(line)
+            sys.stdout.write(line.encode('utf-8'))
 
     # Remove the temp file if we generated one.
     if (temp_file_path):
