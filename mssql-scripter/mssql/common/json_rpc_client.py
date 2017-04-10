@@ -114,6 +114,10 @@ class Json_Rpc_Client(object):
                 # Stream is closed, break out of the loop
                 self._record_exception(error, self.REQUEST_THREAD_NAME)
                 break
+            except Exception as error:
+                # Catch generic exceptions.
+                self.record_exception(error, self.REQUEST_THREAD_NAME)
+                break
 
     def _listen_for_response(self):
         """
@@ -147,9 +151,7 @@ class Json_Rpc_Client(object):
                     self.response_map[0].put(response)
 
             except EOFError as error:
-                # Nothing was read from stream, break out of the loop
-                # TODO: Revisit the scenarios where the stream could for a
-                # second not have any content in it.
+                # Thread fails once we reach EOF.
                 break
             except ValueError as error:
                 # If we get this error it means the stream was closed
@@ -160,6 +162,10 @@ class Json_Rpc_Client(object):
             except LookupError as error:
                 # Content-Length header was not found
                 self._record_exception(error, self.RESPONSE_THREAD_NAME)
+                break
+            except Exception as error:
+                # Catch generic exceptions.
+                self.record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
 
     def _record_exception(self, ex, thread_name):

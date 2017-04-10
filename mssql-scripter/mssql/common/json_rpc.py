@@ -160,7 +160,8 @@ class Json_Rpc_Reader(object):
             self.buffer_end_offset += length_read
 
             if (length_read == 0):
-                # Nothing was read from stream
+                # This should happen in testing.
+                # Production would never reach 0 as it would block.
                 logger.debug('JSON RPC Reader reached end of stream')
                 raise EOFError("End of stream reached, no output.")
 
