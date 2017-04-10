@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 
-import scripter_logging
+import mssql.scripter.scripter_logging
 import mssql.scripter as scripter
 from mssql.sql_tools_client import Sql_Tools_Client
 

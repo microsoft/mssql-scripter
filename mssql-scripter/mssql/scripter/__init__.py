@@ -9,6 +9,7 @@ import platform
 import site
 import sys
 
+import mssql.contracts.scripting as scripting
 
 # Check repo if in dev mode.
 TOOLS_SERVICE_DIR = os.path.abspath(
@@ -101,8 +102,10 @@ def initialize_parser():
         description='mssql-scripter tool used for scripting out databases')
 
     parser.add_argument(
-        'ConnectionString',
-        help='Connection string of database to script')
+        '--connection-string',
+        dest='ConnectionString',
+        help='Connection string of database to script',
+        required=True)
 
     parser.add_argument(
         '-f', '--file',
@@ -110,6 +113,20 @@ def initialize_parser():
         metavar='',
         help='',
         default=None)
+
+    parser.add_argument(
+        '--include-objects',
+        dest='IncludeObjects',
+        nargs='*',
+        type=str
+    )
+
+    parser.add_argument(
+        '--exclude-objects',
+        dest='ExcludeObjects',
+        nargs='*',
+        type=str
+    )
 
     # General boolean Scripting Options
     parser.add_argument(
