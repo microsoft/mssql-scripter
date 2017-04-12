@@ -37,7 +37,6 @@ def install_sqltoolsservice():
         sqltoolsservicesetup.install(download_url, tools_service_target_dir)
         print('Sql Tools Service was succesfully installed.')
         return
-    #TODO: Add debug details about the platform
     print('Error: Sql Tools Service is not supported on this platform.')
 
 

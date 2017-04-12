@@ -10,9 +10,11 @@ import sys
 import tempfile
 import time
 
-import mssql.scripter.scripter_logging
+
+import mssql.scripter.scripterlogging
+
 import mssql.scripter as scripter
-from mssql.sql_tools_client import Sql_Tools_Client
+from mssql.sqltoolsclient import SqlToolsClient
 
 
 def main(args):
@@ -26,23 +28,23 @@ def main(args):
     scripter.map_server_options(parameters)
 
     temp_file_path = None
-    if (not parameters.FilePath):
+    if not parameters.FilePath:
         # Generate and track the temp file.
         temp_file_path = tempfile.NamedTemporaryFile(
-            prefix='mssqlscripter_', delete=False).name
+            prefix=u'mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
 
     try:
-        # Start the tools Service
+        # Start the tools Service.
         tools_service_process = subprocess.Popen(
             [
                 sql_tools_service_path,
-                "--enable-logging"],
+                u'--enable-logging'],
             bufsize=0,
             stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE)
+            stdout=subprocess.PIPE,)
 
         # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
         # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
@@ -50,25 +52,25 @@ def main(args):
         # on readinto().
         std_out_wrapped = io.open(
             tools_service_process.stdout.fileno(),
-            'rb',
+            u'rb',
             buffering=0,
             closefd=False)
 
-        sql_tools_client = Sql_Tools_Client(
+        sql_tools_client = SqlToolsClient(
             tools_service_process.stdin,
             std_out_wrapped)
 
         scripting_request = sql_tools_client.create_request(
-            'scripting_request', vars(parameters))
+            u'scripting_request', vars(parameters))
         scripting_request.execute()
 
-        while(not scripting_request.completed()):
+        while not scripting_request.completed():
             response = scripting_request.get_response()
 
-            if (response):
+            if response:
                 scripter.handle_response(response, parameters.DisplayProgress)
 
-        with io.open(parameters.FilePath, encoding='utf-16') as script_file:
+        with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
             for line in script_file.readlines():
                 # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
                 # If it is not none then the user has specified a custom
@@ -76,7 +78,7 @@ def main(args):
                 if not sys.stdout.encoding:
                     # We are piping and the user is using the default encoding,
                     # so encode to utf8.
-                    line = line.encode('utf-8')
+                    line = line.encode(u'utf-8')
                 sys.stdout.write(line)
 
     finally:
@@ -98,5 +100,5 @@ def main(args):
             pass
 
 
-if __name__ == '__main__':
+if __name__ == u'__main__':
     main(sys.argv[1:])

@@ -8,32 +8,32 @@ from future.utils import iteritems
 
 import logging
 
-logger = logging.getLogger('mssql-scripter.contracts.scripting')
+logger = logging.getLogger(u'mssql-scripter.contracts.scripting')
 
 
-class Scripting_Request(Request):
+class ScriptingRequest(Request):
     """
-        Encapsulates a scripting request against sql tools service.
+        SqlTools Service scripting service scripting request.
     """
-    METHOD_NAME = 'scripting/script'
+    METHOD_NAME = u'scripting/script'
 
     def __init__(self, id, json_rpc_client, parameters):
         """
-            Initializes a command with the json rpc client and necessary parameters.
+            Create a scripting request command.
         """
         assert id != 0
         self.id = id
         self.finished = False
         self.json_rpc_client = json_rpc_client
-        self.params = Scripting_Params(parameters)
-        self.decoder = Scripting_Response_Decoder()
+        self.params = ScriptingParams(parameters)
+        self.decoder = ScriptingResponseDecoder()
 
     def execute(self):
         """
-            Submits scripting request via json rpc client with formatted parameters and id.
+            submit scripting request to sql tools service.
         """
         logger.info(
-            'Submitting scripting request id: {} with targetfile: {}'.format(
+            u'Submitting scripting request id: {} with targetfile: {}'.format(
                 self.id, self.params.file_path))
 
         self.json_rpc_client.submit_request(
@@ -53,16 +53,16 @@ class Scripting_Request(Request):
                 logger.debug(
                     u'Scripting request received response: {}'.format(decoded_response))
                 if isinstance(decoded_response, ScriptCompleteEvent
-                        or isinstance(decoded_response, ScriptErrorEvent)):
+                              or isinstance(decoded_response, ScriptErrorEvent)):
                     self.finished = True
                     self.json_rpc_client.request_finished(self.id)
 
             return decoded_response
 
         except Exception as error:
-            # Handle exception by logging and returning a error event.
+            # Log exception and return a scripting error event.
             logger.debug(
-                u'Scripting request received a exception:{}'.format(error))
+                u'Scripting request received a exception:{}'.format(error.args))
             self.finished = True
             self.json_rpc_client.request_finished(self.id)
 
@@ -76,36 +76,36 @@ class Scripting_Request(Request):
 
     def completed(self):
         """
-            Returns current state.
+            Get current request state.
         """
         return self.finished
 
 
-class Scripting_Params(object):
+class ScriptingParams(object):
     """
-        Holds scripting database options. Used by client.
+        Scripting request parameters.
     """
 
     def __init__(self, parameters):
-        self.file_path = parameters['FilePath']
-        self.connection_string = parameters['ConnectionString']
-        self.scripting_options = Scripting_Options(parameters)
+        self.file_path = parameters[u'FilePath']
+        self.connection_string = parameters[u'ConnectionString']
+        self.scripting_options = ScriptingOptions(parameters)
 
         # List of scripting objects.
         self.include_objects = ScriptingObjects(
-            parameters['IncludeObjects'] if 'IncludeObjects' in parameters else None)
+            parameters[u'IncludeObjects'] if u'IncludeObjects' in parameters else None)
         self.exclude_objects = ScriptingObjects(
-            parameters['ExcludeObjects'] if 'ExcludeObjects' in parameters else None)
+            parameters[u'ExcludeObjects'] if u'ExcludeObjects' in parameters else None)
 
     def format(self):
         """
-            Returns a dictionary of script database parameters nested with it's sql tools service equivalent class name.
+            Format paramaters into a dictionary.
         """
-        return {'FilePath': self.file_path,
-                'ConnectionString': self.connection_string,
-                'IncludeObjectCriteria': self.include_objects.format(),
-                'ExcludeObjectCriteria': self.exclude_objects.format(),
-                'ScriptOptions': self.scripting_options.get_options()}
+        return {u'FilePath': self.file_path,
+                u'ConnectionString': self.connection_string,
+                u'IncludeObjectCriteria': self.include_objects.format(),
+                u'ExcludeObjectCriteria': self.exclude_objects.format(),
+                u'ScriptOptions': self.scripting_options.get_options()}
 
 
 class ScriptingObjects(object):
@@ -131,9 +131,9 @@ class ScriptingObjects(object):
             Serialize scripting object into a JSON Scripting object.
         """
         object_dict = {
-            'Type': script_type,
-            'Schema': schema,
-            'Name': name
+            u'Type': script_type,
+            u'Schema': schema,
+            u'Name': name
         }
 
         self.list_of_objects.append(object_dict)
@@ -142,48 +142,48 @@ class ScriptingObjects(object):
         return self.list_of_objects
 
 
-class Scripting_Options(object):
+class ScriptingOptions(object):
     """
-        Holds various scripting options that are available in the script database wizard in SSMS.
+        Advanced scripting options.
     """
     scripting_option_map = {
-        'TypeOfDataToScript': [
-            'SchemaAndData',
-            'DataOnly',
-            'SchemaOnly'],
-        'ScriptDropAndCreate': [
-            'ScriptCreate',
-            'ScriptDrop',
-            'ScriptCreateDrop'],
-        'ScriptForTheDatabaseEngineType': [
-            'SingleInstance',
-            'SqlAzure'],
-        'ScriptStatistics': [
-            'ScriptStatsAll',
-            'ScriptStatsNone',
-            'ScriptStatsDll'],
-        'ScriptForServerVersion': [
-            'SQL Server 2005',
-            'SQL Server 2008',
-            'SQL Server 2008 R2',
-            'SQL Server 2012',
-            'SQL Server 2014',
-            'SQL Server 2016',
-            'SQL Server vNext CTP 1.0'],
-        'ScriptForTheDatabaseEngineEdition': [
-            'Microsoft SQL Server Standard Edition',
-            'Microsoft SQL Server Personal Edition'
-            'Microsoft SQL Server Express Edition',
-            'Microsoft SQL Server Enterprise Edition',
-            'Microsoft SQL Server Stretch Database Edition',
-            'Microsoft Azure SQL Database Edition',
-            'Microsoft Azure Data Warehouse Edition', ]}
+        u'TypeOfDataToScript': [
+            u'SchemaAndData',
+            u'DataOnly',
+            u'SchemaOnly'],
+        u'ScriptDropAndCreate': [
+            u'ScriptCreate',
+            u'ScriptDrop',
+            u'ScriptCreateDrop'],
+        u'ScriptForTheDatabaseEngineType': [
+            u'SingleInstance',
+            u'SqlAzure'],
+        u'ScriptStatistics': [
+            u'ScriptStatsAll',
+            u'ScriptStatsNone',
+            u'ScriptStatsDll'],
+        u'ScriptForServerVersion': [
+            u'SQL Server 2005',
+            u'SQL Server 2008',
+            u'SQL Server 2008 R2',
+            u'SQL Server 2012',
+            u'SQL Server 2014',
+            u'SQL Server 2016',
+            u'SQL Server vNext CTP 1.0'],
+        u'ScriptForTheDatabaseEngineEdition': [
+            u'Microsoft SQL Server Standard Edition',
+            u'Microsoft SQL Server Personal Edition'
+            u'Microsoft SQL Server Express Edition',
+            u'Microsoft SQL Server Enterprise Edition',
+            u'Microsoft SQL Server Stretch Database Edition',
+            u'Microsoft Azure SQL Database Edition',
+            u'Microsoft Azure Data Warehouse Edition', ]}
 
     def __init__(self, parameters=None):
         """
-            Initializes database options with default values. If parameters were passed in, script options will only update valid ones.
+            Create default or non default scripting options based on parameters.
         """
-        # General Default scripting options
+        # General Default scripting options.
         self.ANSIPadding = False
         self.AppendToFile = False
         self.CheckForObjectExistence = False
@@ -203,7 +203,7 @@ class Scripting_Options(object):
         self.ScriptOwner = False
         self.ScriptUseDatabase = False
 
-        # Default Table/View options
+        # Default Table/View options.
         self.ScriptChangeTracking = False
         self.ScriptCheckConstraints = False
         self.ScriptDataCompressionOptions = False
@@ -214,117 +214,115 @@ class Scripting_Options(object):
         self.ScriptTriggers = False
         self.ScriptUniqueKeys = False
 
-        # Scripting options that are limited
-        self.TypeOfDataToScript = 'SchemaOnly'
-        self.ScriptDropAndCreate = 'ScriptCreate'
-        self.ScriptForTheDatabaseEngineType = 'SingleInstance'
-        self.ScriptStatistics = 'ScriptStatsNone'
-        self.ScriptForServerVersion = 'SQL Server vNext CTP 1.0'
-        self.ScriptForTheDatabaseEngineEdition = 'Microsoft SQL Server Standard Edition'
+        # Scripting options that are limited.
+        self.TypeOfDataToScript = u'SchemaOnly'
+        self.ScriptDropAndCreate = u'ScriptCreate'
+        self.ScriptForTheDatabaseEngineType = u'SingleInstance'
+        self.ScriptStatistics = u'ScriptStatsNone'
+        self.ScriptForServerVersion = u'SQL Server vNext CTP 1.0'
+        self.ScriptForTheDatabaseEngineEdition = u'Microsoft SQL Server Standard Edition'
 
-        if (parameters is not None):
+        if parameters:
             self.update_options(parameters)
 
     def update_options(self, parameters):
         """
-            Updates options from passed in parameters only if they are valid.
+            Update default options to passed in options.
         """
         default_options = vars(self)
         for option, value in iteritems(parameters):
-            if (option in default_options):
-                if (option in self.scripting_option_map):
-                    if (value not in self.scripting_option_map[option]):
+            if option in default_options:
+                if option in self.scripting_option_map:
+                    if value not in self.scripting_option_map[option]:
                         raise ValueError(
-                            'Option: {0} has invalid value: {1}'.format(
+                            u'Option: {} has invalid value: {}'.format(
                                 option, value))
-                elif (not isinstance(value, bool)):
+                elif not isinstance(value, bool):
                     raise ValueError(
-                        'Option: {0} has unexpected value type" {1}'.format(
+                        u'Option: {} has unexpected value type" {}'.format(
                             option, value))
-                # set the value if we pass all the checks
+                # set the value if we pass all the checks.
                 default_options[option] = value
 
     def get_options(self):
         """
-            Returns a dictionary of all options
+            Return a dictionary of all options
         """
         return vars(self)
 
 #
-#   Various Scripting Events
+#   Various Scripting Events.
 #
 
 
 class ScriptCancelEvent(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
+        self.operation_id = params[u'operationId']
 
 
 class ScriptCompleteEvent(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
+        self.operation_id = params[u'operationId']
 
 
 class ScriptErrorEvent(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
-        self.message = params['message']
-        self.diagnostic_message = params['diagnosticMessage']
+        self.operation_id = params[u'operationId']
+        self.message = params[u'message']
+        self.diagnostic_message = params[u'diagnosticMessage']
 
 
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
-        # TODO: We can separate out the actual objects or return a list of the
-        # objects to the client
-        self.database_objects = params['databaseObjects']
-        self.count = params['count']
+        self.operation_id = params[u'operationId']
+        self.database_objects = params[u'databaseObjects']
+        self.count = params[u'count']
 
 
 class ScriptProgressNotificationEvent(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
-        self.scripting_object = params['scriptingObject']
-        self.status = params['status']
-        self.count = params['count']
-        self.total_count = params['totalCount']
+        self.operation_id = params[u'operationId']
+        self.scripting_object = params[u'scriptingObject']
+        self.status = params[u'status']
+        self.count = params[u'count']
+        self.total_count = params[u'totalCount']
 
 
 class ScriptResponse(object):
     def __init__(self, params):
-        self.operation_id = params['operationId']
+        self.operation_id = params[u'operationId']
 
 
-class Scripting_Response_Decoder(object):
+class ScriptingResponseDecoder(object):
     """
-        Responsibile for decoding json response into it's appropriate  type.
+        Decode response dictionary into scripting parameter type.
     """
 
     def __init__(self):
-        # response map
+        # response map.
         self.response_dispatcher = {
-            'scripting/scriptCancel': ScriptCancelEvent,
-            'scripting/scriptComplete': ScriptCompleteEvent,
-            'scripting/scriptError': ScriptErrorEvent,
-            'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
-            'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
-            'id': ScriptResponse}
+            u'scripting/scriptCancel': ScriptCancelEvent,
+            u'scripting/scriptComplete': ScriptCompleteEvent,
+            u'scripting/scriptError': ScriptErrorEvent,
+            u'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
+            u'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
+            u'id': ScriptResponse}
 
     def decode_response(self, obj):
         """
-            Based on the method name, we return the appropriate event object.
+            Decode valid response.
         """
-        if ('method' in obj):
-            response_name = obj['method']
-            if (response_name in self.response_dispatcher):
-                # Handle event received
-                return self.response_dispatcher[response_name](obj['params'])
+        if u'method' in obj:
+            response_name = obj[u'method']
+            if response_name in self.response_dispatcher:
+                # Handle event received.
+                return self.response_dispatcher[response_name](obj[u'params'])
 
-        if ('id' in obj and 'result' in obj):
-            # Handle response received
-            return self.response_dispatcher['id'](obj['result'])
+        if u'id' in obj and u'result' in obj:
+            # Handle response received.
+            return self.response_dispatcher[u'id'](obj[u'result'])
 
         logger.debug(
-            'Unable to decode response to a event type: {0}'.format(obj))
-        # Unable to decode, return json string
+            u'Unable to decode response to a event type: {}'.format(obj))
+        # Unable to decode, return json string.
         return obj

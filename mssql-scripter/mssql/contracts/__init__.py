@@ -4,36 +4,30 @@
 # --------------------------------------------------------------------------------------------
 import abc
 
-ABC = abc.ABCMeta('ABC', (object,), {})  # compatibile with Python 2 *and* 3
+ABC = abc.ABCMeta(u'ABC', (object,), {})  # compatibile with Python 2 *and* 3.
 
 
 class Request(ABC):
     """
-        Abstract command class that all service commands need to subclass.
-        Each commands responsibilities:
-             Method name in the sql tools service.
-             Define it's types necessary for requests and responses.
-             Serialization of request parameters.
-             Deserialization of responses.
-
+        Abstract request class.
     """
     @abc.abstractmethod
     def execute(self):
         """
-            Executes the request
+            Executes the request.
         """
         pass
 
     @abc.abstractmethod
     def get_response(self):
         """
-            Retrieves json response and serializes to expected response type
+            Retrieves expected response.
         """
         pass
 
     @abc.abstractmethod
     def completed(self):
         """
-            returns on the state of the command if it has finished.
+            Return state of request.
         """
         pass

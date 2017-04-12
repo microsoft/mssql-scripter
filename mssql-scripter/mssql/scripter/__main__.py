@@ -9,9 +9,9 @@ import os
 import mssql.scripter.main
 
 try:
+
     args = sys.argv[1:]
     exit_code = mssql.scripter.main.main(args)
-
     sys.exit(exit_code)
 except EnvironmentError as error:
     sys.stderr.write(str(error))
