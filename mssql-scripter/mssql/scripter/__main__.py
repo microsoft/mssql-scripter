@@ -19,9 +19,7 @@ except EnvironmentError as error:
     sys.stdout.write(str(error))
     sys.exit(1)
 except KeyboardInterrupt as error:
-    #TODO: Verify this scenario.
     sys.exit(2)
 except Exception as error:
     sys.stdout.write(str(error))
     sys.exit(3)
-    

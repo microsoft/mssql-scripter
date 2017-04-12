@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 import tempfile
-
+import time
 
 import mssql.scripter.scripter_logging
 import mssql.scripter as scripter
@@ -72,7 +72,7 @@ def main(args):
             for line in script_file.readlines():
                 # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
                 # If it is not none then the user has specified a custom
-                # encoding. 
+                # encoding.
                 if not sys.stdout.encoding:
                     # We are piping and the user is using the default encoding,
                     # so encode to utf8.
@@ -80,13 +80,22 @@ def main(args):
                 sys.stdout.write(line)
 
     finally:
-        # Remove the temp file if we generated one.
-        if temp_file_path:
-            os.remove(temp_file_path)
 
-        # May need to add a timer here
         sql_tools_client.shutdown()
         tools_service_process.kill()
+        # allow tools service process to be killed.
+        time.sleep(1)
+        # None value indicates process has not terminated.
+        if not tools_service_process.poll():
+            sys.stdout.write(
+                u'Sql Tools Service process was not shut down properly.')
+        try:
+            # Remove the temp file if we generated one.
+            if temp_file_path:
+                os.remove(temp_file_path)
+        except Exception:
+            # Supress exceptions.
+            pass
 
 
 if __name__ == '__main__':
