@@ -62,10 +62,10 @@ class JsonRpcTest(unittest.TestCase):
         json_rpc_writer.send_request(
             method=u'testMethod/DoThis',
             params={
-                "Key": "Value",
-                "key2": {
-                    "key3": "value3",
-                    "key4": "value4"}},
+                u'Key': u'Value',
+                u'key2': {
+                    u'key3': u'value3',
+                    u'key4': u'value4'}},
             id=1)
 
         test_stream.seek(0)

@@ -10,7 +10,6 @@ import sqltoolsservicesetup
 from setuptools import setup
 from setuptools.command.install import install
 
-# TODO: Decide on versioning.
 VERSION = "0.1.1.dev"
 
 
@@ -24,14 +23,15 @@ class Install_Native_Dependencies(install):
         sqltoolsservice_url = sqltoolsservicesetup.get_download_url()
 
         # Only install if sql tools service is supported.
-        # TODO: Throw exception if we can't install.
         if sqltoolsservice_url:
             # We only install if sql tools service is supported on this platform.
             # Install sql tools service only if the install was successful; this prevents a dangling sqltoolsservice folder
             # when mssql-scripter was not installed succesfully.
             install.run(self)
             sqltoolsservicesetup.install(sqltoolsservice_url)
+            return
 
+        raise EnvironmentError(u'Installation unsuccesful: Sql Tools service is not supported on this platform.')
 
 CLASSIFIERS = [
     u'Development Status :: 2 - Pre-Alpha',
