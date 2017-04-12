@@ -44,8 +44,7 @@ def main(args):
                 u'--enable-logging'],
             bufsize=0,
             stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT)
+            stdout=subprocess.PIPE,)
 
         # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
         # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
