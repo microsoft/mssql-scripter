@@ -34,50 +34,60 @@ def main(args):
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
 
-    # Start the tools Service
-    tools_service_process = subprocess.Popen(
-        [
-            sql_tools_service_path,
-            "--enable-logging"],
-        bufsize=0,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE)
+    try:
+        # Start the tools Service
+        tools_service_process = subprocess.Popen(
+            [
+                sql_tools_service_path,
+                "--enable-logging"],
+            bufsize=0,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE)
 
-    # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
-    # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
-    # Wrap a FileIO around it to use a different implementation that does not attempt to fill the buffer
-    # on readinto().
-    std_out_wrapped = io.open(
-        tools_service_process.stdout.fileno(),
-        'rb',
-        buffering=0,
-        closefd=False)
+        # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
+        # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
+        # Wrap a FileIO around it to use a different implementation that does not attempt to fill the buffer
+        # on readinto().
+        std_out_wrapped = io.open(
+            tools_service_process.stdout.fileno(),
+            'rb',
+            buffering=0,
+            closefd=False)
 
-    sql_tools_client = Sql_Tools_Client(
-        tools_service_process.stdin,
-        std_out_wrapped)
+        sql_tools_client = Sql_Tools_Client(
+            tools_service_process.stdin,
+            std_out_wrapped)
 
-    scripting_request = sql_tools_client.create_request(
-        'scripting_request', vars(parameters))
-    scripting_request.execute()
+        scripting_request = sql_tools_client.create_request(
+            'scripting_request', vars(parameters))
+        scripting_request.execute()
 
-    while(not scripting_request.completed()):
-        response = scripting_request.get_response()
+        while(not scripting_request.completed()):
+            response = scripting_request.get_response()
 
-        if (response):
-            scripter.handle_response(response, parameters.DisplayProgress)
+            if (response):
+                scripter.handle_response(response, parameters.DisplayProgress)
 
-    with io.open(parameters.FilePath, encoding='utf-16') as script_file:
-        for line in script_file.readlines():
-            sys.stdout.write(line.encode('utf-8'))
+        with io.open(parameters.FilePath, encoding='utf-16') as script_file:
+            for line in script_file.readlines():
+                # Default encoding for python 2: ascii and python 3: utf-8,
+                # we explicitly encode to utf-8 in python 2 when piping only
+                # if the user did not specify a specific encoding for stdout.
+                if not sys.stdout.encoding:
+                    line = line.encode('utf-8')
 
-    # Remove the temp file if we generated one.
-    if (temp_file_path):
-        os.remove(temp_file_path)
+                sys.stdout.write(line)
 
-    # May need to add a timer here
-    sql_tools_client.shutdown()
-    tools_service_process.kill()
+        # Remove the temp file if we generated one.
+        if (temp_file_path):
+            os.remove(temp_file_path)
+    except Exception:
+        #TODO: Log to telemetry here or let caller handle it.
+        raise
+    finally:
+        # May need to add a timer here
+        sql_tools_client.shutdown()
+        tools_service_process.kill()
 
 
 if __name__ == '__main__':

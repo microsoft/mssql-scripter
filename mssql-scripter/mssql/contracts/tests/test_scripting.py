@@ -11,7 +11,6 @@ from io import BytesIO
 import unittest
 import os
 
-
 class Scripting_Request_Tests(unittest.TestCase):
     """
         Scripting request tests
@@ -359,8 +358,8 @@ class Scripting_Request_Tests(unittest.TestCase):
                 plan_notification_event += 1
             elif (isinstance(response, ScriptErrorEvent)):
                 error_event += 1
-        # TODO: Renable this check once we give the process time to process request.
-        #self.assertEqual(response_event, response_count)
+        
+        self.assertEqual(response_event, response_count)
         self.assertEqual(plan_notification_event, plan_notification_count)
         self.assertEqual(progress_notification_event, progress_count)
         self.assertEqual(complete_event, complete_count)
