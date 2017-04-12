@@ -83,18 +83,18 @@ def main(args):
 
         sql_tools_client.shutdown()
         tools_service_process.kill()
-        # allow tools service process to be killed.
+        # 1 second time out, allow tools service process to be killed.
         time.sleep(1)
         # None value indicates process has not terminated.
         if not tools_service_process.poll():
-            sys.stdout.write(
+            sys.stderr.write(
                 u'Sql Tools Service process was not shut down properly.')
         try:
             # Remove the temp file if we generated one.
             if temp_file_path:
                 os.remove(temp_file_path)
         except Exception:
-            # Supress exceptions.
+            # Suppress exceptions.
             pass
 
 
