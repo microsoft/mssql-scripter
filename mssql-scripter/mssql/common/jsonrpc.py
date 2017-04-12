@@ -2,14 +2,13 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
 from __future__ import division
-
 import enum
 import json
 import logging
 
-logger = logging.getLogger('mssql-scripter.common.json_rpc')
+
+logger = logging.getLogger(u'mssql-scripter.common.json_rpc')
 
 
 class ReadState(enum.Enum):
@@ -19,9 +18,9 @@ class ReadState(enum.Enum):
 
 class JsonRpcWriter(object):
     """
-    Form and submit JSON RPC request to a stream.
+        Write JSON RPC message to input stream.
     """
-    HEADER = u'Content-Length: {}\r\n\r\n'
+    HEADER = u'Content-Length: {0}\r\n\r\n'
 
     def __init__(self, stream, encoding=None):
         self.stream = stream
@@ -29,16 +28,17 @@ class JsonRpcWriter(object):
 
     def send_request(self, method, params, id=None):
         """
-        write a JSON RPC request message to a stream.
+        Send JSON RPC request message.
         Exceptions raised:
             ValueError
                 If the stream was closed externally.
         """
+        # Perhaps move to a different def to add some validation
         content_body = {
             u'jsonrpc': u'2.0',
             u'method': method,
             u'params': params,
-            u'id': id,
+            u'id': id
         }
 
         json_content = json.dumps(content_body, sort_keys=True)
@@ -49,9 +49,8 @@ class JsonRpcWriter(object):
             self.stream.flush()
 
         except ValueError as ex:
-            # TODO: Add telemetry of stream closed externally.
             logger.debug(u'Send Request encountered exception {}'.format(ex))
-            raise
+            raise ex
 
     def close(self):
         """
@@ -65,9 +64,9 @@ class JsonRpcWriter(object):
 
 class JsonRpcReader(object):
     """
-    Read JSON RPC Response message from a stream.
+        Read JSON RPC message from output stream.
     """
-    # \r\n.
+    # \r\n
     CR = 13
     LF = 10
     BUFFER_RESIZE_TRIGGER = 0.25
@@ -75,6 +74,7 @@ class JsonRpcReader(object):
 
     def __init__(self, stream, encoding=None):
         self.encoding = encoding or u'UTF-8'
+
         self.stream = stream
         self.buffer = bytearray(self.DEFAULT_BUFFER_SIZE)
         # Pointer to end of buffer content.
@@ -88,39 +88,45 @@ class JsonRpcReader(object):
 
     def read_response(self):
         """
-        Read and return json dictionary of response from buffer.
+            Read JSON RPC message from buffer.
         Exceptions raised:
             ValueError
-                body-content can not be serialized to a JSON object.
+                if the body-content can not be serialized to a JSON object.
         """
+        # Using a mutable list to hold the value since a immutable string
+        # passed by reference won't change the value.
         content = ['']
         try:
-            while not self.needs_more_data or self.read_next_chunk():
-                # process buffer for header and content.
+            while (not self.needs_more_data or self.read_next_chunk()):
+                # We should have all the data we need to form a message in the buffer.
+                # If we need more data to form the next message, this flag will
+                # be reset by a attempt to form a header or content.
                 self.needs_more_data = False
-
+                # If we can't read a header, read the next chunk.
                 if self.read_state is ReadState.Header and not self.try_read_headers():
                     self.needs_more_data = True
                     continue
-
+                # If we read the header, try the content. If that fails, read
+                # the next chunk.
                 if self.read_state is ReadState.Content and not self.try_read_content(
                         content):
                     self.needs_more_data = True
                     continue
-
+                # We have the  content
                 break
 
-            # Resize buffer and remove bytes we have read.
+            # Resize buffer and remove bytes we have read
             self.trim_buffer_and_resize(self.read_offset)
             return json.loads(content[0])
         except ValueError as ex:
+            # response has invalid json object.
             logger.debug(
                 u'JSON RPC Reader on read_response() encountered exception: {}'.format(ex))
-            raise
+            raise ex
 
     def read_next_chunk(self):
         """
-        read a chunk of bytes into the buffer.
+        Read a chunk from the output stream into buffer.
         Exceptions raised:
             EOFError
                 Stream was empty or Stream did not contain a valid header or content-body.
@@ -137,13 +143,14 @@ class JsonRpcReader(object):
             # point to new buffer.
             self.buffer = resized_buffer
 
+        # Memory view is required in order to read into a subset of a byte
+        # array
         try:
             length_read = self.stream.readinto(
                 memoryview(self.buffer)[self.buffer_end_offset:])
             self.buffer_end_offset += length_read
 
             if not length_read:
-                # Nothing was read from stream.
                 logger.debug(u'JSON RPC Reader reached end of stream')
                 raise EOFError(u'End of stream reached, no output.')
 
@@ -151,18 +158,17 @@ class JsonRpcReader(object):
         except ValueError as ex:
             logger.debug(
                 u'JSON RPC Reader on read_next_chunk encountered exception: {}'.format(ex))
-            # Stream was closed
-            raise
+            # Stream was closed.
+            raise ex
 
     def try_read_headers(self):
         """
-        Read header from internal buffer.
-
+        Try to read the Header information from the internal buffer expecting the last header to contain '\r\n\r\n'.
         Exceptions:
             LookupError
-                'content-length' header was not found.
+                The content-length header was not found.
             ValueError
-                'content-length' contains a invalid literal for int.
+                The content-length contained a invalid literal for int.
         """
         # Scan the buffer up until right before the CRLFCRLF.
         scan_offset = self.read_offset
@@ -173,14 +179,14 @@ class JsonRpcReader(object):
                  self.buffer[scan_offset + 3] != self.LF)):
             scan_offset += 1
 
-        # scanned the entire buffer, no header found.
+        # if we reached the end
         if scan_offset + 3 >= self.buffer_end_offset:
             return False
 
+        # Split the headers by new line
         try:
             headers_read = self.buffer[self.read_offset:scan_offset].decode(
                 u'ascii')
-
             for header in headers_read.split(u'\n'):
                 colon_index = header.find(u':')
 
@@ -190,20 +196,20 @@ class JsonRpcReader(object):
                     raise KeyError(
                         u'Colon missing from Header: {}.'.format(header))
 
-                # Making all headers lowercase to support case insensitivity.
+                # Case insensitive.
                 header_key = header[:colon_index].lower()
                 header_value = header[colon_index + 1:]
 
                 self.headers[header_key] = header_value
 
-            # Find content body in the list of headers and parse the value.
-            if 'content-length' not in self.headers:
+            # Was content-length header found?
+            if not ('content-length' in self.headers):
                 logger.debug(
                     u'JSON RPC Reader did not find Content-Length in the headers')
                 raise LookupError(
                     u'Content-Length was not found in headers received.')
 
-            self.expected_content_length = int(self.headers['content-length'])
+            self.expected_content_length = int(self.headers[u'content-length'])
 
         except ValueError:
             # Content-length contained invalid literal for int.
@@ -218,15 +224,15 @@ class JsonRpcReader(object):
 
     def try_read_content(self, content):
         """
-        Read content from internal buffer.
+            Try to read content from internal buffer.
         """
-        if ((self.buffer_end_offset - self.read_offset) <
+        if (self.buffer_end_offset - self.read_offset <
                 self.expected_content_length):
-            # buffered less than the expected content length.
+            # We buffered less than the expected content length.
             return False
 
-        content[0] = self.buffer[self.read_offset:self.read_offset + \
-            self.expected_content_length].decode(self.encoding)
+        content[0] = self.buffer[self.read_offset:self.read_offset +
+                                 self.expected_content_length].decode(self.encoding)
         self.read_offset += self.expected_content_length
 
         self.read_state = ReadState.Header
@@ -235,15 +241,16 @@ class JsonRpcReader(object):
 
     def trim_buffer_and_resize(self, bytes_to_remove):
         """
-        Trim buffer by bytes read and resize to a minimum between default and current size.
+        Trim the buffer by the passed in bytes_to_remove by creating a new buffer that is at a minimum the default max size.
         """
         current_buffer_size = len(self.buffer)
-
+        # Create a new buffer with either minumum size or leftover size.
         new_buffer = bytearray(max(current_buffer_size -
                                    bytes_to_remove, self.DEFAULT_BUFFER_SIZE))
 
-        # copy unread portion to the new buffer.
-        if bytes_to_remove <= current_buffer_size:
+        # if we have content we did not read, copy that portion to the new
+        # buffer.
+        if (bytes_to_remove <= current_buffer_size):
             new_buffer[:self.buffer_end_offset -
                        bytes_to_remove] = self.buffer[bytes_to_remove:self.buffer_end_offset]
 

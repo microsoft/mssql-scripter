@@ -3,19 +3,19 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
-from queue import Queue
-
-import logging
-import threading
 import mssql.common.jsonrpc as json_rpc
+import logging
+from queue import Queue
+import threading
 
 logger = logging.getLogger(u'mssql-scripter.common.json_rpc_client')
 
 
 class JsonRpcClient(object):
     """
-        Orchestrate read/response and write/request on 2 daemon threads.
+        Handle async request submission with async response handling.
     """
+
     REQUEST_THREAD_NAME = u'Json_Rpc_Request_Thread'
     RESPONSE_THREAD_NAME = u'Json_Rpc_Response_Thread'
 
@@ -27,11 +27,13 @@ class JsonRpcClient(object):
         # Response map intialized with event queue.
         self.response_map = {0: Queue()}
         self.exception_queue = Queue()
+
         self.cancel = False
 
     def start(self):
         """
-            start request and response thread for read and write operations.
+            Starts the background threads to listen for responses and requests from the underlying
+            streams. Encapsulated into it's own method for future async extensions without threads.
         """
         self.request_thread = threading.Thread(
             target=self._listen_for_request,
@@ -47,12 +49,9 @@ class JsonRpcClient(object):
 
     def submit_request(self, method, params, id=None):
         """
-            Enqueue request to be submitted by request thread.
-            Exceptions:
-                ValueError:
-                    Request did not contain a method or parameters
+            Submit json rpc request to input stream.
         """
-        if not method or not params:
+        if (method is None or params is None):
             raise ValueError(u'Method or Parameter was not found in request')
 
         request = {u'method': method, u'params': params, u'id': id}
@@ -60,35 +59,34 @@ class JsonRpcClient(object):
 
     def request_finished(self, id):
         """
-            Remove request id from response map.
+            Remove request id response entry.
         """
         if id in self.response_map:
             del self.response_map[id]
 
     def get_response(self, id=0):
         """
-            Get exception or response associated to the request id.
+            Get latest response. Priority order: Response, Event, Exception.
         """
-        if not self.exception_queue.empty():
-            ex = self.exception_queue.get()
-            raise ex
-
         if id in self.response_map:
             if not self.response_map[id].empty():
                 return self.response_map[id].get()
+
+        if not self.response_map[0].empty():
+            return self.response_map[0].get()
+
+        if not self.exception_queue.empty():
+            raise self.exception_queue.get()
 
         return None
 
     def _listen_for_request(self):
         """
-            Submit latest request.
-            Exceptions:
-                ValueError:
-                    The stream was closed. Exit the thread immediately.
+            Submit request if available.
         """
         while not self.cancel:
             try:
-                # using blocking queue.get() to minimuize cpu usage.
+                # Block until queue contains a request.
                 request = self.request_queue.get()
 
                 if request:
@@ -98,14 +96,17 @@ class JsonRpcClient(object):
                         id=request[u'id'])
 
             except ValueError as error:
-                # Stream is closed.
+                # Stream is closed, break out of the loop.
+                self._record_exception(error, self.REQUEST_THREAD_NAME)
+                break
+            except Exception as error:
+                # Catch generic exceptions.
                 self._record_exception(error, self.REQUEST_THREAD_NAME)
                 break
 
     def _listen_for_response(self):
         """
-            Retrieve and enqueue latest response or event.
-
+            Listen for and store response, event or exception for main thread to access.
             Exceptions:
                 ValueError
                     The stream was closed. Exit the thread immediately.
@@ -131,7 +132,8 @@ class JsonRpcClient(object):
                     self.response_map[0].put(response)
 
             except EOFError as error:
-                # Nothing was read from stream, keep listening.
+                # Thread fails once we reach EOF.
+                self._record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
             except ValueError as error:
                 # Stream was closed.
@@ -141,10 +143,14 @@ class JsonRpcClient(object):
                 # Content-Length header was not found.
                 self._record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
+            except Exception as error:
+                # Catch generic exceptions.
+                self.record_exception(error, self.RESPONSE_THREAD_NAME)
+                break
 
     def _record_exception(self, ex, thread_name):
         """
-            Record exception.
+            Record exception to allow main thread to access.
         """
         logger.debug(
             u'Thread: {} encountered exception {}'.format(
@@ -153,14 +159,15 @@ class JsonRpcClient(object):
 
     def shutdown(self):
         """
-            Shut down request thread and queue.
+            Signal request thread to close as soon as it can.
         """
         self.cancel = True
-        # Submit none as a request to allow request thread to check for cancel
-        # flag.
+        # Enqueue None to optimistically unblock background threads so
+        # they can check for the cancellation flag.
         self.request_queue.put(None)
-        # wait on request thread for 0.2 seconds.
-        self.request_thread.join(0.2)
-        self.writer.close()
 
-        # Response thread will block and die when main process dies.
+        # Wait for request thread to finish with a timeout in seconds.
+        self.request_thread.join(0.2)
+
+        # close the underlying writer.
+        self.writer.close()

@@ -9,6 +9,7 @@ import platform
 import site
 import sys
 
+import mssql.contracts.scripting as scripting
 
 # Check repo if in dev mode.
 TOOLS_SERVICE_DIR = os.path.abspath(
@@ -48,7 +49,7 @@ def handle_response(response, display=False):
     """
         Dispatches response to appropriate response handler based on response type.
     """
-    # TODO: Revisit the format of the messages.
+
     def handle_script_response(response, display=False):
         if display:
             sys.stderr.write(
@@ -59,7 +60,7 @@ def handle_response(response, display=False):
         # Always display error messages
         sys.stdout.write(
             u'Scripting request: {} encountered error: {}\n'.format(
-                response.operation_id, response.message))
+                response.operation_id, response.diagnostic_message))
 
     def handle_script_plan_notification(response, display=False):
         if display:
@@ -101,8 +102,10 @@ def initialize_parser():
         description=u'mssql-scripter tool used for scripting out databases')
 
     parser.add_argument(
-        u'ConnectionString',
-        help=u'Connection string of database to script')
+        u'--connection-string',
+        dest=u'ConnectionString',
+        help=u'Connection string of database to script',
+        required=True)
 
     parser.add_argument(
         u'-f', u'--file',
@@ -110,6 +113,20 @@ def initialize_parser():
         metavar=u'',
         help=u'',
         default=None)
+
+    parser.add_argument(
+        u'--include-objects',
+        dest=u'IncludeObjects',
+        nargs=u'*',
+        type=str
+    )
+
+    parser.add_argument(
+        u'--exclude-objects',
+        dest=u'ExcludeObjects',
+        nargs=u'*',
+        type=str
+    )
 
     # General boolean Scripting Options
     parser.add_argument(
@@ -137,7 +154,7 @@ def initialize_parser():
         help=u'',
         default=False)
     parser.add_argument(
-        '--convert-uddts',
+        u'--convert-uddts',
         dest=u'ConvertUDDTsToBaseTypes',
         action=u'store_true',
         help=u'',

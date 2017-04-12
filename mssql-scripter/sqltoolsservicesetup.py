@@ -11,7 +11,8 @@ import tarfile
 import zipfile
 
 
-DOWNLOAD_URL_BASE = u'https://mssqlscripter.blob.core.windows.net/sqltoolservice-03-31-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-07-2017/'
+
 
 PLATFORM_FILE_NAMES = {
     u'CentOS_7 ': DOWNLOAD_URL_BASE + u'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',

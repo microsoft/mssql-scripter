@@ -13,6 +13,7 @@ from mssql.contracts.scripting import *
 
 
 class ScriptingRequestTests(unittest.TestCase):
+
     """
         Scripting request tests.
     """
@@ -30,8 +31,10 @@ class ScriptingRequestTests(unittest.TestCase):
             parameters = {
                 u'FilePath': u'Sample_File_Path',
                 u'ConnectionString': u'Sample_connection_string',
+                u'IncludeObjectCriteria': None,
+                u'ExcludeObjectCriteria': None,
                 u'DatabaseObjects': None}
-            request = Scripting_Request(1, rpc_client, parameters)
+            request = ScriptingRequest(1, rpc_client, parameters)
 
             self.verify_response_count(
                 request=request,
@@ -42,6 +45,25 @@ class ScriptingRequestTests(unittest.TestCase):
                 error_count=0)
 
             rpc_client.shutdown()
+
+    def test_scripting_criteria_parameters(self):
+        """
+            Verify scripting objects are properly parsed.
+        """
+        include_objects = [u'schema1.table1', u'table2']
+        include_criteria = ScriptingObjects(include_objects)
+        include_formatted = include_criteria.format()
+
+        scripting_object_1 = include_formatted[0]
+        scripting_object_2 = include_formatted[1]
+
+        self.assertEqual(scripting_object_1[u'Schema'], u'schema1')
+        self.assertEqual(scripting_object_1[u'Name'], u'table1')
+        self.assertEqual(scripting_object_1[u'Type'], None)
+
+        self.assertEqual(scripting_object_2[u'Schema'], None)
+        self.assertEqual(scripting_object_2[u'Name'], u'table2')
+        self.assertEqual(scripting_object_2[u'Type'], None)
 
     def test_scripting_response_decoder(self):
         cancel_event = {
@@ -87,7 +109,7 @@ class ScriptingRequestTests(unittest.TestCase):
                         u'name': u'AdventureWorks2014'}],
                 u'count': 10}}
 
-        decoder = Scripting_Response_Decoder()
+        decoder = ScriptingResponseDecoder()
 
         cancel_decoded = decoder.decode_response(cancel_event)
         complete_decoded = decoder.decode_response(complete_event)
@@ -117,7 +139,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
 
-        decoder = Scripting_Response_Decoder()
+        decoder = ScriptingResponseDecoder()
 
         cancel_decoded = decoder.decode_response(cancel_event)
         complete_decoded = decoder.decode_response(complete_event)
@@ -130,7 +152,7 @@ class ScriptingRequestTests(unittest.TestCase):
         """
             Verify default scripting options created.
         """
-        scripting_options = Scripting_Options()
+        scripting_options = ScriptingOptions()
         expected = {
             u'ANSIPadding': False,
             u'AppendToFile': False,
@@ -181,7 +203,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptStatistics': u'ScriptStatsNone',
             u'ScriptForServerVersion': u'SQL Server vNext CTP 1.0',
             u'ScriptForTheDatabaseEngineEdition': u'Microsoft SQL Server Standard Edition'}
-        scripting_options = Scripting_Options(new_options)
+        scripting_options = ScriptingOptions(new_options)
 
         expected = {
             u'ANSIPadding': True,
@@ -230,9 +252,9 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptForServerVersion': u'SQL Server 1689'}
 
         with self.assertRaises(ValueError):
-            Scripting_Options(invalid_options)
+            ScriptingOptions(invalid_options)
         with self.assertRaises(ValueError):
-            Scripting_Options(invalid_server_version)
+            ScriptingOptions(invalid_server_version)
 
     def test_script_database_params_format(self):
         """
@@ -241,8 +263,10 @@ class ScriptingRequestTests(unittest.TestCase):
         params = {
             u'FilePath': u'C:\temp\sample_db.sql',
             u'ConnectionString': u'Sample_connection_string',
+            u'IncludeObjectCriteria': [],
+            u'ExcludeObjectCriteria': [],
             u'DatabaseObjects': [u'Person.Person']}
-        scripting_params = Scripting_Params(params)
+        scripting_params = ScriptingParams(params)
 
         formatted_params = scripting_params.format()
         expected_script_options = {
@@ -315,16 +339,17 @@ class ScriptingRequestTests(unittest.TestCase):
             response = request.get_response()
             if func:
                 func(self, response)
-            if isinstance(response, ScriptProgressNotificationEvent):
-                progress_notification_event += 1
-            elif isinstance(response, ScriptCompleteEvent):
-                complete_event += 1
-            elif isinstance(response, ScriptResponse):
-                response_event += 1
-            elif isinstance(response, ScriptPlanNotificationEvent):
-                plan_notification_event += 1
-            elif isinstance(response, ScriptErrorEvent):
-                error_event += 1
+            if response:
+                if isinstance(response, ScriptProgressNotificationEvent):
+                    progress_notification_event += 1
+                elif isinstance(response, ScriptCompleteEvent):
+                    complete_event += 1
+                elif isinstance(response, ScriptResponse):
+                    response_event += 1
+                elif isinstance(response, ScriptPlanNotificationEvent):
+                    plan_notification_event += 1
+                elif isinstance(response, ScriptErrorEvent):
+                    error_event += 1
 
         self.assertEqual(response_event, response_count)
         self.assertEqual(plan_notification_event, plan_notification_count)

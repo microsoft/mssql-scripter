@@ -8,10 +8,10 @@ from future.utils import iteritems
 
 import logging
 
-logger = logging.getLogger('mssql-scripter.contracts.scripting')
+logger = logging.getLogger(u'mssql-scripter.contracts.scripting')
 
 
-class Scripting_Request(Request):
+class ScriptingRequest(Request):
     """
         SqlTools Service scripting service scripting request.
     """
@@ -25,8 +25,8 @@ class Scripting_Request(Request):
         self.id = id
         self.finished = False
         self.json_rpc_client = json_rpc_client
-        self.params = Scripting_Params(parameters)
-        self.decoder = Scripting_Response_Decoder()
+        self.params = ScriptingParams(parameters)
+        self.decoder = ScriptingResponseDecoder()
 
     def execute(self):
         """
@@ -41,29 +41,38 @@ class Scripting_Request(Request):
 
     def get_response(self):
         """
-            Get response for this request or global event.
+            Get latest response, event or exception if it occured.
         """
-        # Check if there are any immediate response to the request.
-        response = self.json_rpc_client.get_response(self.id)
-        decoded_response = None
+        try:
+            response = self.json_rpc_client.get_response(self.id)
+            decoded_response = None
 
-        if response:
-            decoded_response = self.decoder.decode_response(response)
-            logger.debug(
-                u'Scripting request received response: {}'.format(decoded_response))
-        # No response, check for events.
-        event = self.json_rpc_client.get_response()
-        if event:
-            decoded_response = self.decoder.decode_response(event)
-            logger.debug(
-                u'Scripting request received response: {}'.format(decoded_response))
-            # Request is completed.
-            if (isinstance(decoded_response, ScriptCompleteEvent)
-                    or isinstance(decoded_response, ScriptErrorEvent)):
-                self.finished = True
-                self.json_rpc_client.request_finished(self.id)
+            if response:
+                # Decode response to either response or event type.
+                decoded_response = self.decoder.decode_response(response)
+                logger.debug(
+                    u'Scripting request received response: {}'.format(decoded_response))
+                if isinstance(decoded_response, ScriptCompleteEvent
+                              or isinstance(decoded_response, ScriptErrorEvent)):
+                    self.finished = True
+                    self.json_rpc_client.request_finished(self.id)
 
-        return decoded_response
+            return decoded_response
+
+        except Exception as error:
+            # Log exception and return a scripting error event.
+            logger.debug(
+                u'Scripting request received a exception:{}'.format(error.args))
+            self.finished = True
+            self.json_rpc_client.request_finished(self.id)
+
+            exception = {
+                u'operationId': self.id,
+                u'message': u'Scripting request encountered a exception',
+                u'diagnosticMessage': error.args,
+            }
+
+            return ScriptErrorEvent(exception)
 
     def completed(self):
         """
@@ -72,7 +81,7 @@ class Scripting_Request(Request):
         return self.finished
 
 
-class Scripting_Params(object):
+class ScriptingParams(object):
     """
         Scripting request parameters.
     """
@@ -80,9 +89,13 @@ class Scripting_Params(object):
     def __init__(self, parameters):
         self.file_path = parameters[u'FilePath']
         self.connection_string = parameters[u'ConnectionString']
-        # TODO: Renable when this option is supported.
-        #self.scripting_objects = parameters['scriptingObjects']
-        self.scripting_options = Scripting_Options(parameters)
+        self.scripting_options = ScriptingOptions(parameters)
+
+        # List of scripting objects.
+        self.include_objects = ScriptingObjects(
+            parameters[u'IncludeObjects'] if u'IncludeObjects' in parameters else None)
+        self.exclude_objects = ScriptingObjects(
+            parameters[u'ExcludeObjects'] if u'ExcludeObjects' in parameters else None)
 
     def format(self):
         """
@@ -90,12 +103,46 @@ class Scripting_Params(object):
         """
         return {u'FilePath': self.file_path,
                 u'ConnectionString': self.connection_string,
-                # TODO: Renable when support is added
-                #'DatabaseObjects' : self.database_objects,
+                u'IncludeObjectCriteria': self.include_objects.format(),
+                u'ExcludeObjectCriteria': self.exclude_objects.format(),
                 u'ScriptOptions': self.scripting_options.get_options()}
 
 
-class Scripting_Options(object):
+class ScriptingObjects(object):
+    """
+        Represent a database object via it's type, schema, and name.
+    """
+
+    def __init__(self, scripting_objects):
+        self.list_of_objects = []
+        if scripting_objects:
+            for item in scripting_objects:
+                index = item.find('.')
+                if index > 0:
+                    schema = item[0:index]
+                    name = item[index + 1:]
+                else:
+                    schema = None
+                    name = item
+                self.add_scripting_object(schema=schema, name=name)
+
+    def add_scripting_object(self, script_type=None, schema=None, name=None):
+        """
+            Serialize scripting object into a JSON Scripting object.
+        """
+        object_dict = {
+            u'Type': script_type,
+            u'Schema': schema,
+            u'Name': name
+        }
+
+        self.list_of_objects.append(object_dict)
+
+    def format(self):
+        return self.list_of_objects
+
+
+class ScriptingOptions(object):
     """
         Advanced scripting options.
     """
@@ -248,7 +295,7 @@ class ScriptResponse(object):
         self.operation_id = params[u'operationId']
 
 
-class Scripting_Response_Decoder(object):
+class ScriptingResponseDecoder(object):
     """
         Decode response dictionary into scripting parameter type.
     """

@@ -32,7 +32,7 @@ class SqlToolsClient(object):
         """
         request = None
         if request_type == u'scripting_request':
-            request = Scripting_Request(
+            request = ScriptingRequest(
                 self.current_id, self.json_rpc_client, parameters)
             logger.info(
                 u'Scripting request id: {} created.'.format(
