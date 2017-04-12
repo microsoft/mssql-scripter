@@ -68,7 +68,6 @@ try:
             break
 except AttributeError:
     # getsitepackages() does not work in virtual environment for python 2.
-    # TODO: Add support for production use in a virtual env.
     pass
 
 
@@ -94,7 +93,6 @@ def _get_runtime_id(
         if (architecture == u'64bit'):
             run_time_id = u'OSX_10_11_64'
     elif (system == u'Linux'):
-        # TODO: Not sure if this will be the string for linux distro.
         if (architecture == u'64bit'):
             run_time_id = get_linux_distro_runtime_id()
 
@@ -113,8 +111,6 @@ def install(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
     """
         Installs native sql tools service to either site-packages/mssql/sqltoolsservice or custom directory.
     """
-    # TODO: Refactor, there has to be a way to submit a single request against any file and extract them.
-    # TODO: Revisit for case where request fails.
     import requests
     from future.standard_library import install_aliases
     install_aliases()

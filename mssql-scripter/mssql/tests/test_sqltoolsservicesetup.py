@@ -144,7 +144,6 @@ class TestSqlToolsServiceSetup(unittest.TestCase):
         self.assertEqual(u'Ubuntu_16', kde_neon)
         self.assertEqual(None, unknown)
 
-        # TODO: Add test for checking linux download links
 
 
 if __name__ == u'__main__':

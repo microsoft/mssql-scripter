@@ -275,8 +275,6 @@ class ScriptErrorEvent(object):
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
-        # TODO: We can separate out the actual objects or return a list of the
-        # objects to the client.
         self.database_objects = params[u'databaseObjects']
         self.count = params[u'count']
 

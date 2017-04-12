@@ -7,7 +7,7 @@ import os
 
 
 def get_config_log_file():
-    # TODO: Refine this.
+
     log_dir = os.path.join(
         os.path.expanduser(
             os.path.join(
