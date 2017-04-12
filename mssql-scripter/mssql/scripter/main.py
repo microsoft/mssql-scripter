@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 import tempfile
-
+import time
 
 import mssql.scripter.scripter_logging
 import mssql.scripter as scripter
@@ -34,50 +34,68 @@ def main(args):
 
     sql_tools_service_path = scripter.get_sql_tools_service_path()
 
-    # Start the tools Service
-    tools_service_process = subprocess.Popen(
-        [
-            sql_tools_service_path,
-            "--enable-logging"],
-        bufsize=0,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE)
+    try:
+        # Start the tools Service
+        tools_service_process = subprocess.Popen(
+            [
+                sql_tools_service_path,
+                "--enable-logging"],
+            bufsize=0,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE)
 
-    # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
-    # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
-    # Wrap a FileIO around it to use a different implementation that does not attempt to fill the buffer
-    # on readinto().
-    std_out_wrapped = io.open(
-        tools_service_process.stdout.fileno(),
-        'rb',
-        buffering=0,
-        closefd=False)
+        # Python 2.7 uses the built-in File type when referencing the subprocess.PIPE.
+        # This built-in type for that version blocks on readinto() because it attempts to fill buffer.
+        # Wrap a FileIO around it to use a different implementation that does not attempt to fill the buffer
+        # on readinto().
+        std_out_wrapped = io.open(
+            tools_service_process.stdout.fileno(),
+            'rb',
+            buffering=0,
+            closefd=False)
 
-    sql_tools_client = Sql_Tools_Client(
-        tools_service_process.stdin,
-        std_out_wrapped)
+        sql_tools_client = Sql_Tools_Client(
+            tools_service_process.stdin,
+            std_out_wrapped)
 
-    scripting_request = sql_tools_client.create_request(
-        'scripting_request', vars(parameters))
-    scripting_request.execute()
+        scripting_request = sql_tools_client.create_request(
+            'scripting_request', vars(parameters))
+        scripting_request.execute()
 
-    while(not scripting_request.completed()):
-        response = scripting_request.get_response()
+        while(not scripting_request.completed()):
+            response = scripting_request.get_response()
 
-        if (response):
-            scripter.handle_response(response, parameters.DisplayProgress)
+            if (response):
+                scripter.handle_response(response, parameters.DisplayProgress)
 
-    with io.open(parameters.FilePath, encoding='utf-16') as script_file:
-        for line in script_file.readlines():
-            sys.stdout.write(line.encode('utf-8'))
+        with io.open(parameters.FilePath, encoding='utf-16') as script_file:
+            for line in script_file.readlines():
+                # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
+                # If it is not none then the user has specified a custom
+                # encoding.
+                if not sys.stdout.encoding:
+                    # We are piping and the user is using the default encoding,
+                    # so encode to utf8.
+                    line = line.encode('utf-8')
+                sys.stdout.write(line)
 
-    # Remove the temp file if we generated one.
-    if (temp_file_path):
-        os.remove(temp_file_path)
+    finally:
 
-    # May need to add a timer here
-    sql_tools_client.shutdown()
-    tools_service_process.kill()
+        sql_tools_client.shutdown()
+        tools_service_process.kill()
+        # 1 second time out, allow tools service process to be killed.
+        time.sleep(1)
+        # None value indicates process has not terminated.
+        if not tools_service_process.poll():
+            sys.stderr.write(
+                u'Sql Tools Service process was not shut down properly.')
+        try:
+            # Remove the temp file if we generated one.
+            if temp_file_path:
+                os.remove(temp_file_path)
+        except Exception:
+            # Suppress exceptions.
+            pass
 
 
 if __name__ == '__main__':

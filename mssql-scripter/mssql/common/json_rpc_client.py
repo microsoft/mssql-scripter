@@ -77,18 +77,18 @@ class Json_Rpc_Client(object):
 
     def get_response(self, id=0):
         """
-            Retrieves the latest response from the queue.
-            First check if a exception occured and throw the latest one.
-            Second, by default we return the latest event, otherwise we return the latest response from the passed in id.
+            Get latest response. Priority order: Response, Event, Exception.
         """
-        if (not self.exception_queue.empty()):
-            ex = self.exception_queue.get()
-            raise ex
-
-        if (id in self.response_map):
-            if (not self.response_map[id].empty()):
+        if id in self.response_map:
+            if not self.response_map[id].empty():
                 return self.response_map[id].get()
+        
+        if not self.response_map[0].empty():
+            return self.response_map[0].get()
 
+        if not self.exception_queue.empty():
+            raise self.exception_queue.get()
+            
         return None
 
     def _listen_for_request(self):
@@ -116,7 +116,7 @@ class Json_Rpc_Client(object):
                 break
             except Exception as error:
                 # Catch generic exceptions.
-                self.record_exception(error, self.REQUEST_THREAD_NAME)
+                self._record_exception(error, self.REQUEST_THREAD_NAME)
                 break
 
     def _listen_for_response(self):
@@ -152,6 +152,7 @@ class Json_Rpc_Client(object):
 
             except EOFError as error:
                 # Thread fails once we reach EOF.
+                self._record_exception(error, self.RESPONSE_THREAD_NAME)
                 break
             except ValueError as error:
                 # If we get this error it means the stream was closed

@@ -47,7 +47,6 @@ def handle_response(response, display=False):
     """
         Dispatches response to appropriate response handler based on response type.
     """
-    # TODO: Revisit the format of the messages
 
     def handle_script_response(response, display=False):
         if (display):
@@ -59,7 +58,7 @@ def handle_response(response, display=False):
         # Always display error messages
         sys.stdout.write(
             'Scripting request: {0} encountered error: {1}\n'.format(
-                response.operation_id, response.message))
+                response.operation_id, response.diagnostic_message))
 
     def handle_script_plan_notification(response, display=False):
         if (display):

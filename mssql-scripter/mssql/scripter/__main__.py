@@ -9,14 +9,15 @@ import os
 import mssql.scripter.main
 
 try:
-    # TODO: Start telemetry here
     args = sys.argv[1:]
     exit_code = mssql.scripter.main.main(args)
 
-    # TODO: Log telemetry based on exit code
     sys.exit(exit_code)
 except EnvironmentError as error:
-    sys.stdout.write(str(e))
+    sys.stderr.write(str(error))
     sys.exit(1)
-except KeyboardInterrupt:
+except KeyboardInterrupt as error:
     sys.exit(2)
+except Exception as error:
+    sys.stderr.write(str(error))
+    sys.exit(3)

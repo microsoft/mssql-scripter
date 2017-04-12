@@ -41,28 +41,18 @@ class Scripting_Request(Request):
 
     def get_response(self):
         """
-            Retrieves the events or response associated with this request and decodes to the explicit type.
-            Get the latest event/response from the queue.
-
-            Finish state is either via a complete or error event.
+            Get latest response, event or exception if it occured.
         """
-        # Check if there are any immediate response to the request.
         try:
             response = self.json_rpc_client.get_response(self.id)
             decoded_response = None
 
             if response:
+                # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
                 logger.debug(
                     u'Scripting request received response: {}'.format(decoded_response))
-            # No response, check for events
-            event = self.json_rpc_client.get_response()
-            if event:
-                decoded_response = self.decoder.decode_response(event)
-                logger.debug(
-                    u'Scripting request received response: {}'.format(decoded_response))
-                # Request is completed
-                if (isinstance(decoded_response, ScriptCompleteEvent)
+                if isinstance(decoded_response, ScriptCompleteEvent
                         or isinstance(decoded_response, ScriptErrorEvent)):
                     self.finished = True
                     self.json_rpc_client.request_finished(self.id)
@@ -70,7 +60,7 @@ class Scripting_Request(Request):
             return decoded_response
 
         except Exception as error:
-            # Log exception and return a scripting error event.
+            # Handle exception by logging and returning a error event.
             logger.debug(
                 u'Scripting request received a exception:{}'.format(error))
             self.finished = True
