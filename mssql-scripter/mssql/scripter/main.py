@@ -70,21 +70,20 @@ def main(args):
 
         with io.open(parameters.FilePath, encoding='utf-16') as script_file:
             for line in script_file.readlines():
-                # Default encoding for python 2: ascii and python 3: utf-8,
-                # we explicitly encode to utf-8 in python 2 when piping only
-                # if the user did not specify a specific encoding for stdout.
+                # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
+                # If it is not none then the user has specified a custom
+                # encoding. 
                 if not sys.stdout.encoding:
+                    # We are piping and the user is using the default encoding,
+                    # so encode to utf8.
                     line = line.encode('utf-8')
-
                 sys.stdout.write(line)
 
-        # Remove the temp file if we generated one.
-        if (temp_file_path):
-            os.remove(temp_file_path)
-    except Exception:
-        #TODO: Log to telemetry here or let caller handle it.
-        raise
     finally:
+        # Remove the temp file if we generated one.
+        if temp_file_path:
+            os.remove(temp_file_path)
+
         # May need to add a timer here
         sql_tools_client.shutdown()
         tools_service_process.kill()
