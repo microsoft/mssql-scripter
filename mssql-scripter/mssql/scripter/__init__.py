@@ -47,7 +47,6 @@ def handle_response(response, display=False):
     """
         Dispatches response to appropriate response handler based on response type.
     """
-    # TODO: Revisit the format of the messages
 
     def handle_script_response(response, display=False):
         if (display):
