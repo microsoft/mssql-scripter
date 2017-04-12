@@ -59,7 +59,7 @@ def handle_response(response, display=False):
         # Always display error messages
         sys.stdout.write(
             'Scripting request: {0} encountered error: {1}\n'.format(
-                response.operation_id, response.diagnost_message))
+                response.operation_id, response.diagnostic_message))
 
     def handle_script_plan_notification(response, display=False):
         if (display):

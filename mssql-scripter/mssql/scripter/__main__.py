@@ -24,3 +24,4 @@ except KeyboardInterrupt as error:
 except Exception as error:
     sys.stdout.write(str(error))
     sys.exit(3)
+    

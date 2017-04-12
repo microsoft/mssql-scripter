@@ -79,8 +79,8 @@ class Json_Rpc_Client(object):
         """
             Get latest response. Priority order: Response, Event, Exception.
         """
-        if (id in self.response_map):
-            if (not self.response_map[id].empty()):
+        if id in self.response_map:
+            if not self.response_map[id].empty():
                 return self.response_map[id].get()
         
         if not self.response_map[0].empty():
