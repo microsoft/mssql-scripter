@@ -12,6 +12,7 @@ import site
 TOOLS_SERVICE_DIR = os.path.abspath(
     os.path.join(
         os.path.abspath(__file__),
+        u'..',
         u'sqltoolsservice'))
 
 if (not os.path.exists(TOOLS_SERVICE_DIR)):
