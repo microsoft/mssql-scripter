@@ -1,0 +1,47 @@
+Need documents on:
+
+    Design/Architecture
+        Check in design images
+
+        Explain JSON RPC Protocol
+        Describe and show JSON RPC Common library
+        Show scripting Architecture
+
+        Explain Sql Tools service
+
+    Developer set up
+        Details between production/development sql tools service
+        Compatibility between python 2 and 3
+        Testing + coverage
+        how to test locally with set up
+        Note about how we don't support virutal environment yet
+    Help
+
+
+    Install story
+
+JSON RPC Messaging Protocol
+    Header 
+    The header part consists of header fields. Each header field is comprised of a name and a value, separated by ': ' (a colon and a space). 
+    Each header field is terminated by '\r\n'. Considering the last header field and the overall header itself are each terminated with '\r\n', 
+    and that at least one header is mandatory, this means that two '\r\n' sequences always immediately precede the content part of a message.
+
+    Content Part
+    Contains the actual content of the message. The content part of a message uses JSON-RPC to describe requests, responses and notifications. 
+    The content part is encoded using the charset provided in the Content-Type field. It defaults to 'utf8', which is the only encoding supported right now.
+
+    More info: TODO: <Add link here>.
+
+JSON RPC Client
+    The JSON RPC Client is built on top of the JSON RPC Reader and Writer. The reader and writer run on their own threads
+    along with their own response/request queue to faciliate communication with the main thread.
+
+    Requests submitted into the request queue that contains the method name, corresponding parameters and id if applicable.
+    Request thread listens on background for the request queue and submits the request via the input stream.
+
+    Responses from the output stream are dequeued on a background thread and routed to the approriate response queue. The response map contains 
+    a mapping between ids and it's request queue. This ensures requests with their id's can retrieve their corresponding response. Events are 
+    currently considered global and enqueued into the first slot of the response map (id = 1). 
+
+    Exceptions that may arise during either threads execution are captured and logged into a exception queue. If a exception occurs, it will take priority
+    over a response and event. Clients will be responsible for handling exceptions that may arise during response retrieval.
