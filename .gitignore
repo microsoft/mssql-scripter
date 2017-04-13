@@ -92,7 +92,7 @@ ENV/
 .DS_Store
 
 # sqltoolsservice binaries
-/mssql-scripter/mssql/sqltoolsservice/*
+/mssqlscripter/sqltoolsservice/*
 
 # VSCode configuration
 .vscode/*
