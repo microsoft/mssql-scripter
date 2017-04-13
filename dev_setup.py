@@ -43,7 +43,7 @@ print('Running dev setup...')
 print('Root directory \'{}\'\n'.format(root_dir))
 
 # install general requirements.
-exec_command('pip install -r dev_requirements.txt')
+exec_command('pip install -r requirements.txt')
 
 # install platform specific sql tools service to repo.
 print('Installing native Sql Tools Service...')

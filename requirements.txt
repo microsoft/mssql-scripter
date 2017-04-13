@@ -1,6 +1,9 @@
+# Requirements for both dev and production.
 enum34 == 1.1.6
 future == 0.16.0
 pip == 9.0.1
 setuptools == 30.4.0
-coverage == 4.3.4
 requests == 2.13.0
+
+#Development requirements.
+coverage == 4.3.4
