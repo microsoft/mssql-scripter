@@ -350,7 +350,7 @@ def build_connection_string(parameters):
         connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
     
     else:
-        connection_string += u'Trusted_Connection=True;'
+        connection_string += u'Integrated Security=True;'
     
     parameters.ConnectionString = connection_string
 

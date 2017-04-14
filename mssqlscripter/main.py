@@ -24,7 +24,7 @@ def main(args):
     """
     parameters = parser.parse_arguments(args)
 
-      temp_file_path = None
+    temp_file_path = None
     if not parameters.FilePath:
         # Generate and track the temp file.
         temp_file_path = tempfile.NamedTemporaryFile(

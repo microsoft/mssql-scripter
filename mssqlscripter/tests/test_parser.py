@@ -15,15 +15,15 @@ class TestParser(unittest.TestCase):
         
         trusted_connection = [u'-S', u'TestServer']
         parameters = parser.parse_arguments(trusted_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Trusted_Connection=True;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Integrated Security=True;')
 
         trusted_connection = [u'-S', u'TestServer', u'-d', u'mydatabase']
         parameters = parser.parse_arguments(trusted_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;Trusted_Connection=True;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;Integrated Security=True;')
 
-        trusted_connection = [u'--connection-string', u'Server=TestServer;Database=mydatabase;Trusted_Connection=True;']
+        trusted_connection = [u'--connection-string', u'Server=TestServer;Database=mydatabase;Integrated Security=True;']
         parameters = parser.parse_arguments(trusted_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;Trusted_Connection=True;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;Integrated Security=True;')
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username', u'-P', 'secret' ]
         parameters = parser.parse_arguments(standard_connection)
