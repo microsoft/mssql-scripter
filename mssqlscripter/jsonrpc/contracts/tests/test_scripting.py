@@ -21,7 +21,7 @@ class ScriptingRequestTests(unittest.TestCase):
             Verifies that the scripting response of a successful request is read succesfully with a sample request against AdventureWorks2014.
         """
         with open(self.get_test_baseline(u'adventureworks2014_baseline.txt'), u'r+b', buffering=0) as response_file:
-            request_stream = io.BytesIO(b'')
+            request_stream = io.BytesIO()
             rpc_client = json_rpc_client.JsonRpcClient(
                 request_stream, response_file)
             rpc_client.start()

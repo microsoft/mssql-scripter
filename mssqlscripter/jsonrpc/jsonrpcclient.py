@@ -214,7 +214,7 @@ class JsonRpcWriter(object):
 
         except ValueError as ex:
             logger.debug(u'Send Request encountered exception {}'.format(ex))
-            raise ex
+            raise
 
     def close(self):
         """
@@ -286,7 +286,7 @@ class JsonRpcReader(object):
             # response has invalid json object.
             logger.debug(
                 u'JSON RPC Reader on read_response() encountered exception: {}'.format(ex))
-            raise ex
+            raise
 
     def read_next_chunk(self):
         """
@@ -323,7 +323,7 @@ class JsonRpcReader(object):
             logger.debug(
                 u'JSON RPC Reader on read_next_chunk encountered exception: {}'.format(ex))
             # Stream was closed.
-            raise ex
+            raise
 
     def try_read_headers(self):
         """

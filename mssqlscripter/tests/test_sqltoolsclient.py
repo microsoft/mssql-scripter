@@ -18,8 +18,8 @@ class SqlToolsClientTest(unittest.TestCase):
         """
             Verify sql tools client initialization.
         """
-        input_stream = io.BytesIO(b'')
-        output_stream = io.BytesIO(b'')
+        input_stream = io.BytesIO()
+        output_stream = io.BytesIO()
 
         # Start the tools client
         tools_client = sql_tools_client.SqlToolsClient(
