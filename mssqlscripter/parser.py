@@ -337,7 +337,7 @@ def parse_arguments(args):
     elif parameters.ConnectionString is None:
         # Check environment variable for connection string.
         if not get_connection_string_from_environment(parameters):
-            sys.stdout.write(u'--connection-string was not supplied nor found in MSSQL_SCRIPTER_CONNECTION_STRING variable.')
+            sys.stdout.write(u'Please specify connection information using --connection-string or --server and/or --database --user')
             sys.exit()
 
     map_server_options(parameters)
