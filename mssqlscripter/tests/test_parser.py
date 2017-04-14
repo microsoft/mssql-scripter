@@ -36,7 +36,7 @@ class TestParser(unittest.TestCase):
         """
         os.environ[parser.MSSQL_SCRIPTER_CONNECTION_STRING] = u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;'
         parameters = parser.parse_arguments(None)
-        self.assertEqual(parameters.ConnectionString, 'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username']
         os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'secret123ABC'
