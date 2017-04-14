@@ -12,7 +12,7 @@ import time
 
 
 import mssqlscripter.scripterlogging
-import mssqlscripter.parser as _parser
+import mssqlscripter.parser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
 import mssqlscripter.utility as utility
@@ -22,12 +22,9 @@ def main(args):
         Main entry point to mssql-scripter.
 
     """
-    parser = _parser.initialize_parser()
-    parameters = parser.parse_args(args)
+    parameters = parser.parse_arguments(args)
 
-    _parser.map_server_options(parameters)
-
-    temp_file_path = None
+      temp_file_path = None
     if not parameters.FilePath:
         # Generate and track the temp file.
         temp_file_path = tempfile.NamedTemporaryFile(
@@ -98,7 +95,6 @@ def main(args):
         except Exception:
             # Suppress exceptions.
             pass
-
 
 if __name__ == u'__main__':
     main(sys.argv[1:])

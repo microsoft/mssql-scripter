@@ -4,9 +4,10 @@
 # --------------------------------------------------------------------------------------------
 
 import argparse
+import getpass
+import sys
 
-
-def initialize_parser():
+def parse_arguments(args):
     """
         Initialize parser with scripter options.
     """
@@ -14,12 +15,41 @@ def initialize_parser():
         prog=u'mssql-scripter',
         description=u'mssql-scripter tool used for scripting out databases')
 
-    parser.add_argument(
+    group_connection_options = parser.add_mutually_exclusive_group(required=True)
+    group_connection_options.add_argument(
         u'--connection-string',
         dest=u'ConnectionString',
         help=u'Connection string of database to script',
-        required=True)
+        metavar=u''
+    )
+    group_connection_options.add_argument(
+        u'-S', u'--server',
+        dest=u'Server',
+        help=u'Server',
+        metavar=u''
+    )
+    
+    parser.add_argument(
+        u'-d', u'--database',
+        dest=u'Database',
+        help=u'Database name',
+        metavar=u''
+    )
+    parser.add_argument(
+        u'-U', u'--user',
+        dest=u'UserId',
+        help=u'User Id',
+        metavar=u''
+    )
 
+    parser.add_argument(
+        u'-P', u'--password',
+        dest=u'Password',
+        help=u'Password',
+        metavar=u''
+    )
+
+    # Basic parameters.
     parser.add_argument(
         u'-f', u'--file',
         dest=u'FilePath',
@@ -30,13 +60,15 @@ def initialize_parser():
         u'--include-objects',
         dest=u'IncludeObjects',
         nargs=u'*',
-        type=str
+        type=str,
+        metavar=u''
     )
     parser.add_argument(
         u'--exclude-objects',
         dest=u'ExcludeObjects',
         nargs=u'*',
-        type=str
+        type=str,
+        metavar=u''
     )
     # General boolean Scripting Options
     parser.add_argument(
@@ -293,9 +325,34 @@ def initialize_parser():
         action=u'store_true',
         help=u'',
         default=False)
+    
+    parameters = parser.parse_args(args)
+    
+    if not parameters.ConnectionString:
+        build_connection_string(parameters)
 
-    return parser
+    map_server_options(parameters)
 
+    return parameters
+
+def build_connection_string(parameters):
+    """
+        Build connection string.
+    """
+    connection_string = u'Server={};'.format(parameters.Server)
+    if parameters.Database:
+        connection_string += u'Database={};'.format(parameters.Database)
+    
+    # Standard connection if user id is supplied.
+    if parameters.UserId:
+        connection_string += u'User Id={};'.format(parameters.UserId)
+        # Prompt for password if not supplied.
+        connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
+    
+    else:
+        connection_string += u'Trusted_Connection=True;'
+    
+    parameters.ConnectionString = connection_string
 
 def map_server_options(parameters):
     """
