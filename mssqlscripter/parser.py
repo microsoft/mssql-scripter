@@ -11,6 +11,7 @@ import sys
 MSSQL_SCRIPTER_CONNECTION_STRING = u'MSSQL_SCRIPTER_CONNECTION_STRING'
 MSSQL_SCRIPTER_PASSWORD = u'MSSQL_SCRIPTER_PASSWORD'
 
+
 def parse_arguments(args):
     """
         Initialize parser with scripter options.
@@ -23,166 +24,183 @@ def parse_arguments(args):
     group_connection_options.add_argument(
         u'--connection-string',
         dest=u'ConnectionString',
-        help=u'Connection string of database to script',
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Connection string of database to script')
     group_connection_options.add_argument(
         u'-S', u'--server',
         dest=u'Server',
-        help=u'Server',
-        metavar=u''
-    )
-    
+        metavar=u'',
+        help=u'Server name.')
+
     parser.add_argument(
         u'-d', u'--database',
         dest=u'Database',
-        help=u'Database name',
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Database name.')
+
     parser.add_argument(
         u'-U', u'--user',
         dest=u'UserId',
-        help=u'User Id',
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Login ID for server.')
 
     parser.add_argument(
         u'-P', u'--password',
         dest=u'Password',
-        help=u'Password',
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Password.')
 
     # Basic parameters.
     parser.add_argument(
         u'-f', u'--file',
         dest=u'FilePath',
         metavar=u'',
-        help=u'',
-        default=None)
+        default=None,
+        help=u'Output file name.',
+    )
+
     parser.add_argument(
         u'--include-objects',
         dest=u'IncludeObjects',
         nargs=u'*',
         type=str,
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Database objects to include in script.')
+
     parser.add_argument(
         u'--exclude-objects',
         dest=u'ExcludeObjects',
         nargs=u'*',
         type=str,
-        metavar=u''
-    )
+        metavar=u'',
+        help=u'Database objects to exclude from script.')
+
     # General boolean Scripting Options
     parser.add_argument(
         u'--ansi-padding',
         dest=u'ANSIPadding',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Generates ANSI Padding statements.')
+
     parser.add_argument(
         u'--append',
         dest=u'AppendToFile',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Append script to file.')
+
     parser.add_argument(
-        u'--CheckForObjectExistence',
+        u'--check-for-existence',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Check for database object existence.')
+
     parser.add_argument(
         u'-r',
         u'--continue-on-error',
         dest=u'ContinueScriptingOnError',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Continue scripting on error.')
+
     parser.add_argument(
         u'--convert-uddts',
         dest=u'ConvertUDDTsToBaseTypes',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Convert user-defined data types to base types.')
+
     parser.add_argument(
         u'--include-dependencies',
         dest=u'GenerateScriptForDependentObjects',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Generate script for the dependent objects for each object scripted.')
+
     parser.add_argument(
         u'--headers',
         dest=u'IncludeDescriptiveHeaders',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Include descriptive headers for each object scripted.')
+
     parser.add_argument(
         u'--constraint-names',
         dest=u'IncludeSystemConstraintNames',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Include system constraint names to enforce declarative referential integrity.')
+
     parser.add_argument(
         u'--unsupported-statements',
         dest=u'IncludeUnsupportedStatements',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Include statements in the script that are not supported on the target SQL Server Version.')
+
     parser.add_argument(
         u'--object-schema',
         dest=u'SchemaQualifyObjectNames',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Prefix object names with the object schema.')
+
     parser.add_argument(
         u'--bindings',
         dest=u'ScriptBindings',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script options to set binding options.')
+
     parser.add_argument(
         u'--collation',
         dest=u'ScriptCollations',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the objects that use collation.')
+
     parser.add_argument(
         u'--defaults',
         dest=u'ScriptDefaults',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the default values.')
+
     parser.add_argument(
         u'--extended-properties',
         dest=u'ScriptExtendedProperties',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the extended properties for each object scripted.')
+
     parser.add_argument(
         u'--logins',
         dest=u'ScriptLogins',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script all logins available on the server, passwords will not be scripted.')
+
     parser.add_argument(
         u'--object-permissions',
         dest=u'ScriptObjectLevelPermissions',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Generate object-level permissions.')
+
     parser.add_argument(
         u'--owner',
         dest=u'ScriptOwner',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script owner for the objects.')
+
     parser.add_argument(
         u'--use-database',
         dest=u'ScriptUseDatabase',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Generate USE DATABASE statement.')
 
     group_type_of_data = parser.add_mutually_exclusive_group()
     group_type_of_data.add_argument(
@@ -190,19 +208,22 @@ def parse_arguments(args):
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'SchemaOnly',
-        default=u'SchemaOnly')
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contains schema only.')
     group_type_of_data.add_argument(
         u'--data-only',
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'DataOnly',
-        default=u'SchemaOnly')
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contains data only.')
     group_type_of_data.add_argument(
         u'--schema-and-data',
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'SchemaAndData',
-        default=u'SchemaOnly')
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contain schema and data.')
 
     group_create_drop = parser.add_mutually_exclusive_group()
     group_create_drop.add_argument(
@@ -210,26 +231,30 @@ def parse_arguments(args):
         dest=u'ScriptCreate',
         action=u'store_const',
         const=u'ScriptCreate',
-        default=u'ScriptCreate')
+        default=u'ScriptCreate',
+        help=u'Script object CREATE statements.')
     group_create_drop.add_argument(
         u'--script-drop',
         dest=u'ScriptCreate',
         action=u'store_const',
         const=u'ScriptDrop',
-        default=u'ScriptCreate')
+        default=u'ScriptCreate',
+        help=u'Script object DROP statements')
     group_create_drop.add_argument(
         u'--script-drop-create',
         dest=u'ScriptCreate',
         action=u'store_const',
         const=u'ScriptCreateDrop',
-        default=u'ScriptCreate')
+        default=u'ScriptCreate',
+        help=u'Script object CREATE and DROP statements.')
 
     parser.add_argument(
         u'--statistics',
         dest=u'ScriptStatistics',
         action=u'store_const',
         const=u'ScriptStatsAll',
-        default=u'ScriptStatsNone')
+        default=u'ScriptStatsNone',
+        help=u'Script all statistics.')
 
     parser.add_argument(
         u'--target-server-version',
@@ -244,7 +269,8 @@ def parse_arguments(args):
             'vNext',
             'AzureDB',
             'AzureDW'],
-        default=u'2016')
+        default=u'2016',
+        help=u'Script only features compatible with the specified SQL Version.')
 
     parser.add_argument(
         u'--target-server-edition',
@@ -255,81 +281,91 @@ def parse_arguments(args):
             u'Express',
             u'Enterprise',
             u'Stretch'],
-        default=u'Enterprise')
+        default=u'Enterprise',
+        help=u'Script only features compatible with the specified SQL Server database edition.')
+
     parser.add_argument(
         u'--database-engine-type',
-        dest=u'ScriptForTheDatabaseEngineType',
-        help=argparse.SUPPRESS,
+        dest=u'ScriptForTheDatabaseEngineType', 
         # This parameter is determined based on engine edition and version in
         # the background. User cannot select it.
         action=u'store_const',
         const=u'SingleInstance',
-        default=u'SingleInstance'
-    )
+        default=u'SingleInstance',
+        help=argparse.SUPPRESS)
+
     # Table/View Options
     parser.add_argument(
         u'--change-tracking',
         dest=u'ScriptChangeTracking',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the change tracking information.')
+
     parser.add_argument(
         u'--check-constraints',
         dest=u'ScriptCheckConstraints',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the check constraints for each table or view scripted.')
+
     parser.add_argument(
         u'--data-compressions',
         dest=u'ScriptDataCompressionOptions',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the data compression information.')
+
     parser.add_argument(
         u'--foreign-keys',
         dest=u'ScriptForeignKey',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the foreign keys for each table scripted.')
+
     parser.add_argument(
         u'--full-text-indexes',
         dest=u'ScriptFullTextIndexes',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the full-text indexes for each table or indexed view scripted.')
+
     parser.add_argument(
         u'--indexes',
         dest=u'ScriptIndexes',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the indexes (XML and clustered) for each table or indexed view scripted.')
+
     parser.add_argument(
         u'--primary-keys',
         dest=u'ScriptPrimaryKeys',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the primary keys for each table or view scripted.')
+
     parser.add_argument(
         u'--triggers',
         dest=u'ScriptTriggers',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the triggers for each table or view scripted.')
+
     parser.add_argument(
         u'--unique-keys',
         dest=u'ScriptUniqueKeys',
         action=u'store_true',
-        help=u'',
-        default=False)
+        default=False,
+        help=u'Script the unique keys for each table or view scripted.')
 
     # Configuration Options.
     parser.add_argument(
         u'--display-progress',
         dest=u'DisplayProgress',
         action=u'store_true',
-        help=u'',
-        default=False)
-    
+        default=False,
+        help=u'Display scripting progress.')
+
     parameters = parser.parse_args(args)
     
     if parameters.Server:
@@ -354,6 +390,7 @@ def get_connection_string_from_environment(parameters):
 
     return False
 
+
 def build_connection_string(parameters):
     """
         Build connection string.
@@ -361,7 +398,7 @@ def build_connection_string(parameters):
     connection_string = u'Server={};'.format(parameters.Server)
     if parameters.Database:
         connection_string += u'Database={};'.format(parameters.Database)
-    
+
     # Standard connection if user id is supplied.
     if parameters.UserId:
         connection_string += u'User Id={};'.format(parameters.UserId)
@@ -373,8 +410,9 @@ def build_connection_string(parameters):
     
     else:
         connection_string += u'Integrated Security=True;'
-    
+
     parameters.ConnectionString = connection_string
+
 
 def map_server_options(parameters):
     """
