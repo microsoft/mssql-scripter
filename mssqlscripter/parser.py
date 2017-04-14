@@ -5,7 +5,11 @@
 
 import argparse
 import getpass
+import os
 import sys
+
+MSSQL_SCRIPTER_CONNECTION_STRING = u'MSSQL_SCRIPTER_CONNECTION_STRING'
+MSSQL_SCRIPTER_PASSWORD = u'MSSQL_SCRIPTER_PASSWORD'
 
 def parse_arguments(args):
     """
@@ -15,7 +19,7 @@ def parse_arguments(args):
         prog=u'mssql-scripter',
         description=u'mssql-scripter tool used for scripting out databases')
 
-    group_connection_options = parser.add_mutually_exclusive_group(required=True)
+    group_connection_options = parser.add_mutually_exclusive_group()
     group_connection_options.add_argument(
         u'--connection-string',
         dest=u'ConnectionString',
@@ -328,12 +332,27 @@ def parse_arguments(args):
     
     parameters = parser.parse_args(args)
     
-    if not parameters.ConnectionString:
+    if parameters.Server:
         build_connection_string(parameters)
+    elif parameters.ConnectionString is None:
+        # Check environment variable for connection string.
+        if not get_connection_string_from_environment(parameters):
+            sys.stdout.write(u'Connection string was not supplied nor found in the environment variable.')
+            sys.exit()
 
     map_server_options(parameters)
 
     return parameters
+
+def get_connection_string_from_environment(parameters):
+    """
+        Get connection string from environment variable.
+    """
+    if MSSQL_SCRIPTER_CONNECTION_STRING in os.environ:
+        parameters.ConnectionString = os.environ[MSSQL_SCRIPTER_CONNECTION_STRING]
+        return True
+
+    return False
 
 def build_connection_string(parameters):
     """
@@ -346,7 +365,10 @@ def build_connection_string(parameters):
     # Standard connection if user id is supplied.
     if parameters.UserId:
         connection_string += u'User Id={};'.format(parameters.UserId)
-        # Prompt for password if not supplied.
+        # If no password supplied, check for environment variable.
+        if parameters.Password is None and MSSQL_SCRIPTER_PASSWORD in os.environ:
+            parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD ]
+
         connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
     
     else:
