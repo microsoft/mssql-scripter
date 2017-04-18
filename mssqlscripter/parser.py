@@ -373,7 +373,7 @@ def parse_arguments(args):
     elif parameters.ConnectionString is None:
         # Check environment variable for connection string.
         if not get_connection_string_from_environment(parameters):
-            sys.stdout.write(u'Please specify connection information using --connection-string or --server and/or --database --user')
+            sys.stdout.write(u'Please specify connection information using --connection-string or --server and/or --database --user\n')
             sys.exit()
 
     map_server_options(parameters)

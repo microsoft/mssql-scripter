@@ -15,13 +15,9 @@ TOOLS_SERVICE_DIR = os.path.abspath(
         u'..',
         u'sqltoolsservice'))
 
-if (not os.path.exists(TOOLS_SERVICE_DIR)):
+if not os.path.exists(TOOLS_SERVICE_DIR):
     # Production mode.
-    for path in site.getsitepackages():
-        if (path.endswith(u'site-packages')):
-            TOOLS_SERVICE_DIR = os.path.join(
-                path, u'mssqlscripter', u'sqltoolsservice')
-            break
+    TOOLS_SERVICE_DIR = os.path.join(site.getusersitepackages(), u'mssqlscripter', u'sqltoolsservice')
 
 
 def get_sql_tools_service_path():
