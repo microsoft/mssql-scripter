@@ -7,7 +7,7 @@ from __future__ import print_function
 
 import sys
 import os
-import sqltoolsservicesetup
+import dev_sqltoolsservicesetup
 from subprocess import check_call, CalledProcessError
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -29,11 +29,11 @@ def exec_command(command):
 
 
 def install_sqltoolsservice():
-    download_url = sqltoolsservicesetup.get_download_url()
+    download_url = dev_sqltoolsservicesetup.get_download_url()
 
     if (download_url):
         # This platform supports it, install into the repo
-        sqltoolsservicesetup.install(download_url, tools_service_target_dir)
+        dev_sqltoolsservicesetup.install_sqltoolsservice(download_url, tools_service_target_dir)
         print('Sql Tools Service was succesfully installed.')
         return
     print('Error: Sql Tools Service is not supported on this platform.')
