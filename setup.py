@@ -31,57 +31,57 @@ class Install_Native_Dependencies(install):
             sqltoolsservicesetup.install(sqltoolsservice_url)
             return
 
-        raise EnvironmentError(u'Installation unsuccesful: Sql Tools service is not supported on this platform.')
+        raise EnvironmentError('Installation unsuccesful: Sql Tools service is not supported on this platform.')
 
 CLASSIFIERS = [
-    u'Development Status :: 2 - Pre-Alpha',
-    u'Intended Audience :: Developers',
-    u'Intended Audience :: System Administrators',
-    u'Programming Language :: Python',
-    u'Programming Language :: Python :: 2',
-    u'Programming Language :: Python :: 2.7',
-    u'Programming Language :: Python :: 3',
-    u'Programming Language :: Python :: 3.4',
-    u'Programming Language :: Python :: 3.5',
-    u'Programming Language :: Python :: 3.6',
-    u'License :: OSI Approved :: MIT License',
+    'Development Status :: 2 - Pre-Alpha',
+    'Intended Audience :: Developers',
+    'Intended Audience :: System Administrators',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    'License :: OSI Approved :: MIT License',
 ]
 
 DEPENDENCIES = [
-    u'pip',
-    u'future',
-    u'site'
+    'pip',
+    'future',
+    'site'
 ]
 
 SETUP_DEPENDENCIES = [
-    u'requests',
-    u'future'
+    'requests',
+    'future'
 ]
 
 if sys.version_info < (3, 4):
-    DEPENDENCIES.append(u'enum34')
+    DEPENDENCIES.append('enum34')
 
 setup(
     setup_requires=SETUP_DEPENDENCIES,
     install_requires=DEPENDENCIES,
-    name=u'mssql-scripter',
+    name='mssql-scripter',
     version=VERSION,
-    description=u'Microsoft SQL Scripter Command-Line Tool',
-    license=u'MIT',
-    author=u'Microsoft Corporation',
-    author_email=u'sqlxplatclieng@microsoft.com',
-    url=u'https://github.com/Microsoft/sql-xplat-cli/',
+    description='Microsoft SQL Scripter Command-Line Tool',
+    license='MIT',
+    author='Microsoft Corporation',
+    author_email='sqlxplatclieng@microsoft.com',
+    url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
     classifiers=CLASSIFIERS,
     include_package_data=True,
     scripts=[
-        u'mssql-scripter',
-        u'mssql-scripter.bat'
+        'mssql-scripter',
+        'mssql-scripter.bat'
     ],
     packages=[
-        u'mssqlscripter',
-        u'mssqlscripter.jsonrpc',
-        u'mssqlscripter.jsonrpc.contracts'],
+        'mssqlscripter',
+        'mssqlscripter.jsonrpc',
+        'mssqlscripter.jsonrpc.contracts'],
         
-    cmdclass={u'install': Install_Native_Dependencies},
+    cmdclass={'install': Install_Native_Dependencies},
 )
