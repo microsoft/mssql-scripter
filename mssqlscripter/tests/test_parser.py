@@ -35,7 +35,7 @@ class TestParser(unittest.TestCase):
             Verify parser picks up connection string and password from environment variable.
         """
         os.environ[parser.MSSQL_SCRIPTER_CONNECTION_STRING] = u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;'
-        parameters = parser.parse_arguments(None)
+        parameters = parser.parse_arguments(['--append'])
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username']
