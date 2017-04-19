@@ -5,26 +5,26 @@ The Microsoft Sql Scripter projects sources are located on GitHub (https://githu
 -	Fork the  https://github.com/Microsoft/sql-xplat-cli/ repository into your private GitHub account
 -	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli/ repository to get your code changes merged into the project repository.
 
-##Preparing your machine
+## Preparing your machine
 1.	Install Python 3.5.x from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
 2.	Clone your repository and check out the master branch.
 3.	Create a new virtual environment “env” for Python 3.5 in the root of your clone. You can do this by running:
 
-  #####Windows
+  ##### Windows
   ```BatchFile
   python -m venv <clone root>\env
   ```
-  #####OSX/Ubuntu (bash)
+  ##### OSX/Ubuntu (bash)
   ```Shell
   python –m venv <clone root>/env
   ```
 4.  Activate the env virtual environment by running:
 
-  #####Windows
+  ##### Windows
   ```BatchFile
   <clone root>\env\scripts\activate.bat
   ```
-  #####OSX/Ubuntu (bash)
+  ##### OSX/Ubuntu (bash)
   ```Shell
   . <clone root>/env/bin/activate
   ```
@@ -35,23 +35,23 @@ The Microsoft Sql Scripter projects sources are located on GitHub (https://githu
   ```
 6.  Add `<clone root>` to your PYTHONPATH environment variable:
 
-  #####Windows
+  ##### Windows
   ```BatchFile
   set PYTHONPATH=<clone root>;%PYTHONPATH%
   ```
-  #####OSX/Ubuntu (bash)
+  ##### OSX/Ubuntu (bash)
   ```Shell
   export PYTHONPATH=<clone root>:${PYTHONPATH}
   ```
 
 
-##Configuring your IDE
-####Visual Studio (Windows only)
+## Configuring your IDE
+#### Visual Studio (Windows only)
 1.	Install Python Tools for Visual Studio. As of 2/18/2016, the current version (PTVS 2.2) can be found at http://microsoft.github.io/PTVS/.
 2.	Open the sql-xplat-cli.pyproj project
 You should now be able to launch your project by pressing F5/start debugging
 
-####Visual Studio Code (Any platform)
+#### Visual Studio Code (Any platform)
 Experimental steps – still haven’t been able to get virtual environments to work well with VSCode
 
 1.	Install VS Code
@@ -59,28 +59,28 @@ Experimental steps – still haven’t been able to get virtual environments to 
 Debugging should now work (including stepping and setting breakpoints). 
 
 
-##Running CLI
-####Command line
+## Running CLI
+#### Command line
 1.  Activate your virtual environment if not already done
 
-  #####OSX/Ubuntu (bash):
+  ##### OSX/Ubuntu (bash):
   ```Shell
   source <clone root>/env/bin/activate
   ```
 
-  #####Windows:
+  ##### Windows:
   ```BatchFile
   <clone root>\env\scripts\activate.bat
   ```
 
 2.  Invoke the CLI using:
 
-  #####OSX/Ubuntu (bash):
+  ##### OSX/Ubuntu (bash):
   ```Shell
   mssql-scripter
   ```
 
-  #####Windows:
+  ##### Windows:
   ```BatchFile
   <clone root>\mssql-scripter.bat 
   ```
@@ -106,8 +106,8 @@ Debugging should now work (including stepping and setting breakpoints).
 
   Additionally, you can run tests for all CLI tools and common modules using the `run_all_tests.bat` or `sh run_all_tests` script.
 
-####VS Code
+#### VS Code
   Under construction...
   
-####Visual Studio
+#### Visual Studio
   Select `Test > Windows > Test Explorer` and click `Run All` in the Test Explorer pane.
