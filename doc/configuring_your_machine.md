@@ -26,7 +26,7 @@ The Microsoft Sql Scripter projects sources are located on GitHub (https://githu
   ```
   ##### OSX/Ubuntu (bash)
   ```Shell
-  . <clone root>/env/bin/activate
+  sh <clone root>/env/bin/activate
   ```
 
 5.	Install the dependencies and load the command modules as local packages using pip.
@@ -110,4 +110,4 @@ Debugging should now work (including stepping and setting breakpoints).
   Under construction...
   
 #### Visual Studio
-  Select `Test > Windows > Test Explorer` and click `Run All` in the Test Explorer pane.
+ Under construction...
