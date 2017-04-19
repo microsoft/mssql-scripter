@@ -26,7 +26,7 @@ installing of Mssql-Scripter in both a virtual environment and a machine environ
 
     pip install --user mssql-scripter-0.1.1.dev0.tar.gz
 
-##### Running mssql-scripter
+#### Running mssql-scripter
 
 
     mssql-scripter -h
