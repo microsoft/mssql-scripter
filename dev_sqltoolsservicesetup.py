@@ -94,7 +94,7 @@ def get_download_url(run_time_id=_get_runtime_id()):
         return PLATFORM_FILE_NAMES[run_time_id]
 
 
-def install_sqltoolsservice(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
+def install_sqltoolsservice(download_file_path, target_directory):
     """
         Installs native sql tools service to either site-packages/mssql/sqltoolsservice or custom directory.
     """

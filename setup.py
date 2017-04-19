@@ -18,9 +18,6 @@ from setuptools.command.install import install
 
 VERSION = "0.1.1.dev"
 
-
-
-
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-07-2017/'
 
 
@@ -72,11 +69,16 @@ LINUX_DISTRO_WITH_VERSION = {
         },
 }
 try:
+    # Find site-packages for current user.
     site_packages_dir = site.getusersitepackages()
 except AttributeError:
-    # getusersitepackages() does not work in virtual environment for python 2.
-    pass
-
+    # Virtual environment mode. 
+    # Search for site-packages via pip's location in the virtual environment.
+    import pip
+    site_packages_dir = os.path.abspath(os.path.join(
+        os.path.abspath(pip.__file__),
+        '..',
+        '..'))
 
 TOOLS_SERVICE_TARGET_DIR = os.path.join(
     site_packages_dir, 'mssqlscripter', 'sqltoolsservice')
