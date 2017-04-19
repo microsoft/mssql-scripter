@@ -4,11 +4,11 @@ Testing local install
 installing of Mssql-Scripter in both a virtual environment and a machine environment. 
 
 #### Building local package
-1. Execute the following in <clone root>:
+1. Execute the following in \<clone root>:
 
-    python setup.py sdist
+        python setup.py sdist
     
-2. Delete the generated egg file in <clone root>:
+2. Delete the generated egg file in \<clone root>:
 
 ###### Windows
     rmdir /s mssql_scripter.egg-info
@@ -16,13 +16,13 @@ installing of Mssql-Scripter in both a virtual environment and a machine environ
     rm -rf mssql_scripter.egg-info
 
 #### Installing mssql-scripter package
-1. Execute the following in <clone root>/dist:
+1. Execute the following in \<clone root>/dist:
 
 ###### Virtual Environment
 
     pip install mssql-scripter-0.1.1.dev0.tar.gz
     
-###### User account
+###### User Account
 
     pip install --user mssql-scripter-0.1.1.dev0.tar.gz
 
