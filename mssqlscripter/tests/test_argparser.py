@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 import unittest
-import mssqlscripter.parser as parser
+import mssqlscripter.argparser as parser
 import os
 
 class TestParser(unittest.TestCase):

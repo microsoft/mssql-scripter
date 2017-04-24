@@ -72,8 +72,9 @@ try:
     # Find site-packages for current user.
     site_packages_dir = site.getusersitepackages()
 except AttributeError:
-    # Virtual environment mode. 
-    # Search for site-packages via pip's location in the virtual environment.
+    # When we are in a virtual environment, there is no distinction between a user or sys account as 
+    # there is only one site-packages for the python of that environment. 
+    # What we do is find where pip is installed in the virtual environment and install ourselves there.
     import pip
     site_packages_dir = os.path.abspath(os.path.join(
         os.path.abspath(pip.__file__),
@@ -272,6 +273,6 @@ setup(
         'mssqlscripter',
         'mssqlscripter.jsonrpc',
         'mssqlscripter.jsonrpc.contracts'],
-        
-    cmdclass={'install': Install_Native_Dependencies},
+    dependency_links=['/Users/beeboop/Documents/sql-xplat-cli/sqltoolsservicesetup/sqltoolsservice_macosx2.egg-info']
+    #cmdclass={'install': Install_Native_Dependencies},
 )
