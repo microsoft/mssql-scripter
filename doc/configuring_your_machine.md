@@ -1,6 +1,6 @@
 Setting up your development environment
 ========================================
-The Microsoft Sql Scripter projects sources are located on GitHub (https://github.com/Microsoft/sql-xplat-cli/). In order to contribute to the project, you are expected to: 
+The mssql-scripter projects sources are located on GitHub (https://github.com/Microsoft/sql-xplat-cli/). In order to contribute to the project, you are expected to: 
 -	Have a GitHub account. For Microsoft contributors, follow the guidelines on https://opensourcehub.microsoft.com/ to create, configure and link your account
 -	Fork the  https://github.com/Microsoft/sql-xplat-cli/ repository into your private GitHub account
 -	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli/ repository to get your code changes merged into the project repository.

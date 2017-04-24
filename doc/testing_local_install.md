@@ -1,7 +1,7 @@
 Testing local install
 =====================
  This guide will provide details on building and 
-installing of Mssql-Scripter in both a virtual environment and a machine environment. 
+installing of mssql-scripter in both a virtual environment and a machine environment. 
 
 #### Building local package
 1. Execute the following in \<clone root>:
