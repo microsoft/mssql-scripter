@@ -10,4 +10,4 @@ coverage run -a --concurrency=thread -m unittest discover -s mssqlscripter/jsonr
 coverage run -a --concurrency=thread -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
 coverage run -a --concurrency=thread -m unittest discover -s mssqlscripter/tests
 
-coverage report -m
+coverage report --include="./mssqlscripter/*"

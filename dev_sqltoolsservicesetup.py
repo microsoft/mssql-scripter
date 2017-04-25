@@ -61,19 +61,6 @@ LINUX_DISTRO_WITH_VERSION = {
             u'2.0': u'Ubuntu_16'
         },
 }
-try:
-    for path in site.getsitepackages():
-        if path.endswith(u'site-packages'):
-            site_packages_dir = path
-            break
-except AttributeError:
-    # getsitepackages() does not work in virtual environment for python 2.
-    pass
-
-
-TOOLS_SERVICE_TARGET_DIR = os.path.join(
-    site_packages_dir, u'mssqlscripter', u'sqltoolsservice')
-
 
 def _get_runtime_id(
         system=_platform.system(),
@@ -107,7 +94,7 @@ def get_download_url(run_time_id=_get_runtime_id()):
         return PLATFORM_FILE_NAMES[run_time_id]
 
 
-def install(download_file_path, target_directory=TOOLS_SERVICE_TARGET_DIR):
+def install_sqltoolsservice(download_file_path, target_directory):
     """
         Installs native sql tools service to either site-packages/mssql/sqltoolsservice or custom directory.
     """

@@ -4,7 +4,7 @@
 # --------------------------------------------------------------------------------------------
 import abc
 
-ABC = abc.ABCMeta(u'ABC', (object,), {})  # compatibile with Python 2 *and* 3.
+ABC = abc.ABCMeta('ABC', (object,), {})  # compatibile with Python 2 *and* 3.
 
 
 class Request(ABC):
