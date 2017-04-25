@@ -17,7 +17,7 @@ import sys
 import tarfile
 import zipfile
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-07-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-15-2017/'
 
 SUPPORTED_PLATFORMS = {
     'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',
@@ -33,7 +33,7 @@ SUPPORTED_PLATFORMS = {
 }
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'sqltoolsservice', 'native'))
+TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'sqltoolsservice', 'bin))
 
 def exec_command(command):
     """

@@ -93,7 +93,7 @@ ENV/
 
 # sqltoolsservice binaries
 /mssqlscripter/sqltoolsservice/*
-/nativesqltoolsservice/sqltoolsservice/native/*
+/sql-tools-service/sqltoolsservice/bin/*
 
 # VSCode configuration
 .vscode/*
