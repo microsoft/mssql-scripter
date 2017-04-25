@@ -44,7 +44,6 @@ setup(
     url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
     classifiers=CLASSIFIERS,
-    include_package_data=True,
     packages=[
         'sqltoolsservice'
     ],
