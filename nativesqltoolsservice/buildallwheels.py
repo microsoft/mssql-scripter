@@ -92,3 +92,4 @@ def build_sqltoolsservice_wheels(platforms):
 
 if __name__ == '__main__':
     build_sqltoolsservice_wheels(sys.argv[1:])
+    
