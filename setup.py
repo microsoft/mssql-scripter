@@ -273,6 +273,5 @@ setup(
         'mssqlscripter',
         'mssqlscripter.jsonrpc',
         'mssqlscripter.jsonrpc.contracts'],
-    dependency_links=['/Users/beeboop/Documents/sql-xplat-cli/sqltoolsservicesetup/sqltoolsservice_macosx2.egg-info']
     cmdclass={'install': Install_Native_Dependencies},
 )
