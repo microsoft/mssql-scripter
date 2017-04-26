@@ -7,7 +7,6 @@ from __future__ import print_function
 
 import sys
 import os
-import dev_sqltoolsservicesetup
 from subprocess import check_call, CalledProcessError
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -29,6 +28,8 @@ def exec_command(command):
 
 
 def install_sqltoolsservice():
+    import dev_sqltoolsservicesetup
+    
     download_url = dev_sqltoolsservicesetup.get_download_url()
 
     if (download_url):
