@@ -10,12 +10,6 @@ import os
 from subprocess import check_call, CalledProcessError
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-tools_service_target_dir = os.path.abspath(
-    os.path.join(
-        root_dir,
-        'mssqlscripter',
-        'sqltoolsservice'))
-
 
 def exec_command(command):
     try:
@@ -27,17 +21,16 @@ def exec_command(command):
         sys.exit(1)
 
 
-def install_sqltoolsservice():
-    import dev_sqltoolsservicesetup
+def install_mssqltoolsservice():
+    import dev_mssqltoolsservicesetup
     
-    download_url = dev_sqltoolsservicesetup.get_download_url()
-
-    if (download_url):
-        # This platform supports it, install into the repo
-        dev_sqltoolsservicesetup.install_sqltoolsservice(download_url, tools_service_target_dir)
-        print('Sql Tools Service was succesfully installed.')
+    mssqltoolsservice_package_name = dev_sqltoolsservicesetup.get_mssqltoolsservice_if_supported()
+    if mssqltoolsservice_package_name:
+        exec_command('pip install {}'.format(mssqltoolsservice_package_name))
+        print('{} was succesfully installed.'.format(mssqltoolsservice_package_name))
         return
-    print('Error: Sql Tools Service is not supported on this platform.')
+
+    print('Error: mssqltoolsservice is not supported on this platform.')
 
 
 print('Running dev setup...')
@@ -46,8 +39,8 @@ print('Root directory \'{}\'\n'.format(root_dir))
 # install general requirements.
 exec_command('pip install -r requirements.txt')
 
-# install platform specific sql tools service to repo.
-print('Installing native Sql Tools Service...')
-install_sqltoolsservice()
+# install mssqltoolsservice if this platform supports it.
+print('Installing mssqltoolsservice...')
+install_mssqltoolsservice()
 
 print('Finished dev setup.')

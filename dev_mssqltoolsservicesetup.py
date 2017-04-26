@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # --------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
@@ -7,12 +5,7 @@
 
 import os
 import platform as _platform
-import sys
 
-from setuptools import setup
-from setuptools.command.install import install
-
-VERSION = "0.1.1.dev0"
 # mssqltoolsservice version should be kept in sync with mssqlscripter.
 MSSQLTOOLSSERVICE_VERSION = "0.1.1.dev0"
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
@@ -158,56 +151,3 @@ def _get_runtime_id_helper(name, version):
             if version.startswith(supported_version):
                 return LINUX_DISTRO_WITH_VERSION[name][supported_version]
     return None
-    
-CLASSIFIERS = [
-    'Development Status :: 2 - Pre-Alpha',
-    'Intended Audience :: Developers',
-    'Intended Audience :: System Administrators',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.4',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
-    'License :: OSI Approved :: MIT License',
-]
-
-DEPENDENCIES = [
-    'pip==9.0.1',
-    'future==0.16.0',
-]
-
-if sys.version_info < (3, 4):
-    DEPENDENCIES.append('enum34')
-
-mssqltoolsservice = get_mssqltoolsservice_if_supported()
-
-if mssqltoolsservice:
-    DEPENDENCIES.append(mssqltoolsservice)
-
-else:
-    print('The required dependency "mssqltoolsservice" is not supported on this platform.')
-    sys.exit(1)
-
-setup(
-    install_requires=DEPENDENCIES,
-    name='mssql-scripter',
-    version=VERSION,
-    description='Microsoft SQL Scripter Command-Line Tool',
-    license='MIT',
-    author='Microsoft Corporation',
-    author_email='sqlxplatclieng@microsoft.com',
-    url='https://github.com/Microsoft/sql-xplat-cli/',
-    zip_safe=True,
-    classifiers=CLASSIFIERS,
-    include_package_data=True,
-    scripts=[
-        'mssql-scripter',
-        'mssql-scripter.bat'
-    ],
-    packages=[
-        'mssqlscripter',
-        'mssqlscripter.jsonrpc',
-        'mssqlscripter.jsonrpc.contracts'],
-)
