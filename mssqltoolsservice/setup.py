@@ -35,7 +35,7 @@ CLASSIFIERS = [
 
 setup(
     install_requires=DEPENDENCIES,
-    name='sqltoolsservice_{0}'.format(PLATFORM),
+    name='mssqltoolsservice_{0}'.format(PLATFORM),
     version=VERSION,
     description='Microsoft SQL Tools service',
     license='MIT',
@@ -44,7 +44,8 @@ setup(
     url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
     classifiers=CLASSIFIERS,
+    include_package_data=True,
     packages=[
-        'sqltoolsservice'
+        'mssqltoolsservice'
     ],
 )

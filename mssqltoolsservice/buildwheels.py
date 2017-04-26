@@ -33,7 +33,7 @@ SUPPORTED_PLATFORMS = {
 }
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'sqltoolsservice', 'bin))
+TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'mssqltoolsservice', 'bin'))
 
 def exec_command(command):
     """
