@@ -31,13 +31,13 @@ def main(args):
             prefix=u'mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
-    mssqltoolsservice_program = mssqltoolsservice.get_mssqltoolsservice_program()
+    sqltoolsservice_path = mssqltoolsservice.get_executable_path()
 
     try:
         # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(
             [
-                mssqltoolsservice_program,
+                sqltoolsservice_path,
                 u'--enable-logging'],
             bufsize=0,
             stdin=subprocess.PIPE,

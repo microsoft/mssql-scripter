@@ -9,7 +9,7 @@
 import os
 import platform
 
-def get_mssqltoolsservice_program():
+def get_executable_path():
     """
         Find mssqltoolsservice executable relative to this package.
     """
