@@ -9,10 +9,11 @@ from setuptools import setup
 import os
 import sys
 
+# Version must be in sync with mssqlscripter.
 VERSION = "0.1.1.dev0"
 # Find the platform we are building against.
 # This file should not be called directly.
-PLATFORM = os.environ['SQLTOOLSSERVICE_CURRENT_PLATFORM']
+PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
 
 DEPENDENCIES = [
     'wheel'
