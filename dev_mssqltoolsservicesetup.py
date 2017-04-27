@@ -66,16 +66,16 @@ def _get_runtime_id(
     """
     run_time_id = None
 
-    if (system == 'Windows'):
-        if (architecture == '32bit'):
+    if system == 'Windows':
+        if architecture == '32bit':
             run_time_id = 'Windows_7_86'
-        elif (architecture == '64bit'):
+        elif architecture == '64bit':
             run_time_id = 'Windows_7_64'
-    elif (system == 'Darwin'):
-        if (architecture == '64bit'):
+    elif system == 'Darwin':
+        if architecture == '64bit':
             run_time_id = 'OSX_10_11_64'
-    elif (system == 'Linux'):
-        if (architecture == '64bit'):
+    elif system == 'Linux':
+        if architecture == '64bit':
             run_time_id = _get_linux_distro_from_file()
 
     return run_time_id
