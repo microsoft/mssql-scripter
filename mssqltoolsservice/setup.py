@@ -36,7 +36,7 @@ setup(
     license='MIT',
     author='Microsoft Corporation',
     author_email='sqlxplatclieng@microsoft.com',
-    url='https://github.com/Microsoft/sql-xplat-cli/',
+    url='https://github.com/Microsoft/sqltoolsservice',
     zip_safe=True,
     classifiers=CLASSIFIERS,
     include_package_data=True,
