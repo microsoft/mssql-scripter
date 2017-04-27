@@ -15,10 +15,6 @@ VERSION = "0.1.1.dev0"
 # This file should not be called directly.
 PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
 
-DEPENDENCIES = [
-    'wheel'
-]
-
 CLASSIFIERS = [
     'Development Status :: 2 - Pre-Alpha',
     'Intended Audience :: Developers',
@@ -33,10 +29,8 @@ CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 
-
 setup(
-    install_requires=DEPENDENCIES,
-    name='mssqltoolsservice_{0}'.format(PLATFORM),
+    name='mssqltoolsservice_{}'.format(PLATFORM),
     version=VERSION,
     description='Microsoft SQL Tools service',
     license='MIT',
