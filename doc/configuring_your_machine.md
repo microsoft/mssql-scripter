@@ -29,9 +29,9 @@ The mssql-scripter projects sources are located on GitHub (https://github.com/Mi
   sh <clone root>/env/bin/activate
   ```
 
-5.	Install the dependencies and load the command modules as local packages using pip.
+5.	Install the dependencies using pip.
   ```Shell
-  python <clone root>/dev_setup.py
+  python <clone root>/dev_setup.py clean
   ```
 6.  Add `<clone root>` to your PYTHONPATH environment variable:
 

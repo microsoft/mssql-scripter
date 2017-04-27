@@ -87,12 +87,14 @@ def _get_runtime_id(
 
     return run_time_id
 
-def get_mssqltoolsservice_if_supported(run_time_id=_get_runtime_id()):
+def get_mssqltoolsservice_package_info(run_time_id=_get_runtime_id()):
     """
         Retrieve sql tools service package name for this platform if supported.
     """
     if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
         return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLTOOLSSERVICE_VERSION)
+        
+    raise EnvironmentError(u'mssqltoolsservice is not supported on this platform.')
 
 def _get_linux_distro_from_file(non_default_file=None):
     """
@@ -111,7 +113,6 @@ def _get_linux_distro_from_file(non_default_file=None):
     with open(os_release_info_file, 'r', encoding='utf-8') as os_release_file:
         content = os_release_file.read()
         return _get_linux_distro_runtime_id(content)
-
 
 def _get_linux_distro_runtime_id(content):
     """
@@ -144,7 +145,6 @@ def _get_linux_distro_runtime_id(content):
                 break
 
     return run_time_id
-
 
 def _get_runtime_id_helper(name, version):
     """
@@ -181,14 +181,11 @@ DEPENDENCIES = [
 if sys.version_info < (3, 4):
     DEPENDENCIES.append('enum34')
 
-mssqltoolsservice = get_mssqltoolsservice_if_supported()
+DEPENDENCIES.append(get_mssqltoolsservice_package_info())
 
-if mssqltoolsservice:
-    DEPENDENCIES.append(mssqltoolsservice)
-
-else:
-    print('The required dependency "mssqltoolsservice" is not supported on this platform.')
-    sys.exit(1)
+# Using a environment variable to communicate mssqltoolsservice package name for 
+# other modules that need that info like dev_setup.py.
+os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME'] = DEPENDENCIES[-1]
 
 setup(
     install_requires=DEPENDENCIES,

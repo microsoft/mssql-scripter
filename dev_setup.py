@@ -4,10 +4,11 @@
 # --------------------------------------------------------------------------------------------
 
 from __future__ import print_function
-
-import sys
-import os
 from subprocess import check_call, CalledProcessError
+
+import os
+import setup
+import sys
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
@@ -20,19 +21,6 @@ def exec_command(command):
         print(err, file=sys.stderr)
         sys.exit(1)
 
-
-def install_mssqltoolsservice():
-    import dev_mssqltoolsservicesetup
-    
-    mssqltoolsservice_package_name = dev_sqltoolsservicesetup.get_mssqltoolsservice_if_supported()
-    if mssqltoolsservice_package_name:
-        exec_command('pip install {}'.format(mssqltoolsservice_package_name))
-        print('{} was succesfully installed.'.format(mssqltoolsservice_package_name))
-        return
-
-    print('Error: mssqltoolsservice is not supported on this platform.')
-
-
 print('Running dev setup...')
 print('Root directory \'{}\'\n'.format(root_dir))
 
@@ -40,7 +28,9 @@ print('Root directory \'{}\'\n'.format(root_dir))
 exec_command('pip install -r requirements.txt')
 
 # install mssqltoolsservice if this platform supports it.
-print('Installing mssqltoolsservice...')
-install_mssqltoolsservice()
+mssqltoolsservice_package_name = os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME']
+print('Installing {}...'.format(mssqltoolsservice_package_name))
+# mssqltoolsservice package name is retrieved from environment variable set by setup.py.
+exec_command('pip install {}'.format(mssqltoolsservice_package_name))
 
 print('Finished dev setup.')
