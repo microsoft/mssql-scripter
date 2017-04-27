@@ -16,6 +16,7 @@ import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
 import mssqlscripter.utility as utility
+import mssqltoolsservice
 
 def main(args):
     """
@@ -31,13 +32,13 @@ def main(args):
             prefix=u'mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
-    sql_tools_service_path = utility.get_sql_tools_service_path()
+    mssqltoolsservice_program = mssqltoolsservice.get_mssqltoolsservice_program()
 
     try:
-        # Start the tools Service.
+        # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(
             [
-                sql_tools_service_path,
+                mssqltoolsservice_program,
                 u'--enable-logging'],
             bufsize=0,
             stdin=subprocess.PIPE,
