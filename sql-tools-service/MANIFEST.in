@@ -1,4 +1,0 @@
-include README.txt
-include LICENSE.txt
-include sqltoolsservice/native/*
-include sqltoolsservice/native/*/*

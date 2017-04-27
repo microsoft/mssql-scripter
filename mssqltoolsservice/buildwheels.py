@@ -19,6 +19,7 @@ import zipfile
 
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-15-2017/'
 
+# Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
     'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',
     'DEBIAN_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
@@ -33,7 +34,8 @@ SUPPORTED_PLATFORMS = {
 }
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'sqltoolsservice', 'bin))
+BUILD_DIRECTORY = os.path.abspath(os.path.join(CURRENT_DIRECTORY, 'build'))
+TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'mssqltoolsservice', 'bin'))
 
 def exec_command(command):
     """
@@ -65,30 +67,41 @@ def download_and_unzip(download_file_path, directory):
 
 def clean_up(directory):
     """
-        Remove unzipped native sql tools service.
+        Delete directory.
     """
-    shutil.rmtree(directory)
+    try:
+        shutil.rmtree(directory)
+    except Exception:
+        # Ignored, directory may not exist which is fine.
+        pass
 
 def build_sqltoolsservice_wheels(platforms):
     """
         For each supported platform, build a universal wheel.
     """
+    # Clean up dangling directories if previous run was interrupted.
+    clean_up(directory=TARGET_DIRECTORY)
+    clean_up(directory=BUILD_DIRECTORY)
+
     if not platforms:
             # Defaults to all supported platforms.
-        platforms = SUPPORTED_PLATFORMS
+        platforms = SUPPORTED_PLATFORMS.keys()
 
+    print(u'Generating .whl files for the following platforms: {}'.format(platforms))
     for platform in platforms:
         if platform not in SUPPORTED_PLATFORMS:
             print(u'{} is not a supported platform'.format(platform))
             break
         # Set environment variable to communicate current platform to setup.py.
-        os.environ[u'SQLTOOLSSERVICE_CURRENT_PLATFORM'] = platform
+        os.environ[u'MSSQLTOOLSSERVICE_PLATFORM'] = platform
+
         print(u'Calling setup bdist_wheel for platform:{}'.format(platform))
         download_and_unzip(SUPPORTED_PLATFORMS[platform], directory=TARGET_DIRECTORY)
         exec_command(u'python setup.py bdist_wheel')
-        print(u'Cleaning up native directory for platform:{}'.format(platform))
-        clean_up(directory=TARGET_DIRECTORY)
 
+        print(u'Cleaning up mssqltoolservice and build directory for platform:{}'.format(platform))
+        clean_up(directory=TARGET_DIRECTORY)
+        clean_up(directory=BUILD_DIRECTORY)
 
 if __name__ == '__main__':
     build_sqltoolsservice_wheels(sys.argv[1:])

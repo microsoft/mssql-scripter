@@ -9,14 +9,11 @@ from setuptools import setup
 import os
 import sys
 
+# Version must be in sync with mssqlscripter.
 VERSION = "0.1.1.dev0"
 # Find the platform we are building against.
 # This file should not be called directly.
-PLATFORM = os.environ['SQLTOOLSSERVICE_CURRENT_PLATFORM']
-
-DEPENDENCIES = [
-    'wheel'
-]
+PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
 
 CLASSIFIERS = [
     'Development Status :: 2 - Pre-Alpha',
@@ -32,19 +29,18 @@ CLASSIFIERS = [
     'License :: OSI Approved :: MIT License',
 ]
 
-
 setup(
-    install_requires=DEPENDENCIES,
-    name='sqltoolsservice_{0}'.format(PLATFORM),
+    name='mssqltoolsservice_{}'.format(PLATFORM),
     version=VERSION,
     description='Microsoft SQL Tools service',
     license='MIT',
     author='Microsoft Corporation',
     author_email='sqlxplatclieng@microsoft.com',
-    url='https://github.com/Microsoft/sql-xplat-cli/',
+    url='https://github.com/Microsoft/sqltoolsservice',
     zip_safe=True,
     classifiers=CLASSIFIERS,
+    include_package_data=True,
     packages=[
-        'sqltoolsservice'
+        'mssqltoolsservice'
     ],
 )
