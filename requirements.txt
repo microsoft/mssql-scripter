@@ -8,3 +8,4 @@ requests == 2.13.0
 #Development requirements.
 coverage == 4.3.4
 wheel == 0.29.0
+twine == 1.8.1

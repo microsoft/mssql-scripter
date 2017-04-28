@@ -36,9 +36,7 @@ def main(args):
     try:
         # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(
-            [
-                sqltoolsservice_path,
-                u'--enable-logging'],
+            sqltoolsservice_path,
             bufsize=0,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE)

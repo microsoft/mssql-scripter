@@ -12,9 +12,9 @@ import sys
 from setuptools import setup
 from setuptools.command.install import install
 
-VERSION = "0.1.1.dev0"
-# mssqltoolsservice version should be kept in sync with mssqlscripter.
-MSSQLTOOLSSERVICE_VERSION = "0.1.1.dev0"
+# This version number is in place in two places and must be in sync with mssqltoolsservice's version in setup.py.
+MSSQLSCRIPTER_VERSION = "0.1.1.alpha1"
+
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
     'CentOS_7',
@@ -92,7 +92,7 @@ def get_mssqltoolsservice_package_info(run_time_id=_get_runtime_id()):
         Retrieve sql tools service package name for this platform if supported.
     """
     if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
-        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLTOOLSSERVICE_VERSION)
+        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLSCRIPTER_VERSION)
         
     raise EnvironmentError(u'mssqltoolsservice is not supported on this platform.')
 
@@ -190,7 +190,7 @@ os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME'] = DEPENDENCIES[-1]
 setup(
     install_requires=DEPENDENCIES,
     name='mssql-scripter',
-    version=VERSION,
+    version=MSSQLSCRIPTER_VERSION,
     description='Microsoft SQL Scripter Command-Line Tool',
     license='MIT',
     author='Microsoft Corporation',

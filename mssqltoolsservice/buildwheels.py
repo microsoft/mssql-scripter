@@ -37,12 +37,12 @@ CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'
 BUILD_DIRECTORY = os.path.abspath(os.path.join(CURRENT_DIRECTORY, 'build'))
 TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'mssqltoolsservice', 'bin'))
 
-def exec_command(command):
+def exec_command(command, directory=CURRENT_DIRECTORY):
     """
         Execute command.
     """
     try:
-        check_call(command.split(), cwd=CURRENT_DIRECTORY)
+        check_call(command.split(), cwd=directory)
     except CalledProcessError as err:
         print(err, file=sys.stderr)
         sys.exit(1)
