@@ -22,6 +22,7 @@ def register_or_upload_to_pypi(options):
         print('Please provide a supported action (register or upload).')
         return
 
+    action = options[0]
     repository = ''
     if len(options) == 2:
         # We were provided a explicity repo to target.
