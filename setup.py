@@ -87,7 +87,7 @@ def _get_runtime_id(
 
     return run_time_id
 
-def get_mssqltoolsservice_package_info(run_time_id=_get_runtime_id()):
+def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
     """
         Retrieve sql tools service package name for this platform if supported.
     """
@@ -160,7 +160,7 @@ def _get_runtime_id_helper(name, version):
     return None
     
 CLASSIFIERS = [
-    'Development Status :: 2 - Pre-Alpha',
+    'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'Programming Language :: Python',
@@ -181,7 +181,7 @@ DEPENDENCIES = [
 if sys.version_info < (3, 4):
     DEPENDENCIES.append('enum34')
 
-DEPENDENCIES.append(get_mssqltoolsservice_package_info())
+DEPENDENCIES.append(get_mssqltoolsservice_package_name())
 
 # Using a environment variable to communicate mssqltoolsservice package name for 
 # other modules that need that info like dev_setup.py.

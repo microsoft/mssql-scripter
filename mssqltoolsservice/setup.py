@@ -16,7 +16,7 @@ MSSQTOOLSSERVICE_VERSION = "0.1.1.alpha1"
 PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
 
 CLASSIFIERS = [
-    'Development Status :: 2 - Pre-Alpha',
+    'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'Programming Language :: Python',
