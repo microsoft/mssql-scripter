@@ -7,4 +7,4 @@ Support is not provided to this package alone.
 
 More information can be found at: <https://github.com/Microsoft/sqltoolsservice>
 
-Microsoft Sql Scripter tool information: <https://github.com/Microsoft/sql-xplat-cli>
+mssql-scripter cli tool information: <https://github.com/Microsoft/sql-xplat-cli>
