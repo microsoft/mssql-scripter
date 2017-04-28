@@ -34,8 +34,9 @@ def register_or_upload_to_pypi(options):
         # Run twine action for mssqltoolsservice wheels.
         buildwheels.exec_command('twine {} {} {}'.format(action, wheel_name, repository), MSSQLTOOLSSERVICE_DIST_DIRECTORY)
 
+    mssqlscripter_sdist_name = os.listdir(MSSQLSCRIPTER_DIST_DIRECTORY)[0]
     # Run twine action for mssqlscripter.
-    buildwheels.exec_command('twine {} {} {}'.format(action, wheel_name, repository), MSSQLSCRIPTER_DIST_DIRECTORY)
+    buildwheels.exec_command('twine {} {} {}'.format(action, mssqlscripter_sdist_name, repository), MSSQLSCRIPTER_DIST_DIRECTORY)
     
 if __name__ == '__main__':
     register_or_upload_to_pypi(sys.argv[1:])
