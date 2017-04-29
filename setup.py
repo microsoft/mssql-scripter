@@ -13,7 +13,7 @@ from setuptools import setup
 from setuptools.command.install import install
 
 # This version number is in place in two places and must be in sync with mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = "0.1.1.alpha1"
+MSSQLSCRIPTER_VERSION = "0.1.1a4"
 
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
@@ -174,8 +174,8 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'pip==9.0.1',
     'future==0.16.0',
+    'wheel==0.29.0'
 ]
 
 if sys.version_info < (3, 4):
