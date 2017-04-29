@@ -10,6 +10,8 @@ should only be handled via mssql-scipter’s install.
 
 Support is not provided to this package alone.
 
-`Microsoft SQL Tools Service GitHub repository <https://github.com/Microsoft/sqltoolsservice>`_
+`Microsoft SQL Tools Service GitHub`_
+`mssql-scriper GitHub repository`_
 
-`mssql-scriper GitHub repository <https://github.com/Microsoft/sql-xplat-cli>`_
+.. _Microsoft SQL Tools Service GitHub repository: https://github.com/Microsoft/sqltoolsservice
+.. _mssql-scriper GitHub repository: https://github.com/Microsoft/sql-xplat-cli

@@ -7,18 +7,18 @@ experience for scripting SQL Server databases.
 Installation
 ------------
 
-::
+.. code:: bash
 
     $ pip install mssql-scripter
 
 Dependencies
------------------------------
+------------
 Upon installation, mssql-scripter will detect the operating system or distribution of the host to install the mssqltoolsservice, 
 a platform specific native dependency. Due to this native dependency being detected during the setup.py install, 
 it is recommended that wheel caches not be shared amongst different operating system platforms and distributions. 
 If you upgrade your operating system or distribution, please reinstall mssql-scripter with --no-cache-dir option. 
 
-::
+.. code:: bash
 
     $ pip install mssql-scripter --no-cache-dir
 
