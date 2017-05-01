@@ -4,6 +4,7 @@
 # --------------------------------------------------------------------------------------------
 
 import logging
+import logging.handlers
 import os
 
 
@@ -18,9 +19,10 @@ def get_config_log_file():
 
     return os.path.join(log_dir, u'mssql-scripter.log')
 
+scripter_logger = logging.getLogger('mssqlscripter')
+scripter_logger.setLevel(logging.DEBUG)
+handler = logging.handlers.RotatingFileHandler(get_config_log_file(), maxBytes=1024*1000, backupCount=10)
 
-logging.basicConfig(
-    filename=get_config_log_file(),
-    filemode=u'w',
-    format=u'%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.DEBUG)
+formatter = logging.Formatter(u'%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+scripter_logger.addHandler(handler)

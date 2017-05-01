@@ -50,9 +50,7 @@ class ScriptingRequest(Request):
             if response:
                 # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
-                
-                logger.debug(
-                    u'Scripting request received response: {}'.format(decoded_response))
+
                 if (isinstance(decoded_response, ScriptCompleteEvent) or 
                     isinstance(decoded_response, ScriptErrorEvent)):
                     self.finished = True
@@ -61,9 +59,7 @@ class ScriptingRequest(Request):
             return decoded_response
 
         except Exception as error:
-            # Log exception and return a scripting error event.
-            logger.debug(
-                u'Scripting request received a exception:{}'.format(error.args))
+            # Return a scripting error event.
             self.finished = True
             self.json_rpc_client.request_finished(self.id)
 

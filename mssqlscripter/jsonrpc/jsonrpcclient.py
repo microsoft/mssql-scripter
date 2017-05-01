@@ -5,11 +5,11 @@
 from __future__ import division
 from queue import Queue
 
-import logging
-import threading
+import copy
 import enum
 import json
 import logging
+import threading
 
 logger = logging.getLogger(u'mssqlscripter.jsonrpc.jsonrpcclient')
 
@@ -38,6 +38,7 @@ class JsonRpcClient(object):
             Starts the background threads to listen for responses and requests from the underlying
             streams. Encapsulated into it's own method for future async extensions without threads.
         """
+        logger.debug('Json Rpc client started.')
         self.request_thread = threading.Thread(
             target=self._listen_for_request,
             name=self.REQUEST_THREAD_NAME)
@@ -65,6 +66,7 @@ class JsonRpcClient(object):
             Remove request id response entry.
         """
         if id in self.response_map:
+            logger.debug('Request with id: {} has completed.'.format(id))
             del self.response_map[id]
 
     def get_response(self, id=0):
@@ -92,6 +94,10 @@ class JsonRpcClient(object):
                 # Block until queue contains a request.
                 request = self.request_queue.get()
 
+                # Clean out sensitive information for logging.
+                scrubbed_request = copy.deepcopy(request)
+                scrubbed_request['params']['ConnectionString'] = '***********'
+                logger.debug(scrubbed_request)
                 if request:
                     self.writer.send_request(
                         method=request[u'method'],
@@ -121,6 +127,7 @@ class JsonRpcClient(object):
         while not self.cancel:
             try:
                 response = self.reader.read_response()
+                logger.debug(response)
                 response_id_str = response.get(u'id')
                 if response_id_str:
                     response_id = int(response_id_str)
@@ -174,7 +181,8 @@ class JsonRpcClient(object):
 
         # close the underlying writer.
         self.writer.close()
-
+        logger.info('Shutting down Json rpc client.')
+        
 class ReadState(enum.Enum):
     Header = 1
     Content = 2
