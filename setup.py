@@ -5,6 +5,7 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+import io
 import os
 import platform as _platform
 import sys
@@ -13,7 +14,7 @@ from setuptools import setup
 from setuptools.command.install import install
 
 # This version number is in place in two places and must be in sync with mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = "0.1.1a4"
+MSSQLSCRIPTER_VERSION = "0.1.1a8"
 
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
@@ -64,55 +65,18 @@ LINUX_DISTRO_WITH_VERSION = {
         },
 }
 
-def _get_runtime_id(
-        system=_platform.system(),
-        architecture=_platform.architecture()[0],
-        version=_platform.version()):
+def _get_runtime_id_helper(name, version):
     """
-        Find supported run time id for current platform.
+        Checks if linux distro name and version match to a supported package.
     """
-    run_time_id = None
+    if name in LINUX_DISTRO_NO_VERSION:
+        return LINUX_DISTRO_NO_VERSION[name]
 
-    if system == 'Windows':
-        if architecture == '32bit':
-            run_time_id = 'Windows_7_86'
-        elif architecture == '64bit':
-            run_time_id = 'Windows_7_64'
-    elif system == 'Darwin':
-        if architecture == '64bit':
-            run_time_id = 'OSX_10_11_64'
-    elif system == 'Linux':
-        if architecture == '64bit':
-            run_time_id = _get_linux_distro_from_file()
-
-    return run_time_id
-
-def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
-    """
-        Retrieve sql tools service package name for this platform if supported.
-    """
-    if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
-        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLSCRIPTER_VERSION)
-        
-    raise EnvironmentError(u'mssqltoolsservice is not supported on this platform.')
-
-def _get_linux_distro_from_file(non_default_file=None):
-    """
-        Find linux distro based on
-        https://www.freedesktop.org/software/systemd/man/os-release.html.
-    """
-    os_release_info_file = None
-
-    if os.path.exists(non_default_file):
-        os_release_info_file = non_default_file
-    elif os.path.exists('/etc/os-release'):
-        os_release_info_file = '/etc/os-release'
-    elif os.path.exists('/usr/lib/os-release'):
-        os_release_info_file = '/usr/lib/os-release'
-
-    with open(os_release_info_file, 'r', encoding='utf-8') as os_release_file:
-        content = os_release_file.read()
-        return _get_linux_distro_runtime_id(content)
+    if name in LINUX_DISTRO_WITH_VERSION:
+        for supported_version in LINUX_DISTRO_WITH_VERSION[name]:
+            if version.startswith(supported_version):
+                return LINUX_DISTRO_WITH_VERSION[name][supported_version]
+    return None
 
 def _get_linux_distro_runtime_id(content):
     """
@@ -146,18 +110,57 @@ def _get_linux_distro_runtime_id(content):
 
     return run_time_id
 
-def _get_runtime_id_helper(name, version):
+def _get_linux_distro_from_file():
     """
-        Checks if linux distro name and version match to a supported package.
+        Find linux distro based on
+        https://www.freedesktop.org/software/systemd/man/os-release.html.
     """
-    if name in LINUX_DISTRO_NO_VERSION:
-        return LINUX_DISTRO_NO_VERSION[name]
+    os_release_info_file = None
 
-    if name in LINUX_DISTRO_WITH_VERSION:
-        for supported_version in LINUX_DISTRO_WITH_VERSION[name]:
-            if version.startswith(supported_version):
-                return LINUX_DISTRO_WITH_VERSION[name][supported_version]
-    return None
+    if os.path.exists('/etc/os-release'):
+        os_release_info_file = '/etc/os-release'
+    elif os.path.exists('/usr/lib/os-release'):
+        os_release_info_file = '/usr/lib/os-release'
+    else:
+        raise EnvironmentError('Error detecting Linux distro version')
+
+    with io.open(os_release_info_file, 'r', encoding='utf-8') as os_release_file:
+        content = os_release_file.read()
+        return _get_linux_distro_runtime_id(content)
+
+def _get_runtime_id(
+        system=_platform.system(),
+        architecture=_platform.architecture()[0],
+        version=_platform.version()):
+    """
+        Find supported run time id for current platform.
+    """
+    run_time_id = None
+
+    if system == 'Windows':
+        if architecture == '32bit':
+            run_time_id = 'Windows_7_86'
+        elif architecture == '64bit':
+            run_time_id = 'Windows_7_64'
+    elif system == 'Darwin':
+        if architecture == '64bit':
+            run_time_id = 'OSX_10_11_64'
+    elif system == 'Linux':
+        if architecture == '64bit':
+            run_time_id = _get_linux_distro_from_file()
+
+    return run_time_id
+
+
+def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
+    """
+        Retrieve sql tools service package name for this platform if supported.
+    """
+    if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
+        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLSCRIPTER_VERSION)
+        
+    raise EnvironmentError(u'mssqltoolsservice is not supported on this platform.')
+
     
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',

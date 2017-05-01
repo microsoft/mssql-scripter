@@ -3,7 +3,9 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+from __future__ import print_function
 from subprocess import check_call, CalledProcessError
+import sys
 
 def exec_command(command, directory):
     """
