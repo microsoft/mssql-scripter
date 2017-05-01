@@ -36,11 +36,15 @@ def main(args):
         import mssqltoolsservice
         sqltoolsservice_path = mssqltoolsservice.get_executable_path()
 
+    sqltoolsservice_executable = [sqltoolsservice_path]
+
+    if parameters.EnableLogging:
+        sqltoolsservice_executable.append('--enable-logging')
+
     try:
         # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(
-            [sqltoolsservice_path,
-            '--enable-logging' if parameters.EnableLogging else ''],
+            sqltoolsservice_executable,
             bufsize=0,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE)
