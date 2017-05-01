@@ -6,6 +6,7 @@
 from future.utils import iteritems
 from mssqlscripter.jsonrpc.contracts import Request
 
+import copy
 import logging
 
 logger = logging.getLogger(u'mssqlscripter.jsonrpc.contracts.scripting')
@@ -36,6 +37,9 @@ class ScriptingRequest(Request):
             u'Submitting scripting request id: {} with targetfile: {}'.format(
                 self.id, self.params.file_path))
 
+        scrubbed_parameters = copy.deepcopy(self.params)
+        scrubbed_parameters.connection_string = '*********'
+        logger.debug(scrubbed_parameters.format())
         self.json_rpc_client.submit_request(
             self.METHOD_NAME, self.params.format(), self.id)
 
@@ -48,6 +52,7 @@ class ScriptingRequest(Request):
             decoded_response = None
 
             if response:
+                logger.debug(response)
                 # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
 

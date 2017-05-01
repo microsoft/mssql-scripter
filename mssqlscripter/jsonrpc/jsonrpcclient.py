@@ -5,7 +5,6 @@
 from __future__ import division
 from queue import Queue
 
-import copy
 import enum
 import json
 import logging
@@ -94,10 +93,6 @@ class JsonRpcClient(object):
                 # Block until queue contains a request.
                 request = self.request_queue.get()
 
-                # Clean out sensitive information for logging.
-                scrubbed_request = copy.deepcopy(request)
-                scrubbed_request['params']['ConnectionString'] = '***********'
-                logger.debug(scrubbed_request)
                 if request:
                     self.writer.send_request(
                         method=request[u'method'],
@@ -127,7 +122,6 @@ class JsonRpcClient(object):
         while not self.cancel:
             try:
                 response = self.reader.read_response()
-                logger.debug(response)
                 response_id_str = response.get(u'id')
                 if response_id_str:
                     response_id = int(response_id_str)
@@ -182,7 +176,7 @@ class JsonRpcClient(object):
         # close the underlying writer.
         self.writer.close()
         logger.info('Shutting down Json rpc client.')
-        
+
 class ReadState(enum.Enum):
     Header = 1
     Content = 2

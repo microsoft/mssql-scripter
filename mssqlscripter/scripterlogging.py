@@ -21,7 +21,7 @@ def get_config_log_file():
 
 scripter_logger = logging.getLogger('mssqlscripter')
 scripter_logger.setLevel(logging.DEBUG)
-handler = logging.handlers.RotatingFileHandler(get_config_log_file(), maxBytes=1024*1000, backupCount=10)
+handler = logging.handlers.RotatingFileHandler(get_config_log_file(), maxBytes=21024*1000, backupCount=10)
 
 formatter = logging.Formatter(u'%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
