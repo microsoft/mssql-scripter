@@ -366,6 +366,13 @@ def parse_arguments(args):
         default=False,
         help=u'Display scripting progress.')
 
+    parser.add_argument(
+        u'--enable-logging',
+        dest=u'EnableLogging',
+        action=u'store_true',
+        default=False,
+        help=u'Enable verbose logging.')
+
     parameters = parser.parse_args(args)
     
     if parameters.Server:
