@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------------------
 
 from __future__ import print_function
-from subprocess import check_call, CalledProcessError
 from future.standard_library import install_aliases
 install_aliases()
 from urllib.request import urlopen
@@ -15,6 +14,7 @@ import requests
 import shutil
 import sys
 import tarfile
+import utility
 import zipfile
 
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-15-2017/'
@@ -36,16 +36,6 @@ SUPPORTED_PLATFORMS = {
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 BUILD_DIRECTORY = os.path.abspath(os.path.join(CURRENT_DIRECTORY, 'build'))
 TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'mssqltoolsservice', 'bin'))
-
-def exec_command(command):
-    """
-        Execute command.
-    """
-    try:
-        check_call(command.split(), cwd=CURRENT_DIRECTORY)
-    except CalledProcessError as err:
-        print(err, file=sys.stderr)
-        sys.exit(1)
 
 def download_and_unzip(download_file_path, directory):
     """
@@ -97,7 +87,7 @@ def build_sqltoolsservice_wheels(platforms):
 
         print(u'Calling setup bdist_wheel for platform:{}'.format(platform))
         download_and_unzip(SUPPORTED_PLATFORMS[platform], directory=TARGET_DIRECTORY)
-        exec_command(u'python setup.py bdist_wheel')
+        utility.exec_command(u'python setup.py bdist_wheel', CURRENT_DIRECTORY)
 
         print(u'Cleaning up mssqltoolservice and build directory for platform:{}'.format(platform))
         clean_up(directory=TARGET_DIRECTORY)

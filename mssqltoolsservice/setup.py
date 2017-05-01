@@ -9,14 +9,14 @@ from setuptools import setup
 import os
 import sys
 
-# Version must be in sync with mssqlscripter.
-VERSION = "0.1.1.dev0"
+# This version number is in place in two places and must be in sync with mssqlscripter's version in setup.py.
+MSSQTOOLSSERVICE_VERSION = "0.1.1a12"
 # Find the platform we are building against.
 # This file should not be called directly.
 PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
 
 CLASSIFIERS = [
-    'Development Status :: 2 - Pre-Alpha',
+    'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Intended Audience :: System Administrators',
     'Programming Language :: Python',
@@ -31,8 +31,8 @@ CLASSIFIERS = [
 
 setup(
     name='mssqltoolsservice_{}'.format(PLATFORM),
-    version=VERSION,
-    description='Microsoft SQL Tools service',
+    version=MSSQTOOLSSERVICE_VERSION,
+    description='Microsoft SQL Tools Service',
     license='MIT',
     author='Microsoft Corporation',
     author_email='sqlxplatclieng@microsoft.com',

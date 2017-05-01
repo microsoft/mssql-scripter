@@ -15,7 +15,7 @@ import mssqlscripter.scripterlogging
 import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
-import mssqlscripter.utility as utility
+import mssqltoolsservice
 
 def main(args):
     """
@@ -31,14 +31,15 @@ def main(args):
             prefix=u'mssqlscripter_', delete=False).name
         parameters.FilePath = temp_file_path
 
-    sql_tools_service_path = utility.get_sql_tools_service_path()
+    sqltoolsservice_args = [mssqltoolsservice.get_executable_path()]
+
+    if parameters.EnableLogging:
+        sqltoolsservice_args.append('--enable-logging')
 
     try:
-        # Start the tools Service.
+        # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(
-            [
-                sql_tools_service_path,
-                u'--enable-logging'],
+            sqltoolsservice_args,
             bufsize=0,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE)
