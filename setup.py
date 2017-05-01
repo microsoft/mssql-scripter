@@ -14,7 +14,7 @@ from setuptools import setup
 from setuptools.command.install import install
 
 # This version number is in place in two places and must be in sync with mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = "0.1.1a11"
+MSSQLSCRIPTER_VERSION = "0.1.1a12"
 
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
