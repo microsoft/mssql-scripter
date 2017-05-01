@@ -14,5 +14,6 @@ def exec_command(command, directory):
     try:
         check_call(command.split(), cwd=directory)
     except CalledProcessError as err:
+        # Continue execution in scenarios where we may be bulk command execution.
         print(err, file=sys.stderr)
         pass

@@ -367,7 +367,7 @@ def parse_arguments(args):
         help=u'Display scripting progress.')
 
     parser.add_argument(
-        u'--enable-logging',
+        u'--enable-toolsservice-logging',
         dest=u'EnableLogging',
         action=u'store_true',
         default=False,
