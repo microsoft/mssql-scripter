@@ -27,12 +27,12 @@ def main(args):
         Main entry point to mssql-scripter.
 
     """
-    logger.info('Executing with Python :{}'.format(sys.version_info))
-    logger.info('Current system information: system={} architecture={} version={}'.format(platform.system(), platform.architecture()[0], platform.version()))
+    logger.info('Python Information :{}'.format(sys.version_info))
+    logger.info('System Information: system={} architecture={} version={}'.format(platform.system(), platform.architecture()[0], platform.version()))
 
     parameters = parser.parse_arguments(args)
     scrubbed_parameters = copy.deepcopy(parameters)
-    
+
     try:
         scrubbed_parameters.ConnectionString = '*******'
         scrubbed_parameters.Password = '********'

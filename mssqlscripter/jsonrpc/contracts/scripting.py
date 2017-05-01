@@ -67,7 +67,7 @@ class ScriptingRequest(Request):
             # Return a scripting error event.
             self.finished = True
             self.json_rpc_client.request_finished(self.id)
-
+            logger.debug('Scripting request received exception: {}'.format(str(error)))
             exception = {
                 u'operationId': self.id,
                 u'message': u'Scripting request encountered a exception',
