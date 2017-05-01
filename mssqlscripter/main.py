@@ -15,6 +15,7 @@ import mssqlscripter.scripterlogging
 import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
+import mssqltoolsservice
 
 def main(args):
     """
