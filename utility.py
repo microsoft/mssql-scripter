@@ -15,4 +15,4 @@ def exec_command(command, directory):
         check_call(command.split(), cwd=directory)
     except CalledProcessError as err:
         print(err, file=sys.stderr)
-        sys.exit(1)
+        pass
