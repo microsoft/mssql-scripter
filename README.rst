@@ -1,4 +1,4 @@
-mssql-scripter 1.0.0a
+mssql-scripter 1.0.0a0
 ============================
 
 We’re excited to introduce mssql-scripter, a multi-platform command line

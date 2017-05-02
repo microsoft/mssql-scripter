@@ -1,4 +1,4 @@
-mssqltoolsservice 1.0.0a
+mssqltoolsservice 1.0.0a0
 ===============================
 
 The platform specific mssqltoolsservice package provides external
