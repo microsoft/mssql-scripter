@@ -11,10 +11,51 @@ import platform as _platform
 import sys
 
 from setuptools import setup
-from setuptools.command.install import install
 
-# This version number is in place in two places and must be in sync with mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = "0.1.1a12"
+# This version number is in place in two places and must be in sync with
+# mssqltoolsservice's version in setup.py.
+MSSQLSCRIPTER_VERSION = "0.1.1a14"
+
+# If we have the source, validate our setup version matches source version.
+# This will prevent uploading releases with mismatched versions. This will
+# also ensure mssqlscripter's version is in sync with mssqltoolsservice.
+try:
+    with open('mssqlscripter/__init__.py', 'r', encoding='utf-8') as f:
+        mssqlscripter_info = f.read()
+    with open('mssqltoolsservice/mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
+        mssqltoolsservice_info = f.read()
+except OSError:
+    pass
+else:
+    import re
+    import sys
+    # Use regex to parse for version.
+    scripter_version = re.search(
+        r'__version__\s*=\s*[\'"](.+?)[\'"]',
+        mssqlscripter_info)
+    toolsservice_version = re.search(
+        r'__version__\s*=\s*[\'"](.+?)[\'"]',
+        mssqltoolsservice_info)
+
+    if not scripter_version:
+        print('Could not find __version__ in mssqlscripter/__init__.py')
+        sys.exit(1)
+    if not toolsservice_version:
+        print(
+            'Could not find __version__ in mssqltoolsservice/mssqltoolsservice/__init__.py')
+        sys.exit(1)
+    # Validate mssqlscripter source and setup versions.
+    if scripter_version.group(1) != MSSQLSCRIPTER_VERSION:
+        print('mssqlscripter version mismatch, source = "{}"; setup = "{}"'.format(
+            scripter_version.group(1), MSSQLSCRIPTER_VERSION))
+        sys.exit(1)
+    # Validate mssqlscripter version with mssqltoolsservice.
+    if scripter_version.group(1) != toolsservice_version.group(1):
+        print(
+            'mssqltoolsservice version mismatch, mssqscripter = "{}"; mssqltoolsservice = "{}"'.format(
+                scripter_version.group(1),
+                toolsservice_version.group(1)))
+        sys.exit(1)
 
 MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
@@ -23,10 +64,10 @@ MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
     'Fedora_23',
     'openSUSE_13_2',
     'OSX_10_11_64',
-    'RHEL_7',  
+    'RHEL_7',
     'Ubuntu_14',
-    'Ubuntu_16',    
-    'Windows_7_64',  
+    'Ubuntu_16',
+    'Windows_7_64',
     'Windows_7_86'
 ]
 
@@ -65,6 +106,7 @@ LINUX_DISTRO_WITH_VERSION = {
         },
 }
 
+
 def _get_runtime_id_helper(name, version):
     """
         Checks if linux distro name and version match to a supported package.
@@ -77,6 +119,7 @@ def _get_runtime_id_helper(name, version):
             if version.startswith(supported_version):
                 return LINUX_DISTRO_WITH_VERSION[name][supported_version]
     return None
+
 
 def _get_linux_distro_runtime_id(content):
     """
@@ -110,6 +153,7 @@ def _get_linux_distro_runtime_id(content):
 
     return run_time_id
 
+
 def _get_linux_distro_from_file():
     """
         Find linux distro based on
@@ -122,11 +166,12 @@ def _get_linux_distro_from_file():
     elif os.path.exists('/usr/lib/os-release'):
         os_release_info_file = '/usr/lib/os-release'
     else:
-        raise EnvironmentError('Error detecting Linux distro version')
+        raise EnvironmentError('Error detecting Linux distro version.')
 
     with io.open(os_release_info_file, 'r', encoding='utf-8') as os_release_file:
         content = os_release_file.read()
         return _get_linux_distro_runtime_id(content)
+
 
 def _get_runtime_id(
         system=_platform.system(),
@@ -157,11 +202,13 @@ def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
         Retrieve sql tools service package name for this platform if supported.
     """
     if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
-        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(run_time_id, MSSQLSCRIPTER_VERSION)
-        
-    raise EnvironmentError(u'mssqltoolsservice is not supported on this platform.')
+        return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(
+            run_time_id, MSSQLSCRIPTER_VERSION)
 
-    
+    raise EnvironmentError(
+        u'mssqltoolsservice is not supported on this platform.')
+
+
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
@@ -177,16 +224,16 @@ CLASSIFIERS = [
 ]
 
 DEPENDENCIES = [
-    'future==0.16.0',
-    'wheel==0.29.0'
+    'future>=0.16.0',
+    'wheel>=0.29.0'
 ]
 
 if sys.version_info < (3, 4):
-    DEPENDENCIES.append('enum34')
+    DEPENDENCIES.append('enum34>=1.1.6')
 
 DEPENDENCIES.append(get_mssqltoolsservice_package_name())
 
-# Using a environment variable to communicate mssqltoolsservice package name for 
+# Using a environment variable to communicate mssqltoolsservice package name for
 # other modules that need that info like dev_setup.py.
 os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME'] = DEPENDENCIES[-1]
 

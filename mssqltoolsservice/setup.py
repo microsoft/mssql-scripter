@@ -9,8 +9,33 @@ from setuptools import setup
 import os
 import sys
 
-# This version number is in place in two places and must be in sync with mssqlscripter's version in setup.py.
-MSSQTOOLSSERVICE_VERSION = "0.1.1a12"
+# This version number is in place in two places and must be in sync with
+# mssqlscripter's version in setup.py.
+MSSQLTOOLSSERVICE_VERSION = "0.1.1a14"
+
+# If we have source, validate version numbers match to prevent
+# uploading releases with mismatched versions.
+try:
+    with open('mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
+        content = f.read()
+except OSError:
+    pass
+else:
+    import re
+    import sys
+    # use regex to look for version.
+    m = re.search(r'__version__\s*=\s*[\'"](.+?)[\'"]', content)
+    if not m:
+        print('Could not find __version__ in mssqltoolsservice/__init__.py')
+        sys.exit(1)
+    if m.group(1) != MSSQLTOOLSSERVICE_VERSION:
+        print(
+            'mssqltoolsservice mismatch source = "{}"; setup = "{}"'.format(
+                m.group(1),
+                MSSQLTOOLSSERVICE_VERSION))
+        sys.exit(1)
+
+
 # Find the platform we are building against.
 # This file should not be called directly.
 PLATFORM = os.environ['MSSQLTOOLSSERVICE_PLATFORM']
@@ -31,7 +56,7 @@ CLASSIFIERS = [
 
 setup(
     name='mssqltoolsservice_{}'.format(PLATFORM),
-    version=MSSQTOOLSSERVICE_VERSION,
+    version=MSSQLTOOLSSERVICE_VERSION,
     description='Microsoft SQL Tools Service',
     license='MIT',
     author='Microsoft Corporation',
