@@ -26,15 +26,23 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="doc\README.md" />
+    <Content Include="doc\testing_local_install.md" />
     <Content Include="LICENSE.txt" />
+    <Content Include="MANIFEST.in" />
     <Content Include="mssql-scripter" />
     <Content Include="mssql-scripter.bat" />
     <Content Include="mssqlscripter\jsonrpc\contracts\tests\scripting_baselines\adventureworks2014_baseline.txt" />
+    <Content Include="mssqlscripter\jsonrpc\README.md" />
     <Content Include="mssqlscripter\README.md" />
-    <Content Include="README.txt" />
+    <Content Include="mssqltoolsservice\LICENSE.txt" />
+    <Content Include="mssqltoolsservice\MANIFEST.in" />
+    <Content Include="mssqltoolsservice\README.rst" />
+    <Content Include="mssqltoolsservice\setup.cfg" />
+    <Content Include="README.rst" />
     <Content Include="requirements.txt" />
     <Content Include="run_all_tests.bat" />
     <Content Include="run_all_tests.sh" />
+    <Content Include="setup.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dev_setup.py" />
@@ -53,10 +61,14 @@
     <Compile Include="mssqlscripter\sqltoolsclient.py" />
     <Compile Include="mssqlscripter\tests\test_argparser.py" />
     <Compile Include="mssqlscripter\tests\test_sqltoolsclient.py" />
-    <Compile Include="mssqlscripter\utility.py" />
     <Compile Include="mssqlscripter\__init__.py" />
     <Compile Include="mssqlscripter\__main__.py" />
+    <Compile Include="mssqltoolsservice\buildwheels.py" />
+    <Compile Include="mssqltoolsservice\mssqltoolsservice\__init__.py" />
+    <Compile Include="mssqltoolsservice\setup.py" />
+    <Compile Include="register_upload.py" />
     <Compile Include="setup.py" />
+    <Compile Include="utility.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
@@ -67,6 +79,8 @@
     <Folder Include="mssqlscripter\jsonrpc\contracts\tests\scripting_baselines" />
     <Folder Include="mssqlscripter\jsonrpc\tests" />
     <Folder Include="mssqlscripter\tests" />
+    <Folder Include="mssqltoolsservice\" />
+    <Folder Include="mssqltoolsservice\mssqltoolsservice\" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />

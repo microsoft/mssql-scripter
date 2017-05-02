@@ -11,4 +11,3 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 export PYTHONPATH="${DIR}:${PYTHONPATH}"
 
 python -m mssqlscripter "$@"
-
