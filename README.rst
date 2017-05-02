@@ -1,5 +1,5 @@
-mssql-scripter 0.1.1.alpha9
-===========================
+mssql-scripter 1.0.0a0
+============================
 
 We’re excited to introduce mssql-scripter, a multi-platform command line
 experience for scripting SQL Server databases.

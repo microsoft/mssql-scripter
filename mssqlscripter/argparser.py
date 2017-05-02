@@ -5,6 +5,7 @@
 
 import argparse
 import getpass
+import mssqlscripter
 import os
 import sys
 
@@ -18,7 +19,8 @@ def parse_arguments(args):
     """
     parser = argparse.ArgumentParser(
         prog=u'mssql-scripter',
-        description=u'mssql-scripter tool used for scripting out databases')
+        description=u'Microsoft SQL Server Scripter Command Line Tool. ' +
+            'Version {}'.format(mssqlscripter.__version__))
 
     group_connection_options = parser.add_mutually_exclusive_group()
     group_connection_options.add_argument(
@@ -372,6 +374,11 @@ def parse_arguments(args):
         action=u'store_true',
         default=False,
         help=u'Enable verbose logging.')
+
+    parser.add_argument(
+    u'--version',
+    action=u'version',
+    version='{}'.format(mssqlscripter.__version__))
 
     parameters = parser.parse_args(args)
     
