@@ -3,8 +3,11 @@
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
 
+import copy
 import io
+import logging
 import os
+import platform
 import subprocess
 import sys
 import tempfile
@@ -17,12 +20,27 @@ import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
 import mssqltoolsservice
 
+logger = logging.getLogger(u'mssqlscripter.main')
+
 def main(args):
     """
         Main entry point to mssql-scripter.
 
     """
+    logger.info('Python Information :{}'.format(sys.version_info))
+    logger.info('System Information: system={} architecture={} version={}'.format(platform.system(), platform.architecture()[0], platform.version()))
+
     parameters = parser.parse_arguments(args)
+    scrubbed_parameters = copy.deepcopy(parameters)
+
+    try:
+        scrubbed_parameters.ConnectionString = '*******'
+        scrubbed_parameters.Password = '********'
+    except AttributeError:
+        # Password was not given, using integrated auth.
+        pass
+
+    logger.info(scrubbed_parameters)
 
     temp_file_path = None
     if not parameters.FilePath:
@@ -36,6 +54,7 @@ def main(args):
     if parameters.EnableLogging:
         sqltoolsservice_args.append('--enable-logging')
 
+    logger.debug('Loading mssqltoolsservice with arguments {}'.format(sqltoolsservice_args))
     try:
         # Start mssqltoolsservice program.
         tools_service_process = subprocess.Popen(

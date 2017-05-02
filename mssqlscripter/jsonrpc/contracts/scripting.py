@@ -6,6 +6,7 @@
 from future.utils import iteritems
 from mssqlscripter.jsonrpc.contracts import Request
 
+import copy
 import logging
 
 logger = logging.getLogger(u'mssqlscripter.jsonrpc.contracts.scripting')
@@ -36,6 +37,9 @@ class ScriptingRequest(Request):
             u'Submitting scripting request id: {} with targetfile: {}'.format(
                 self.id, self.params.file_path))
 
+        scrubbed_parameters = copy.deepcopy(self.params)
+        scrubbed_parameters.connection_string = '*********'
+        logger.debug(scrubbed_parameters.format())
         self.json_rpc_client.submit_request(
             self.METHOD_NAME, self.params.format(), self.id)
 
@@ -48,11 +52,10 @@ class ScriptingRequest(Request):
             decoded_response = None
 
             if response:
+                logger.debug(response)
                 # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
-                
-                logger.debug(
-                    u'Scripting request received response: {}'.format(decoded_response))
+
                 if (isinstance(decoded_response, ScriptCompleteEvent) or 
                     isinstance(decoded_response, ScriptErrorEvent)):
                     self.finished = True
@@ -61,12 +64,10 @@ class ScriptingRequest(Request):
             return decoded_response
 
         except Exception as error:
-            # Log exception and return a scripting error event.
-            logger.debug(
-                u'Scripting request received a exception:{}'.format(error.args))
+            # Return a scripting error event.
             self.finished = True
             self.json_rpc_client.request_finished(self.id)
-
+            logger.debug('Scripting request received exception: {}'.format(str(error)))
             exception = {
                 u'operationId': self.id,
                 u'message': u'Scripting request encountered a exception',
