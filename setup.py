@@ -18,7 +18,7 @@ from setuptools.command.install import install
 
 VERSION = "0.1.1.dev"
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-07-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-25-2017/'
 
 
 PLATFORM_FILE_NAMES = {

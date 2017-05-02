@@ -11,7 +11,7 @@ import tarfile
 import zipfile
 
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-07-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-25-2017/'
 
 
 PLATFORM_FILE_NAMES = {

@@ -6,15 +6,16 @@
     <ProjectGuid>{f4bb6290-43f3-4f35-b26e-067c5ef8e64b}</ProjectGuid>
     <ProjectHome />
     <StartupFile>mssqlscripter\main.py</StartupFile>
-    <SearchPath />
+    <SearchPath>.</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
     <InterpreterVersion />
-    <CommandLineArguments>--connection-string "Server=bro-hb;Database=AdventureWorks2014;Integrated Security=true"</CommandLineArguments>
+    <CommandLineArguments>-S localhost -d AdventureWorks2014</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -37,7 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dev_setup.py" />
-    <Compile Include="mssqlscripter\jsonrpc\contracts\scripting.py" />
+    <Compile Include="dev_sqltoolsservicesetup.py" />
+    <Compile Include="mssqlscripter\argparser.py" />
+    <Compile Include="mssqlscripter\jsonrpc\contracts\scriptingservice.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\tests\test_scripting.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\__init__.py" />
     <Compile Include="mssqlscripter\jsonrpc\jsonrpcclient.py" />
@@ -45,17 +48,15 @@
     <Compile Include="mssqlscripter\jsonrpc\tests\test_jsonrpcclient.py" />
     <Compile Include="mssqlscripter\jsonrpc\__init__.py" />
     <Compile Include="mssqlscripter\main.py" />
-    <Compile Include="mssqlscripter\parser.py" />
     <Compile Include="mssqlscripter\scriptercallbacks.py" />
     <Compile Include="mssqlscripter\scripterlogging.py" />
     <Compile Include="mssqlscripter\sqltoolsclient.py" />
+    <Compile Include="mssqlscripter\tests\test_argparser.py" />
     <Compile Include="mssqlscripter\tests\test_sqltoolsclient.py" />
-    <Compile Include="mssqlscripter\tests\test_sqltoolsservicesetup.py" />
     <Compile Include="mssqlscripter\utility.py" />
     <Compile Include="mssqlscripter\__init__.py" />
     <Compile Include="mssqlscripter\__main__.py" />
     <Compile Include="setup.py" />
-    <Compile Include="sqltoolsservicesetup.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />

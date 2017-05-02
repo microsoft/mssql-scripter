@@ -16,12 +16,6 @@ def handle_response(response, display=False):
                 u'Scripting request submitted with request id: {}\n'.format(
                     response.operation_id))
 
-    def handle_script_error(response, display=False):
-        # Always display error messages
-        sys.stdout.write(
-            u'Scripting request: {} encountered error: {}\n'.format(
-                response.operation_id, response.diagnostic_message))
-
     def handle_script_plan_notification(response, display=False):
         if display:
             sys.stderr.write(
@@ -35,14 +29,18 @@ def handle_response(response, display=False):
                     response.status, response.count, response.total_count))
 
     def handle_script_complete(response, display=False):
-        if display:
+        if response.has_error:
+            # Always display error messages
+            sys.stdout.write(
+                    u'Scripting request: {} encountered error: {}\n'.format(
+                        response.operation_id, response.error_message))
+            sys.stdout.write(u'Error details: {}\n'.format(response.error_details))
+        elif display:
             sys.stderr.write(
-                u'Scripting request: {} completed\n'.format(
-                    response.operation_id))
+                u'Scripting request: {} completed\n'.format(response.operation_id))
 
     response_handlers = {
         u'ScriptResponse': handle_script_response,
-        u'ScriptErrorEvent': handle_script_error,
         u'ScriptPlanNotificationEvent': handle_script_plan_notification,
         u'ScriptProgressNotificationEvent': handle_script_progress_notification,
         u'ScriptCompleteEvent': handle_script_complete}
