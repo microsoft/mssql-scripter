@@ -9,7 +9,7 @@
 import os
 import platform
 
-__version__="1.0.0a1""
+__version__="1.0.1a""
 
 def get_executable_path():
     """

@@ -14,7 +14,7 @@ from setuptools import setup
 
 # This version number is in place in two places and must be in sync with
 # mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = "1.0.0a1"
+MSSQLSCRIPTER_VERSION = "1.0.1a"
 
 # If we have the source, validate our setup version matches source version.
 # This will prevent uploading releases with mismatched versions. This will
