@@ -20,9 +20,9 @@ MSSQLSCRIPTER_VERSION = '1.0.0a0'
 # This will prevent uploading releases with mismatched versions. This will
 # also ensure mssqlscripter's version is in sync with mssqltoolsservice.
 try:
-    with open('mssqlscripter/__init__.py', 'r', encoding='utf-8') as f:
+    with io.open('mssqlscripter/__init__.py', 'r', encoding='utf-8') as f:
         mssqlscripter_info = f.read()
-    with open('mssqltoolsservice/mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
+    with io.open('mssqltoolsservice/mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
         mssqltoolsservice_info = f.read()
 except OSError:
     pass

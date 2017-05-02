@@ -6,6 +6,7 @@
 # --------------------------------------------------------------------------------------------
 
 from setuptools import setup
+import io
 import os
 import sys
 
@@ -16,7 +17,7 @@ MSSQLTOOLSSERVICE_VERSION = '1.0.0a0'
 # If we have source, validate version numbers match to prevent
 # uploading releases with mismatched versions.
 try:
-    with open('mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
+    with io.open('mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
         content = f.read()
 except OSError:
     pass
