@@ -24,7 +24,7 @@ try:
         mssqlscripter_info = f.read()
     with io.open('mssqltoolsservice/mssqltoolsservice/__init__.py', 'r', encoding='utf-8') as f:
         mssqltoolsservice_info = f.read()
-except OSError:
+except IOError:
     pass
 else:
     import re
