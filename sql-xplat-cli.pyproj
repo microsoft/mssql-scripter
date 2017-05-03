@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dev_setup.py" />
-    <Compile Include="dev_sqltoolsservicesetup.py" />
     <Compile Include="mssqlscripter\argparser.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\scriptingservice.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\tests\test_scripting.py" />

@@ -35,7 +35,7 @@ class SqlToolsClientTest(unittest.TestCase):
         parameters = {
             u'FilePath': u'Sample_File_Path',
             u'ConnectionString': u'Sample_connection_string',
-            u'DatabaseObjects': None}
+            u'ScriptingObjects': None}
         request = tools_client.create_request(
             u'scripting_request', parameters)
 

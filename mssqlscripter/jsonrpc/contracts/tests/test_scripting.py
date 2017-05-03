@@ -39,7 +39,7 @@ class ScriptingRequestTests(unittest.TestCase):
                 request=request,
                 response_count=1,
                 plan_notification_count=1,
-                progress_count=375,
+                progress_count=1736,
                 complete_count=1)
 
             rpc_client.shutdown()
@@ -69,6 +69,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'method': u'scripting/scriptComplete',
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
+                u'sequenceNumber': u'3',
                 u'hasError': u'false',
                 u'errorMessage': u'',
                 u'errorDetails': u'',
@@ -80,6 +81,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'method': u'scripting/scriptProgressNotification',
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
+                u'sequenceNumber': u'2',
                 u'status': u'Completed',
                 u'completedCount': 3,
                 u'totalCount': 12,
@@ -93,6 +95,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'method': u'scripting/scriptPlanNotification',
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
+                u'sequenceNumber': u'1',
                 u'scriptingObjects': [
                     {
                         u'type': u'Database',

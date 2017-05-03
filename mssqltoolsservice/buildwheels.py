@@ -17,7 +17,7 @@ import tarfile
 import utility
 import zipfile
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-04-15-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-05-02-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {

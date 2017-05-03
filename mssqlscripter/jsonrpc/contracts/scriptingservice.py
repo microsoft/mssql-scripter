@@ -264,6 +264,7 @@ class ScriptingOptions(object):
 class ScriptCompleteEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
+        self.sequenceNumber = params[u'sequenceNumber']
         self.error_details = params[u'errorDetails']
         self.error_message = params[u'errorMessage']
         self.has_error = params[u'hasError']
@@ -274,6 +275,7 @@ class ScriptCompleteEvent(object):
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
+        self.sequenceNumber = params[u'sequenceNumber']
         self.scripting_objects = params[u'scriptingObjects']
         self.count = params[u'count']
 
@@ -281,6 +283,7 @@ class ScriptPlanNotificationEvent(object):
 class ScriptProgressNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
+        self.sequenceNumber = params[u'sequenceNumber']
         self.scripting_object = params[u'scriptingObject']
         self.status = params[u'status']
         self.completed_count = params[u'completedCount']
