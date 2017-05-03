@@ -1,5 +1,5 @@
-mssqltoolsservice 0.1.1.alpha9
-==============================
+mssqltoolsservice 1.0.0a0
+===============================
 
 The platform specific mssqltoolsservice package provides external
 dependencies to the mssql-scripter tool.
