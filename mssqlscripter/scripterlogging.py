@@ -7,17 +7,16 @@ import logging
 import logging.handlers
 import os
 
+def get_config_log_dir():
+    
+    log_dir = os.path.expanduser(os.path.join(u'~', u'.mssqlscripter'))
+    if (not os.path.exists(log_dir)):
+        os.makedirs(log_dir)
+    return log_dir
 
 def get_config_log_file():
 
-    log_dir = os.path.join(
-        os.path.expanduser(
-            os.path.join(
-                u'~', u'.mssqlscripter')))
-    if (not os.path.exists(log_dir)):
-        os.makedirs(log_dir)
-
-    return os.path.join(log_dir, u'mssql-scripter.log')
+    return os.path.join(get_config_log_dir(), u'mssql-scripter.log')
 
 scripter_logger = logging.getLogger('mssqlscripter')
 scripter_logger.setLevel(logging.DEBUG)

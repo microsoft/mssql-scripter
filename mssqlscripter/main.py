@@ -14,7 +14,7 @@ import tempfile
 import time
 
 
-import mssqlscripter.scripterlogging
+import mssqlscripter.scripterlogging as scripterlogging
 import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
@@ -53,6 +53,8 @@ def main(args):
 
     if parameters.EnableLogging:
         sqltoolsservice_args.append('--enable-logging')
+        sqltoolsservice_args.append('--log-dir');
+        sqltoolsservice_args.append(scripterlogging.get_config_log_dir());
 
     logger.debug('Loading mssqltoolsservice with arguments {}'.format(sqltoolsservice_args))
     try:

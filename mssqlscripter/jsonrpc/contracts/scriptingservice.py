@@ -9,7 +9,7 @@ from mssqlscripter.jsonrpc.contracts import Request
 import copy
 import logging
 
-logger = logging.getLogger(u'mssqlscripter.jsonrpc.contracts.scripting')
+logger = logging.getLogger(u'mssqlscripter.jsonrpc.contracts.scriptingservice')
 
 
 class ScriptingRequest(Request):
@@ -55,9 +55,10 @@ class ScriptingRequest(Request):
                 logger.debug(response)
                 # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
-
-                if (isinstance(decoded_response, ScriptCompleteEvent) or 
-                    isinstance(decoded_response, ScriptErrorEvent)):
+                
+                logger.debug(
+                    u'Scripting request received response: {}'.format(decoded_response))
+                if (isinstance(decoded_response, ScriptCompleteEvent)):
                     self.finished = True
                     self.json_rpc_client.request_finished(self.id)
 
@@ -70,11 +71,14 @@ class ScriptingRequest(Request):
             logger.debug('Scripting request received exception: {}'.format(str(error)))
             exception = {
                 u'operationId': self.id,
-                u'message': u'Scripting request encountered a exception',
-                u'diagnosticMessage': error.args,
+                u'success': False,
+                u'canceled': False,
+                u'hasError': True,
+                u'errorMessage': u'Scripting request encountered a exception',
+                u'errorDetails': error.args,
             }
 
-            return ScriptErrorEvent(exception)
+            return ScriptCompleteEvent(exception)
 
     def completed(self):
         """
@@ -257,36 +261,32 @@ class ScriptingOptions(object):
 #
 
 
-class ScriptCancelEvent(object):
-    def __init__(self, params):
-        self.operation_id = params[u'operationId']
-
-
 class ScriptCompleteEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
-
-
-class ScriptErrorEvent(object):
-    def __init__(self, params):
-        self.operation_id = params[u'operationId']
-        self.message = params[u'message']
-        self.diagnostic_message = params[u'diagnosticMessage']
+        self.sequenceNumber = params[u'sequenceNumber']
+        self.error_details = params[u'errorDetails']
+        self.error_message = params[u'errorMessage']
+        self.has_error = params[u'hasError']
+        self.canceled = params[u'canceled']
+        self.success = params[u'success']
 
 
 class ScriptPlanNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
-        self.database_objects = params[u'databaseObjects']
+        self.sequenceNumber = params[u'sequenceNumber']
+        self.scripting_objects = params[u'scriptingObjects']
         self.count = params[u'count']
 
 
 class ScriptProgressNotificationEvent(object):
     def __init__(self, params):
         self.operation_id = params[u'operationId']
+        self.sequenceNumber = params[u'sequenceNumber']
         self.scripting_object = params[u'scriptingObject']
         self.status = params[u'status']
-        self.count = params[u'count']
+        self.completed_count = params[u'completedCount']
         self.total_count = params[u'totalCount']
 
 
@@ -303,9 +303,7 @@ class ScriptingResponseDecoder(object):
     def __init__(self):
         # response map.
         self.response_dispatcher = {
-            u'scripting/scriptCancel': ScriptCancelEvent,
             u'scripting/scriptComplete': ScriptCompleteEvent,
-            u'scripting/scriptError': ScriptErrorEvent,
             u'scripting/scriptPlanNotification': ScriptPlanNotificationEvent,
             u'scripting/scriptProgressNotification': ScriptProgressNotificationEvent,
             u'id': ScriptResponse}

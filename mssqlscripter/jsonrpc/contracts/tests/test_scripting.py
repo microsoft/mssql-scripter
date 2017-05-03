@@ -5,10 +5,11 @@
 
 import io
 import os
+import time
 import unittest
 
 import mssqlscripter.jsonrpc.jsonrpcclient as json_rpc_client
-import mssqlscripter.jsonrpc.contracts.scripting as scripting
+import mssqlscripter.jsonrpc.contracts.scriptingservice as scripting
 
 class ScriptingRequestTests(unittest.TestCase):
 
@@ -31,16 +32,15 @@ class ScriptingRequestTests(unittest.TestCase):
                 u'ConnectionString': u'Sample_connection_string',
                 u'IncludeObjectCriteria': None,
                 u'ExcludeObjectCriteria': None,
-                u'DatabaseObjects': None}
+                u'ScriptingObjects': None}
             request = scripting.ScriptingRequest(1, rpc_client, parameters)
 
             self.verify_response_count(
                 request=request,
                 response_count=1,
                 plan_notification_count=1,
-                progress_count=375,
-                complete_count=1,
-                error_count=0)
+                progress_count=1736,
+                complete_count=1)
 
             rpc_client.shutdown()
 
@@ -64,31 +64,26 @@ class ScriptingRequestTests(unittest.TestCase):
         self.assertEqual(scripting_object_2[u'Type'], None)
 
     def test_scripting_response_decoder(self):
-        cancel_event = {
-            u'jsonrpc': u'2.0',
-            u'method': u'scripting/scriptCancel',
-            u'params': {
-                u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
         complete_event = {
             u'jsonrpc': u'2.0',
             u'method': u'scripting/scriptComplete',
             u'params': {
-                u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
-        error_event = {
-            u'jsonrpc': u'2.0',
-            u'method': u'scripting/scriptError',
-            u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
-                u'message': u'Scripting error occured',
-                u'diagnosticMessage': u'error occured during scripting'}}
+                u'sequenceNumber': u'3',
+                u'hasError': u'false',
+                u'errorMessage': u'',
+                u'errorDetails': u'',
+                u'canceled': u'false',
+                u'success': u'true'}}
 
         progress_notification = {
             u'jsonrpc': u'2.0',
             u'method': u'scripting/scriptProgressNotification',
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
+                u'sequenceNumber': u'2',
                 u'status': u'Completed',
-                u'count': 3,
+                u'completedCount': 3,
                 u'totalCount': 12,
                 u'scriptingObject': {
                     u'type': u'FullTextCatalog',
@@ -100,7 +95,8 @@ class ScriptingRequestTests(unittest.TestCase):
             u'method': u'scripting/scriptPlanNotification',
             u'params': {
                 u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5',
-                u'databaseObjects': [
+                u'sequenceNumber': u'1',
+                u'scriptingObjects': [
                     {
                         u'type': u'Database',
                         u'schema': u'null',
@@ -109,16 +105,12 @@ class ScriptingRequestTests(unittest.TestCase):
 
         decoder = scripting.ScriptingResponseDecoder()
 
-        cancel_decoded = decoder.decode_response(cancel_event)
         complete_decoded = decoder.decode_response(complete_event)
-        error_decoded = decoder.decode_response(error_event)
         progress_notification_decoded = decoder.decode_response(
             progress_notification)
         plan_notification_decoded = decoder.decode_response(plan_notification)
 
-        self.assertIsNotNone(cancel_decoded)
         self.assertIsNotNone(complete_decoded)
-        self.assertIsNotNone(error_decoded)
         self.assertIsNotNone(progress_notification_decoded)
         self.assertIsNotNone(plan_notification_decoded)
 
@@ -126,11 +118,6 @@ class ScriptingRequestTests(unittest.TestCase):
         """
             Verify decode invalid response.
         """
-        cancel_event = {
-            u'jsonrpc': u'2.0',
-            u'method': u'query/queryCancelled',
-            u'params': {
-                u'operationId': u'e18b9538-a7ff-4502-9c33-ac63ed42e5a5'}}
         complete_event = {
             u'jsonrpc': u'2.0',
             u'method': u'connect/connectionComplete',
@@ -139,11 +126,9 @@ class ScriptingRequestTests(unittest.TestCase):
 
         decoder = scripting.ScriptingResponseDecoder()
 
-        cancel_decoded = decoder.decode_response(cancel_event)
         complete_decoded = decoder.decode_response(complete_event)
 
-        # both events should remain untouched.
-        self.assertTrue(isinstance(cancel_decoded, dict))
+        # events should remain untouched.
         self.assertTrue(isinstance(complete_decoded, dict))
 
     def test_default_script_options(self):
@@ -263,7 +248,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ConnectionString': u'Sample_connection_string',
             u'IncludeObjectCriteria': [],
             u'ExcludeObjectCriteria': [],
-            u'DatabaseObjects': [u'Person.Person']}
+            u'ScriptingObjects': [u'Person.Person']}
         scripting_params = scripting.ScriptingParams(params)
 
         formatted_params = scripting_params.format()
@@ -321,7 +306,6 @@ class ScriptingRequestTests(unittest.TestCase):
             plan_notification_count,
             progress_count,
             complete_count,
-            error_count,
             func=None):
         """
             Helper to verify expected response count from a request.
@@ -330,7 +314,6 @@ class ScriptingRequestTests(unittest.TestCase):
         complete_event = 0
         response_event = 0
         plan_notification_event = 0
-        error_event = 0
         request.execute()
 
         while not request.completed():
@@ -346,14 +329,47 @@ class ScriptingRequestTests(unittest.TestCase):
                     response_event += 1
                 elif isinstance(response, scripting.ScriptPlanNotificationEvent):
                     plan_notification_event += 1
-                elif isinstance(response, scripting.ScriptErrorEvent):
-                    error_event += 1
 
         self.assertEqual(response_event, response_count)
         self.assertEqual(plan_notification_event, plan_notification_count)
         self.assertEqual(progress_notification_event, progress_count)
         self.assertEqual(complete_event, complete_count)
-        self.assertEqual(error_event, error_count)
+
+    # Helper to generate a baseline for AdventureWorks
+    #
+    def generate_new_baseline(self, file_name):
+            """ 
+                Helper function to generate new baselines for scripting request test.
+            """
+            import subprocess
+            import time
+            # Point sqltoolsservice output to file.
+            with io.open(file_name, 'wb') as baseline:
+                tools_service_process = subprocess.Popen(
+                    'D:\\GitHub\\sqltoolsservice\\src\\Microsoft.SqlTools.ServiceLayer\\bin\\Debug\\netcoreapp1.0\\win7-x64\\Microsoft.SqlTools.ServiceLayer.exe',
+                    bufsize=0,
+                    stdin=subprocess.PIPE,
+                    stdout=baseline)
+        
+                # Update these parameters in order to user function.
+                parameters = {
+                    u'FilePath': u'D:\\Temp\\adventureworks2014.temp.sql',
+                    u'ConnectionString': u'server=bro-hb;database=AdventureWorks2014;Integrated Security=true',
+                    u'IncludeObjectCriteria': None,
+                    u'ExcludeObjectCriteria': None,
+                    u'ScriptingObjects': None}
+            
+                writer = json_rpc_client.JsonRpcWriter(tools_service_process.stdin)
+                writer.send_request('scripting/script', parameters, id=1)
+                # submit raw request.
+                time.sleep(30)
+
+                tools_service_process.kill()
+
+    # Uncomment to generate a baseline for AdventureWorks
+    #
+    #def test_gen_baseline(self):
+    #    self.generate_new_baseline(u'adventureworks2014_baseline.txt')
 
     def get_test_baseline(self, file_name):
         """

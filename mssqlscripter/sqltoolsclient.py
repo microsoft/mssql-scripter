@@ -5,7 +5,7 @@
 
 import logging
 import mssqlscripter.jsonrpc.jsonrpcclient as json_rpc_client
-import mssqlscripter.jsonrpc.contracts.scripting as scripting
+import mssqlscripter.jsonrpc.contracts.scriptingservice as scripting
 
 logger = logging.getLogger(u'mssqlscripter.sqltoolsclient')
 
