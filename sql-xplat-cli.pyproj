@@ -33,7 +33,6 @@
     <Content Include="mssql-scripter.bat" />
     <Content Include="mssqlscripter\jsonrpc\contracts\tests\scripting_baselines\adventureworks2014_baseline.txt" />
     <Content Include="mssqlscripter\jsonrpc\README.md" />
-    <Content Include="mssqlscripter\README.md" />
     <Content Include="mssqltoolsservice\LICENSE.txt" />
     <Content Include="mssqltoolsservice\MANIFEST.in" />
     <Content Include="mssqltoolsservice\README.rst" />

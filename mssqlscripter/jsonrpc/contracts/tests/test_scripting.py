@@ -335,37 +335,39 @@ class ScriptingRequestTests(unittest.TestCase):
         self.assertEqual(progress_notification_event, progress_count)
         self.assertEqual(complete_event, complete_count)
 
-    # Helpers to generate a baseline for AdventureWorks
+    # Helper to generate a baseline for AdventureWorks
     #
-    #def generate_new_baseline(self, file_name):
-    #        """ 
-    #            Helper function to generate new baselines for scripting request test.
-    #        """
-    #        import subprocess
-    #        import time
-    #        # Point sqltoolsservice output to file.
-    #        with io.open(file_name, 'wb') as baseline:
-    #            tools_service_process = subprocess.Popen(
-    #                'D:\\GitHub\\sqltoolsservice\\src\\Microsoft.SqlTools.ServiceLayer\\bin\\Debug\\netcoreapp1.0\\win7-x64\\Microsoft.SqlTools.ServiceLayer.exe',
-    #                bufsize=0,
-    #                stdin=subprocess.PIPE,
-    #                stdout=baseline)
+    def generate_new_baseline(self, file_name):
+            """ 
+                Helper function to generate new baselines for scripting request test.
+            """
+            import subprocess
+            import time
+            # Point sqltoolsservice output to file.
+            with io.open(file_name, 'wb') as baseline:
+                tools_service_process = subprocess.Popen(
+                    'D:\\GitHub\\sqltoolsservice\\src\\Microsoft.SqlTools.ServiceLayer\\bin\\Debug\\netcoreapp1.0\\win7-x64\\Microsoft.SqlTools.ServiceLayer.exe',
+                    bufsize=0,
+                    stdin=subprocess.PIPE,
+                    stdout=baseline)
         
-    #            # Update these parameters in order to user function.
-    #            parameters = {
-    #                u'FilePath': u'D:\\Temp\\adventureworks2014.temp.sql',
-    #                u'ConnectionString': u'server=bro-hb;database=AdventureWorks2014;Integrated Security=true',
-    #                u'IncludeObjectCriteria': None,
-    #                u'ExcludeObjectCriteria': None,
-    #                u'ScriptingObjects': None}
+                # Update these parameters in order to user function.
+                parameters = {
+                    u'FilePath': u'D:\\Temp\\adventureworks2014.temp.sql',
+                    u'ConnectionString': u'server=bro-hb;database=AdventureWorks2014;Integrated Security=true',
+                    u'IncludeObjectCriteria': None,
+                    u'ExcludeObjectCriteria': None,
+                    u'ScriptingObjects': None}
             
-    #            writer = json_rpc_client.JsonRpcWriter(tools_service_process.stdin)
-    #            writer.send_request('scripting/script', parameters, id=1)
-    #            # submit raw request.
-    #            time.sleep(30)
+                writer = json_rpc_client.JsonRpcWriter(tools_service_process.stdin)
+                writer.send_request('scripting/script', parameters, id=1)
+                # submit raw request.
+                time.sleep(30)
 
-    #            tools_service_process.kill()
+                tools_service_process.kill()
 
+    # Uncomment to generate a baseline for AdventureWorks
+    #
     #def test_gen_baseline(self):
     #    self.generate_new_baseline(u'adventureworks2014_baseline.txt')
 

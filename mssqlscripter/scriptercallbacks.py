@@ -30,7 +30,7 @@ def handle_response(response, display=False):
 
     def handle_script_complete(response, display=False):
         if response.has_error:
-            # Always display error messages
+            # Always display error messages.
             sys.stdout.write(
                     u'Scripting request: {} encountered error: {}\n'.format(
                         response.operation_id, response.error_message))
