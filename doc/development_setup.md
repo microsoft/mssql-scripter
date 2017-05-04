@@ -58,7 +58,7 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
     ```
 2.	Install the dependencies:
     ```Shell
-    python <clone root>/dev_setup.py
+    python <clone root>/dev_setup.py clean
     ```
 
 ## Running Tests
