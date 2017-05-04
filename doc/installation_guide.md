@@ -1,11 +1,11 @@
 # Installation Guide
 
 ## Quick Start
-mssql-scritper is install using pip.  If you know  pip, you can install mssql-scripter using command
+mssql-scritper is installed via pip.  If you know  pip, you can install mssql-scripter using command
 ```shell
 $ pip install mssql-scripter 
 ```
-This command may need to be run as sudo if you are installing to the system site packages. mssql-scripter can be 
+This command may need to run as sudo if you are installing to the system site packages. mssql-scripter can be 
 installed using the --user option, which does not require sudo.
 ```shell
 $ pip install --user mssql-scripter 
@@ -35,7 +35,7 @@ $ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
-Install mssql-scritper using command:
+Install mssql-scripter using command:
 
 ```shell
 $ sudo pip install mssql-scripter 
@@ -64,7 +64,7 @@ If you are using Ubuntu or Debian, you'll need to install the libunwind8 package
 
 # Windows Installation
 
-Python is not installed by default on Windows.  The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  When installing, select the 'Add Python to PATH' option.  Python must be in hte PATH environment variable.
+Python is not installed by default on Windows.  The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  When installing, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
 
 Once Python is installed and in the PATH environment variable, open a command prompt, and install mssql-scripter using the command:
 ```shell
