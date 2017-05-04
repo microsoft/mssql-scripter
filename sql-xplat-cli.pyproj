@@ -26,7 +26,9 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="doc\README.md" />
-    <Content Include="doc\testing_local_install.md" />
+    <Content Include="doc\development_setup.md" />
+    <Content Include="doc\pypi_release_steps.md" />
+    <Content Include="doc\installation_guide.md" />
     <Content Include="LICENSE.txt" />
     <Content Include="MANIFEST.in" />
     <Content Include="mssql-scripter" />
