@@ -11,6 +11,13 @@ installed using the --user option, which does not require sudo.
 $ pip install --user mssql-scripter 
 ```
 
+### Dependencies
+
+Upon installation, mssql-scripter will detect the operating system or distribution of the host to install the mssqltoolsservice, a platform specific native dependency. Due to this native dependency being detected during the setup.py install, it is recommended that wheel caches not be shared amongst different operating system platforms and distributions. If you upgrade your operating system or distribution, please reinstall mssql-scripter with --no-cache-dir option.
+```shell
+$ pip install mssql-scripter --no-cache-dir
+```
+
 ## Detailed Instructions
 
 For operating system specific installs, see one of the following links:
@@ -94,8 +101,8 @@ libunwind.so.8: cannot open shared object file: No such file or directory
 ### Ubuntu 14 & 17
 Run commands
 ```shell
-    $ sudo apt-get update
-    $ sudo apt-get install libunwind8
+$ sudo apt-get update
+$ sudo apt-get install libunwind8
 ```
 
 ### Debian 8
