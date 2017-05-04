@@ -22,11 +22,11 @@ $ pip install mssql-scripter --no-cache-dir
 
 For operating system specific installs, see one of the following links:
 
-* [macOS](#macOS-Installation)
-* [Linux](#Linux-Installation)
-* [Windows](#Windows-Installation)
+* [macOS](#macos-installation)
+* [Linux](#linux-installation)
+* [Windows](#windows-installation)
 
-If you are having installation issues, see the [troubleshooting](#Troubleshooting) section for known issues and workarounds.  
+If you are having installation issues, see the [troubleshooting](#troubleshooting) section for known issues and workarounds.  
 
 # macOS Installation
 
@@ -67,7 +67,7 @@ Install mssql-scritper using command:
 ```shell
 $ sudo pip install mssql-scripter 
 ```
-If you are using Ubuntu or Debian, you'll need to install the libunwind8 package.  See the [libunwind8 installation steps below](#Installing-the-libunwind8-package).
+If you are using Ubuntu or Debian, you'll need to install the libunwind8 package.  See the [libunwind8 installation steps below](#installing-the-libunwind8-package).
 
 # Windows Installation
 
