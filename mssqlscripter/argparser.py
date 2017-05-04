@@ -27,7 +27,7 @@ def parse_arguments(args):
         u'--connection-string',
         dest=u'ConnectionString',
         metavar=u'',
-        help=u'Connection string of database to script. If connection string and server are not supplied, defaults to value in Environment Variable MSSQL_SCRIPTER_CONNECTION_STRING.')
+        help=u'Connection string of database to script. If connection string and server are not supplied, defaults to value in environment variable MSSQL_SCRIPTER_CONNECTION_STRING.')
     group_connection_options.add_argument(
         u'-S', u'--server',
         dest=u'Server',
@@ -50,7 +50,7 @@ def parse_arguments(args):
         u'-P', u'--password',
         dest=u'Password',
         metavar=u'',
-        help=u'Password.')
+        help=u'If not supplied, defaults to value in environment variable MSSQL_SCRIPTER_PASSWORD')
 
     # Basic parameters.
     parser.add_argument(
@@ -418,7 +418,7 @@ def build_connection_string(parameters):
         connection_string += u'User Id={};'.format(parameters.UserId)
         # If no password supplied, check for environment variable.
         if parameters.Password is None and MSSQL_SCRIPTER_PASSWORD in os.environ:
-            parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD ]
+            parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD]
 
         connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
     
