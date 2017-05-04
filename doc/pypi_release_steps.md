@@ -24,7 +24,7 @@ PYPI Test mssql-scripter upload
 
 	Versioning schema: {major}.{minor}.{patch}{release}{release_version}	
     Example: 1.0.0a0
-To bump a particular segment of the version, From <Clone_Root> execute:
+To bump a particular segment of the version, From `<clone_root>` execute:
 
 ```Bash
 versionbump major              ->  2.0.0a0
