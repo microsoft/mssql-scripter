@@ -91,7 +91,7 @@ Versionbump release_version    ->  2.0.0rc1
 		username = your_username
 		password = your_password
         ```
-4. Register and upload to pypi test server
+4. Register and upload to pypi test server:
     
     
     
@@ -103,7 +103,7 @@ Versionbump release_version    ->  2.0.0rc1
     python register_upload.py upload pypitest
     ```
 
-5. Test install
+5. Test install:
 
 	**Note**: Specifying the test pypi server as the index to search for, pip will attempt to search for mssql-scripter's dependencies from the same server. This can result in a requirement not found error, but should not be a problem if dev_setup.py was ran during developer setup. If the error does occur, manually pip install the dependencies that are listed in setup.py and ensure the versions are correct.
 	
