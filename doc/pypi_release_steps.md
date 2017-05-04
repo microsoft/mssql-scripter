@@ -15,7 +15,7 @@ PYPI Test mssql-scripter upload
     ```
 3.	Install the dependencies:
     ```Shell
-    python <clone root>/dev_setup.py
+    python <clone root>/dev_setup.py clean
     ```
 
 
