@@ -27,7 +27,7 @@ def parse_arguments(args):
         u'--connection-string',
         dest=u'ConnectionString',
         metavar=u'',
-        help=u'Connection string of database to script')
+        help=u'Connection string of database to script. If connection string and server are not supplied, defaults to value in environment variable MSSQL_SCRIPTER_CONNECTION_STRING.')
     group_connection_options.add_argument(
         u'-S', u'--server',
         dest=u'Server',
@@ -50,7 +50,7 @@ def parse_arguments(args):
         u'-P', u'--password',
         dest=u'Password',
         metavar=u'',
-        help=u'Password.')
+        help=u'If not supplied, defaults to value in environment variable MSSQL_SCRIPTER_PASSWORD')
 
     # Basic parameters.
     parser.add_argument(
@@ -60,6 +60,80 @@ def parse_arguments(args):
         default=None,
         help=u'Output file name.',
     )
+
+    group_type_of_data = parser.add_mutually_exclusive_group()
+    group_type_of_data.add_argument(
+        u'--schema-only',
+        dest=u'TypeOfDataToScript',
+        action=u'store_const',
+        const=u'SchemaOnly',
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contains schema only.')
+    group_type_of_data.add_argument(
+        u'--data-only',
+        dest=u'TypeOfDataToScript',
+        action=u'store_const',
+        const=u'DataOnly',
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contains data only.')
+    group_type_of_data.add_argument(
+        u'--schema-and-data',
+        dest=u'TypeOfDataToScript',
+        action=u'store_const',
+        const=u'SchemaAndData',
+        default=u'SchemaOnly',
+        help=u'Generate scripts that contain schema and data.')
+
+    group_create_drop = parser.add_mutually_exclusive_group()
+    group_create_drop.add_argument(
+        u'--script-create',
+        dest=u'ScriptCreate',
+        action=u'store_const',
+        const=u'ScriptCreate',
+        default=u'ScriptCreate',
+        help=u'Script object CREATE statements.')
+    group_create_drop.add_argument(
+        u'--script-drop',
+        dest=u'ScriptCreate',
+        action=u'store_const',
+        const=u'ScriptDrop',
+        default=u'ScriptCreate',
+        help=u'Script object DROP statements')
+    group_create_drop.add_argument(
+        u'--script-drop-create',
+        dest=u'ScriptCreate',
+        action=u'store_const',
+        const=u'ScriptCreateDrop',
+        default=u'ScriptCreate',
+        help=u'Script object CREATE and DROP statements.')
+
+    parser.add_argument(
+        u'--target-server-version',
+        dest=u'ScriptForServerVersion',
+        choices=[
+            '2005',
+            '2008',
+            '2008R2',
+            '2012',
+            '2014',
+            '2016',
+            'vNext',
+            'AzureDB',
+            'AzureDW'],
+        default=u'2016',
+        help=u'Script only features compatible with the specified SQL Version.')
+
+    parser.add_argument(
+        u'--target-server-edition',
+        dest=u'ScriptForTheDatabaseEngineEdition',
+        choices=[
+            u'Standard',
+            u'Personal'
+            u'Express',
+            u'Enterprise',
+            u'Stretch'],
+        default=u'Enterprise',
+        help=u'Script only features compatible with the specified SQL Server database edition.')
 
     parser.add_argument(
         u'--include-objects',
@@ -204,52 +278,6 @@ def parse_arguments(args):
         default=False,
         help=u'Generate USE DATABASE statement.')
 
-    group_type_of_data = parser.add_mutually_exclusive_group()
-    group_type_of_data.add_argument(
-        u'--schema-only',
-        dest=u'TypeOfDataToScript',
-        action=u'store_const',
-        const=u'SchemaOnly',
-        default=u'SchemaOnly',
-        help=u'Generate scripts that contains schema only.')
-    group_type_of_data.add_argument(
-        u'--data-only',
-        dest=u'TypeOfDataToScript',
-        action=u'store_const',
-        const=u'DataOnly',
-        default=u'SchemaOnly',
-        help=u'Generate scripts that contains data only.')
-    group_type_of_data.add_argument(
-        u'--schema-and-data',
-        dest=u'TypeOfDataToScript',
-        action=u'store_const',
-        const=u'SchemaAndData',
-        default=u'SchemaOnly',
-        help=u'Generate scripts that contain schema and data.')
-
-    group_create_drop = parser.add_mutually_exclusive_group()
-    group_create_drop.add_argument(
-        u'--script-create',
-        dest=u'ScriptCreate',
-        action=u'store_const',
-        const=u'ScriptCreate',
-        default=u'ScriptCreate',
-        help=u'Script object CREATE statements.')
-    group_create_drop.add_argument(
-        u'--script-drop',
-        dest=u'ScriptCreate',
-        action=u'store_const',
-        const=u'ScriptDrop',
-        default=u'ScriptCreate',
-        help=u'Script object DROP statements')
-    group_create_drop.add_argument(
-        u'--script-drop-create',
-        dest=u'ScriptCreate',
-        action=u'store_const',
-        const=u'ScriptCreateDrop',
-        default=u'ScriptCreate',
-        help=u'Script object CREATE and DROP statements.')
-
     parser.add_argument(
         u'--statistics',
         dest=u'ScriptStatistics',
@@ -257,34 +285,6 @@ def parse_arguments(args):
         const=u'ScriptStatsAll',
         default=u'ScriptStatsNone',
         help=u'Script all statistics.')
-
-    parser.add_argument(
-        u'--target-server-version',
-        dest=u'ScriptForServerVersion',
-        choices=[
-            '2005',
-            '2008',
-            '2008R2',
-            '2012',
-            '2014',
-            '2016',
-            'vNext',
-            'AzureDB',
-            'AzureDW'],
-        default=u'2016',
-        help=u'Script only features compatible with the specified SQL Version.')
-
-    parser.add_argument(
-        u'--target-server-edition',
-        dest=u'ScriptForTheDatabaseEngineEdition',
-        choices=[
-            u'Standard',
-            u'Personal'
-            u'Express',
-            u'Enterprise',
-            u'Stretch'],
-        default=u'Enterprise',
-        help=u'Script only features compatible with the specified SQL Server database edition.')
 
     parser.add_argument(
         u'--database-engine-type',
@@ -418,7 +418,7 @@ def build_connection_string(parameters):
         connection_string += u'User Id={};'.format(parameters.UserId)
         # If no password supplied, check for environment variable.
         if parameters.Password is None and MSSQL_SCRIPTER_PASSWORD in os.environ:
-            parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD ]
+            parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD]
 
         connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
     

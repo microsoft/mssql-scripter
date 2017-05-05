@@ -27,6 +27,7 @@ def main(args):
         Main entry point to mssql-scripter.
 
     """
+    scripterlogging.initialize_logger()
     logger.info('Python Information :{}'.format(sys.version_info))
     logger.info('System Information: system={} architecture={} version={}'.format(platform.system(), platform.architecture()[0], platform.version()))
 
