@@ -44,7 +44,7 @@ database:
     # execute the generated above script with sqlcmd
     $ sqlcmd -S mytestserver -U sa -i ./adventureworks.sql
 
-    # generate DDL scripts for the database schema and data including objects that contain 'Employee' to stdout
+    # generate DDL scripts for the database objects that contain 'Employee' to stdout
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee
 
     # generate DDL scripts for the dbo schema to a file
