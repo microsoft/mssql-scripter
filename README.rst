@@ -27,17 +27,27 @@ database:
 
 .. code:: bash
 
-    # script the database schema (default) to stdout.
+
+    # generate DDL scripts for all database objects and DML scripts (INSERT statements) for all tables in the Adventureworks database and save the script to a file
+    # By default only the schema is scripted out.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa 
 
     # script the database schema and data to a file.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
 
-    # script the database schema and data to a stdout.
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee --schema-and-data
+    # execute the generated above script with sqlcmd
+    $ sqlcmd -S mytestserver -U sa -i ./adventureworks.sql
+    
+    # generate DDL scripts for the database objects that contain 'Employee' to stdout
+    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee
 
-    # script the dbo schema to a file.
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql 
+    # generate DDL scripts for the dbo schema to a file
+    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql
+    
+    # change a schema name in the generated DDL script
+    # 1) generate DDL scripts for all database objects in the Adventureworks database
+    # 2) pipe generated script to sed and change all occurrences of SalesLT to SalesLT_test and save the script to a file
+    $ mssql-scripter scripter -S localhost -d Adventureworks -U sa | sed -e "s/SalesLT./SalesLT_test./g" > adventureworks_SalesLT_test.sql 
 
     # script the dbo data to a file.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. --data-only > ./dboschema.sql 
