@@ -68,14 +68,14 @@ def parse_arguments(args):
         action=u'store_const',
         const=u'DataOnly',
         default=u'SchemaOnly',
-        help=u'Generate scripts that contains data only.')
+        help=u'By default only the schema is scripted. if supplied, generate scripts that contains data only.')
     group_type_of_data.add_argument(
         u'--schema-and-data',
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'SchemaAndData',
         default=u'SchemaOnly',
-        help=u'Generate scripts that contain schema and data.')
+        help=u'By default only the schema is scripted. if supplied, generate scripts that contain schema and data.')
 
     group_create_drop = parser.add_mutually_exclusive_group()
     group_create_drop.add_argument(
