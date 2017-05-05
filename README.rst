@@ -27,17 +27,20 @@ database:
 
 .. code:: bash
 
-    # script the database schema to stdout.
+    # script the database schema (default) to stdout.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa 
 
     # script the database schema and data to a file.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
 
     # script the database schema and data to a stdout.
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee
+    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee --schema-and-data
 
     # script the dbo schema to a file.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql 
+
+    # script the dbo data to a file.
+    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. --data-only > ./dboschema.sql 
 
     # set environment variable MSSQL_SCRIPTER_CONNECTION_STRING with a connection string.
     $ export MSSQL_SCRIPTER_CONNECTION_STRING='Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;'
@@ -53,7 +56,7 @@ Options
 
     $ mssql-scripter -h
     usage: mssql-scripter [-h] [--connection-string  | -S ] [-d] [-U] [-P] [-f]
-                      [--schema-only | --data-only | --schema-and-data]
+                      [--data-only | --schema-and-data]
                       [--script-create | --script-drop | --script-drop-create]
                       [--target-server-version {2005,2008,2008R2,2012,2014,2016,vNext,AzureDB,AzureDW}]
                       [--target-server-edition {Standard,PersonalExpress,Enterprise,Stretch}]
@@ -83,7 +86,6 @@ Options
       -U , --user           Login ID for server.
       -P , --password       Password.
       -f , --file           Output file name.
-      --schema-only         Generate scripts that contains schema only.
       --data-only           Generate scripts that contains data only.
       --schema-and-data     Generate scripts that contain schema and data.
       --script-create       Script object CREATE statements.
