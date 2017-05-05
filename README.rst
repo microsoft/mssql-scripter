@@ -27,11 +27,14 @@ database:
 
 .. code:: bash
 
+
     # generate DDL scripts for all database objects and DML scripts (INSERT statements) for all tables in the Adventureworks database and save the script to a file
+    # By default only the schema is scripted out.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa 
 
     # script the database schema and data to a file.
     $ mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
+
     # execute the generated above script with sqlcmd
     $ sqlcmd -S mytestserver -U sa -i ./adventureworks.sql
     
@@ -45,6 +48,9 @@ database:
     # 1) generate DDL scripts for all database objects in the Adventureworks database
     # 2) pipe generated script to sed and change all occurrences of SalesLT to SalesLT_test and save the script to a file
     $ mssql-scripter scripter -S localhost -d Adventureworks -U sa | sed -e "s/SalesLT./SalesLT_test./g" > adventureworks_SalesLT_test.sql 
+
+    # script the dbo data to a file.
+    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. --data-only > ./dboschema.sql 
 
     # set environment variable MSSQL_SCRIPTER_CONNECTION_STRING with a connection string.
     $ export MSSQL_SCRIPTER_CONNECTION_STRING='Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;'
@@ -60,7 +66,7 @@ Options
 
     $ mssql-scripter -h
     usage: mssql-scripter [-h] [--connection-string  | -S ] [-d] [-U] [-P] [-f]
-                      [--schema-only | --data-only | --schema-and-data]
+                      [--data-only | --schema-and-data]
                       [--script-create | --script-drop | --script-drop-create]
                       [--target-server-version {2005,2008,2008R2,2012,2014,2016,vNext,AzureDB,AzureDW}]
                       [--target-server-edition {Standard,PersonalExpress,Enterprise,Stretch}]
@@ -90,7 +96,6 @@ Options
       -U , --user           Login ID for server.
       -P , --password       Password.
       -f , --file           Output file name.
-      --schema-only         Generate scripts that contains schema only.
       --data-only           Generate scripts that contains data only.
       --schema-and-data     Generate scripts that contain schema and data.
       --script-create       Script object CREATE statements.

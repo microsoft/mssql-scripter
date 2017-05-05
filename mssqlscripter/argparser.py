@@ -50,7 +50,7 @@ def parse_arguments(args):
         u'-P', u'--password',
         dest=u'Password',
         metavar=u'',
-        help=u'If not supplied, defaults to value in environment variable MSSQL_SCRIPTER_PASSWORD')
+        help=u'If not supplied, defaults to value in environment variable MSSQL_SCRIPTER_PASSWORD.')
 
     # Basic parameters.
     parser.add_argument(
@@ -63,26 +63,19 @@ def parse_arguments(args):
 
     group_type_of_data = parser.add_mutually_exclusive_group()
     group_type_of_data.add_argument(
-        u'--schema-only',
-        dest=u'TypeOfDataToScript',
-        action=u'store_const',
-        const=u'SchemaOnly',
-        default=u'SchemaOnly',
-        help=u'Generate scripts that contains schema only.')
-    group_type_of_data.add_argument(
         u'--data-only',
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'DataOnly',
         default=u'SchemaOnly',
-        help=u'Generate scripts that contains data only.')
+        help=u'By default only the schema is scripted. if supplied, generate scripts that contains data only.')
     group_type_of_data.add_argument(
         u'--schema-and-data',
         dest=u'TypeOfDataToScript',
         action=u'store_const',
         const=u'SchemaAndData',
         default=u'SchemaOnly',
-        help=u'Generate scripts that contain schema and data.')
+        help=u'By default only the schema is scripted. if supplied, generate scripts that contain schema and data.')
 
     group_create_drop = parser.add_mutually_exclusive_group()
     group_create_drop.add_argument(
@@ -98,7 +91,7 @@ def parse_arguments(args):
         action=u'store_const',
         const=u'ScriptDrop',
         default=u'ScriptCreate',
-        help=u'Script object DROP statements')
+        help=u'Script object DROP statements.')
     group_create_drop.add_argument(
         u'--script-drop-create',
         dest=u'ScriptCreate',
@@ -387,7 +380,7 @@ def parse_arguments(args):
     elif parameters.ConnectionString is None:
         # Check environment variable for connection string.
         if not get_connection_string_from_environment(parameters):
-            sys.stdout.write(u'Please specify connection information using --connection-string or --server and/or --database --user\n')
+            sys.stdout.write(u'Please specify connection information using --connection-string or --server and/or --database --user.\n')
             sys.exit()
 
     map_server_options(parameters)
