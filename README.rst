@@ -1,4 +1,4 @@
-mssql-scripter 1.0.0a0
+mssql-scripter 1.0.0a1
 ============================
 
 We’re excited to introduce mssql-scripter, a multi-platform command line
@@ -83,7 +83,7 @@ Options
                       [--triggers] [--unique-keys] [--display-progress]
                       [--enable-toolsservice-logging] [--version]
 
-    Microsoft SQL Server Scripter Command Line Tool. Version 1.0.0a0
+    Microsoft SQL Server Scripter Command Line Tool. Version 1.0.0a1
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -159,6 +159,9 @@ Options
                             Enable verbose logging.
       --version             show program's version number and exit
 
+Contributing
+-----------------------------
+If you would like to contribute to the project, please refer to the `development guide`_.
 
 Reporting issues and feedback
 -----------------------------
@@ -180,6 +183,7 @@ License
 mssql-scritper is licensed under the `MIT license`_.
 
 .. _installation guide: doc/installation_guide.md
+.. _development guide: doc/development_guide.md
 .. _Issues: https://github.com/Microsoft/sql-xplat-cli/issues
 .. _Microsoft Open Source Code of Conduct: https://opensource.microsoft.com/codeofconduct/
 .. _Code of Conduct FAQ: https://opensource.microsoft.com/codeofconduct/faq/
