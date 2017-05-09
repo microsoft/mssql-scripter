@@ -25,15 +25,15 @@ PYPI Test mssql-scripter upload
 	Versioning schema: {major}.{minor}.{patch}{release}{release_version}	
     Example: 1.0.0a0
 To bump a particular segment of the version, From `<clone_root>` execute:
+<pre>
+bumpversion major              ->  <b>2</b>.0.0a0
+bumpversion minor              ->  1.<b>1</b>.0a0
+bumpversion patch              ->  1.0.<b>1</b>a0
+bumpversion release            ->  1.0.0<b>rc</b>0
+bumpversion release_version    ->  1.0.0a<b>1</b>
+</pre>
 
-```Bash
-bumpversion major              ->  2.0.0a0
-bumpversion minor              ->  2.1.0a0
-bumpversion patch              ->  2.1.1a0
-bumpversion release            ->  2.0.0rc0
-bumpversion release_version    ->  2.0.0rc1
-```
-**Note**: bumpversion does not allow version bumping if your workspace has pending changes.This is to protect against any manual updates that may have been made which can lead to inconsistent versions across files. If you know what you are doing you can override this by appending --allow-dirty to the bumpversion command.
+**Note**: bumpversion does not allow version bumping if your workspace has pending changes.This is to protect against any manual updates that may have been made which can lead to inconsistent versions across files. If you know what you are doing you can override this by appending `--allow-dirty` to the bumpversion command.
 	
 ## Build
 1. Clean distribution folders:
