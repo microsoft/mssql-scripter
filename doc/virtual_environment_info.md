@@ -22,6 +22,7 @@ In current directory:
     python -m venv .
 
 In a subdirectory that does not exist:
+    
     python -m venv ./new_dir
 
 ## How to activate a virtual environment?
