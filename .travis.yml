@@ -1,0 +1,22 @@
+sudo: True
+language: python
+os:
+  - osx
+#  - linux
+python:
+  - "2"
+  - "2.7"
+  - "3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+before_install:
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get update; fi
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get install libunwind8; fi
+
+install:
+  # We have to install mssqltoolsservice for this platform.
+  - python ./dev_setup.py clean
+script:
+  - ./build.sh
