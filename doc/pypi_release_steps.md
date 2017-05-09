@@ -20,7 +20,6 @@ PYPI Test mssql-scripter upload
 
 
 ## Bump Version
- 
 
 	Versioning schema: {major}.{minor}.{patch}{release}{release_version}	
     Example: 1.0.0a0
