@@ -205,8 +205,7 @@ def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
         return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(
             run_time_id, MSSQLSCRIPTER_VERSION)
 
-    raise EnvironmentError(
-        u'mssqltoolsservice is not supported on this platform.')
+    raise EnvironmentError('mssqltoolsservice is not supported on this platform.')
 
 
 CLASSIFIERS = [
