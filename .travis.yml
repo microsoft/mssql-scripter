@@ -1,8 +1,7 @@
 sudo: True
 language: python
 os:
-  - osx
-#  - linux
+  - linux
 python:
   - "2"
   - "2.7"
