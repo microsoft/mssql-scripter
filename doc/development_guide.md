@@ -28,76 +28,76 @@ When developing on a Python project, it is recommended to do so in a virtual env
 
 If not developing in a virtual environment, please proceed to [Development Setup](#Development) 
 ### Virtual Environment
-1. Create a virtual environment in a subdirectory of your `<clone root>`, using `<clone root>/env` as a example:
+1. Create a virtual environment in a subdirectory of your `<clone_root>`, using `<clone_root>/env` as a example:
  
      ##### Windows
     ```BatchFile
-    python -m venv <clone root>\env
+    Python -m venv <clone_root>\env
     ```
-    ##### OSX/Ubuntu (bash)
+    ##### MacOS/Linux (bash)
     ```Shell
-    python –m venv <clone root>/env
+    Python –m venv <clone_root>/env
     ```
 2.  Activate the env virtual environment by running:
 
     ##### Windows
     ```BatchFile
-    <clone root>\env\scripts\activate.bat
+    <clone_root>\env\scripts\activate.bat
     ```
-    ##### OSX/Ubuntu (bash)
+    ##### MacOS/Linux (bash)
     ```Shell
-    . <clone root>/env/bin/activate
+    . <clone_root>/env/bin/activate
     ```
 3. To deactivate the virtual environment:
 
     ##### Windows
     ```BatchFile
-    <clone root>\env\scripts\deactivate.bat
+    <clone_root>\env\scripts\deactivate.bat
     ```
-    ##### OSX/Ubuntu (bash)
+    ##### MacOS/Linux (bash)
     ```Shell
     deactivate
     ```
 ### <a name="Development"></a>Development Setup
 General development steps that apply to both a virtual environment or a global environment. If working in a virtual environment, do ensure the virtual environment is activated.
-1.  Add `<clone root>` to your PYTHONPATH environment variable:
+1.  Add `<clone_root>` to your PYTHONPATH environment variable:
 
     ##### Windows
     ```BatchFile
-    set PYTHONPATH=<clone root>;%PYTHONPATH%
+    set PYTHONPATH=<clone_root>;%PYTHONPATH%
     ```
-    ##### OSX/Ubuntu (bash)
+    ##### MacOS/Linux (bash)
     ```Shell
-    export PYTHONPATH=<clone root>:${PYTHONPATH}
+    export PYTHONPATH=<clone_root>:${PYTHONPATH}
     ```
 2.	Install the dependencies:
     ```Shell
-    python <clone root>/dev_setup.py clean
+    Python <clone_root>/dev_setup.py clean
     ```
 ## <a name="Configure_IDE"></a>3. Configuring your IDE
 #### Visual Studio (Windows only)
-1.	Install Python Tools for Visual Studio. As of 2/18/2016, the current version (PTVS 2.2) can be found at http://microsoft.github.io/PTVS/.
+1.	Install PythonTools for Visual Studio.
 2.	Open the sql-xplat-cli.pyproj project
 
 
 #### Visual Studio Code (Any platform)
 
 1.	Install VS Code
-2.	Install (one of) the python extension(s) (https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
+2.	Install (one of) the Python extension(s) (https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
 Debugging should now work (including stepping and setting breakpoints). 
 
 The repo has a launch.json file that will launch the version of Python that is first on your path. 
 
 ## <a name="Running_Tests"></a>4. Running Tests
-Provided your PYTHONPATH was set correctly, you can run the tests from your `<root clone>` directory.
+Provided your PYTHONPATH was set correctly, you can run the tests from your `<clone_root>` directory.
 
 1. Run all tests:
     ##### Windows
 
     ```BatchFile
-    <clone root>\run_all_tests.bat
+    <clone_root>\run_all_tests.bat
     ```
-    ##### OSX/Ubuntu (bash)
+    ##### MacOS/Linux (bash)
     ```Shell
     . <clone_root>/run_all_tests.sh
     ```
@@ -105,16 +105,16 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<ro
   
     To test the mssqlscripter:
     ```BatchFile
-    python -m unittest discover -s mssqlscripter/tests
+    Python -m unittest discover -s mssqlscripter/tests
     ```
     To test the jsonrpc library:
     ```BatchFile
-    python -m unittest discover -s mssqlscripter/jsonrpc/tests
+    Python -m unittest discover -s mssqlscripter/jsonrpc/tests
     ```
 
     To test the scripting service:
     ```BatchFile
-    python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
+    Python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
     ```
 
 ## <a name="Run_mssql-scripter"></a>5. Running mssql-scripter
@@ -122,16 +122,16 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<ro
 
 1.  Invoke mssql-scripter using:
 
-    ##### OSX/Ubuntu (bash):
+    ##### MacOS/Linux (bash):
     ```Shell
     mssql-scripter -h
     ```
 
     ##### Windows:
     ```BatchFile
-    <clone root>\mssql-scripter.bat -h
+    <clone_root>\mssql-scripter.bat -h
     ```
     which is equivalent to the following:
     ```BatchFile
-    python -m mssqlscripter -h
+    Python -m mssqlscripter -h
     ```
