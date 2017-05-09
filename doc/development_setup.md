@@ -1,20 +1,32 @@
-Setting up your Development Environment
+Development Guide
 ========================================
+
+## Table of Contents
+1. [Preparing your machine](#Preparing_machine)
+1. [Environment Setup](#Environment_Setup)
+2. [Configuring IDE](#Configure_IDE)
+3. [Running Tests](#Running_Tests)
+4. [Packaging](#pypi_release_steps.md)
+
+
 mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-xplat-cli). In order to contribute to the project, you are expected to: 
 -	Have a GitHub account. For Microsoft contributors, follow the guidelines on https://opensourcehub.microsoft.com/ to create, configure and link your account
 -	Fork the  https://github.com/Microsoft/sql-xplat-clirepository into your private GitHub account
 -	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli repository to get your code changes merged into the project repository.
 
-## Preparing your machine
+## <a name="Preparing_Machine"></a>Preparing your machine
 1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
     #### Windows
     - Install latest Python from [here](http://python.org).
     - During installation, check the 'Add Python X.Y to PATH' option.
     
 2. Clone the repo from [https://github.com/Microsoft/sql-xplat-cli](https://github.com/Microsoft/sql-xplat-cli)
-3. If not developing in a virtual environment, proceed to [Development Setup](#Development).
 
-### Virtual Environment setup
+## <a name="Environment_Setup"></a>Environment Setup
+When developing on a Python project, it is recommended to do so in a virtual environment. A virtual environment is a sandbox that maintains a copy of all libraries necessary to run python in a isolated environment without interfering with the system or global python. For more information on virtual environments, go to [Virtual Environment Info](#virtual_environment_info.md).
+
+If not developing in a virtual environment, please proceed to [Development Setup](#Development) 
+### Virtual Environment
 1. Create a virtual environment in a subdirectory of your `<clone root>`, using `<clone root>/env` as a example:
  
      ##### Windows
@@ -46,6 +58,7 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
     deactivate
     ```
 ### <a name="Development"></a>Development Setup
+General development steps that apply to both a virtual environment or a global environment. If working in a virtual environment, do ensure the virtual environment is activated.
 1.  Add `<clone root>` to your PYTHONPATH environment variable:
 
     ##### Windows
@@ -60,8 +73,21 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
     ```Shell
     python <clone root>/dev_setup.py clean
     ```
+## <a name="Configure_IDE"></a>Configuring your IDE
+#### Visual Studio (Windows only)
+1.	Install Python Tools for Visual Studio. As of 2/18/2016, the current version (PTVS 2.2) can be found at http://microsoft.github.io/PTVS/.
+2.	Open the sql-xplat-cli.pyproj project
+You should now be able to launch your project by pressing F5/start debugging
 
-## Running Tests
+#### Visual Studio Code (Any platform)
+
+1.	Install VS Code
+2.	Install (one of) the python extension(s) (https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
+Debugging should now work (including stepping and setting breakpoints). 
+
+The repo has a launch.json file that will launch the version of Python that is first on your path. 
+
+## <a name="Running_Tests"></a>Running Tests
 Provided your PYTHONPATH was set correctly, you can run the tests from your `<root clone>` directory.
 
 1. Run all tests:
@@ -89,19 +115,6 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<ro
     ```BatchFile
     python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
     ```
-## Configuring your IDE
-#### Visual Studio (Windows only)
-1.	Install Python Tools for Visual Studio. As of 2/18/2016, the current version (PTVS 2.2) can be found at http://microsoft.github.io/PTVS/.
-2.	Open the sql-xplat-cli.pyproj project
-You should now be able to launch your project by pressing F5/start debugging
-
-#### Visual Studio Code (Any platform)
-
-1.	Install VS Code
-2.	Install (one of) the python extension(s) (https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
-Debugging should now work (including stepping and setting breakpoints). 
-
-The repo has a launch.json file that will launch the version of Python that is first on your path. 
 
 ## Running mssql-scripter
 #### Command line
