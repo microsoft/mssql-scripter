@@ -1,4 +1,4 @@
-mssql-scripter 1.0.0a0
+mssql-scripter 1.0.0a1
 ============================
 
 We’re excited to introduce mssql-scripter, a multi-platform command line
@@ -83,7 +83,7 @@ Options
                       [--triggers] [--unique-keys] [--display-progress]
                       [--enable-toolsservice-logging] [--version]
 
-    Microsoft SQL Server Scripter Command Line Tool. Version 1.0.0a0
+    Microsoft SQL Server Scripter Command Line Tool. Version 1.0.0a1
 
     optional arguments:
       -h, --help            show this help message and exit
