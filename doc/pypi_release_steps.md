@@ -23,7 +23,7 @@ PYPI Test mssql-scripter upload
 
 	Versioning schema: {major}.{minor}.{patch}{release}{release_version}	
     Example: 1.0.0a0
-To bump a particular segment of the version, From `<clone_root>` execute:
+To bump a particular segment of the version, from `<clone_root>` execute:
 <pre>
 bumpversion major              ->  <b>2</b>.0.0a0
 bumpversion minor              ->  1.<b>1</b>.0a0
@@ -46,7 +46,7 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     ##### OSX/Ubuntu (bash)
       ```Shell
       rm -rf dist
-      rm -rf mssqltoolsservice\dist
+      rm -rf mssqltoolsservice/dist
       ```
 2. Build mssql-scripter source distribution, From `<clone root>` execute:
     ```BatchFile
@@ -102,7 +102,14 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     python register_upload.py upload pypitest
     ```
 
-5. Test install:
+5. Test install locally
+
+	To install the local mssql-scripter pip package, from `<clone_root>` execute:
+    ```
+    sudo pip install --no-index -i ./mssqltoolsservice/dist/* ./dist/mssql-scripter-1.0.0a1.tar.gz
+    ```
+
+6. Test install via pypi server:
 
 	**Note**: Specifying the test pypi server as the index to search for, pip will attempt to search for mssql-scripter's dependencies from the same server. This can result in a requirement not found error, but should not be a problem if dev_setup.py was ran during developer setup. If the error does occur, manually pip install the dependencies that are listed in setup.py and ensure the versions are correct.
 	
