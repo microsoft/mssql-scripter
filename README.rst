@@ -159,6 +159,9 @@ Options
                             Enable verbose logging.
       --version             show program's version number and exit
 
+Contributing
+-----------------------------
+If you would like to contribute to the project, please refer to the `development guide`_.
 
 Reporting issues and feedback
 -----------------------------
@@ -180,6 +183,7 @@ License
 mssql-scritper is licensed under the `MIT license`_.
 
 .. _installation guide: doc/installation_guide.md
+.. _development guide: doc/development_guide.md
 .. _Issues: https://github.com/Microsoft/sql-xplat-cli/issues
 .. _Microsoft Open Source Code of Conduct: https://opensource.microsoft.com/codeofconduct/
 .. _Code of Conduct FAQ: https://opensource.microsoft.com/codeofconduct/faq/
