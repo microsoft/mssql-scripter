@@ -59,7 +59,7 @@ If not developing in a virtual environment, please proceed to [Development Setup
     deactivate
     ```
 ### <a name="Development"></a>Development Setup
-General development steps that apply to both a virtual environment or a global environment. If working in a virtual environment, do ensure the virtual environment is activated.
+General development steps that apply to both a virtual environment and a global environment. If working in a virtual environment, do ensure the virtual environment is activated.
 1.  Add `<clone root>` to your PYTHONPATH environment variable:
 
     ##### Windows
