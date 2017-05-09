@@ -82,6 +82,17 @@ C:\> pip install mssql-scripter
 
 If you're having installation issues, please check the below known issues and workarounds.  If you're having a different issue, please check the [issues](https://github.com/Microsoft/sql-xplat-cli/issues) page to see if the issue has already been reported.  If you don't see your issue there, filing a new issue would be appreciated.
 
+## No module named mssqlscripter
+If the installation was successful and this error message is encountered, this may be caused by different versions of python in the environment.
+i.e Used python 3.6 to install mssql-scripter, but PATH has python 2.7 so it uses the python 2.7 interpreter which has no visibility to packages installed into python 3.6.
+
+The workaround to prevent this is to use a virtual environment, which will provide a isolated environment that is tied to a specific python version.
+More information can be found at:
+
+- [Virtual Environment Info](virtual_environment_info.md)
+
+- [Development guide](development_guide.md#Environment_Setup)
+
 ## Could not find version that satifies the requirement mssql-scripter
 If you see the above error running `pip install mssql-scripter`, this means the pip version used is out-of-date.  Upgrade pip using the command:
 ```shell
