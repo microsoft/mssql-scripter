@@ -15,7 +15,7 @@ PYPI Test mssql-scripter upload
     ```
 3.	Install the dependencies:
     ```Shell
-    Python <clone_root>/dev_setup.py clean
+    python <clone_root>/dev_setup.py clean
     ```
 
 
@@ -50,26 +50,26 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
       ```
 2. Build mssql-scripter source distribution, From `<clone_root>` execute:
     ```BatchFile
-    Python setup.py sdist
+    python setup.py sdist
     ```
 
 3. Build mssqltoolsservice wheels for each supported platform, From `<clone_root>/mssqltoolsservice` execute:
     ```BatchFile
-	Python buildwheels.py
+	python buildwheels.py
 	```
 
 	Build a OS-Specific wheel:
 	```BatchFile
-    Python buildwheels.py CentOS_7
-    Python buildwheels.py Debian_8
-    Python buildwheels.py Fedora_23
-    Python buildwheels.py openSUSE_13_2
-    Python buildwheels.py OSX_10_11_64
-    Python buildwheels.py RHEL_7
-    Python buildwheels.py Ubuntu_14
-    Python buildwheels.py Ubuntu_16
-    Python buildwheels.py Windows_7_64
-    Python buildwheels.py Windows_7_86
+    python buildwheels.py CentOS_7
+    python buildwheels.py Debian_8
+    python buildwheels.py Fedora_23
+    python buildwheels.py openSUSE_13_2
+    python buildwheels.py OSX_10_11_64
+    python buildwheels.py RHEL_7
+    python buildwheels.py Ubuntu_14
+    python buildwheels.py Ubuntu_16
+    python buildwheels.py Windows_7_64
+    python buildwheels.py Windows_7_86
 	```
 4. Add a .pypirc configuration file:
 
@@ -95,11 +95,11 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     
     
     ```BatchFile
-    Python register_upload.py register pypitest
+    python register_upload.py register pypitest
     ```
     
     ```BatchFile
-    Python register_upload.py upload pypitest
+    python register_upload.py upload pypitest
     ```
 
 5. Test install locally
