@@ -1,0 +1,45 @@
+See http://plantuml.com/sequence-diagram for details on the syntax for creating 
+sequence diagrams using plantuml.
+
+@startuml
+
+title mssql-scripter Sequence Diagram
+
+actor "mssql-scripter" as script
+control main.py as main
+control SqlToolsClient
+control SqlToolsService
+entity ScriptingService
+entity SqlScriptPublishModel
+entity SMO
+database "SQL Server" AS database
+entity ".sql file" as file
+
+script -> main : run python
+main -> SqlToolsClient : new SqlToolsClient 
+SqlToolsClient -> SqlToolsService : start process
+main -> SqlToolsClient : script database 
+SqlToolsClient -> ScriptingService : script database JSON-RPC request
+SqlToolsClient <- ScriptingService
+main <- SqlToolsClient
+ScriptingService -> SqlScriptPublishModel : GenerateScript 
+SqlScriptPublishModel -> SMO : script database
+SMO <-> database : analyze table
+SMO -> file : script table 
+SqlToolsService <-- SqlScriptPublishModel : progress
+SqlToolsClient <-- SqlToolsService : progress JSON-RPC event
+SMO <-> database : analyze table 
+SMO -> file : script table 
+SqlToolsService <-- SqlScriptPublishModel : progress
+SqlToolsClient <-- SqlToolsService : progress JSON-RPC event
+SMO <-> database : analyze table 
+SMO -> file : script table 
+SqlScriptPublishModel <- SMO :
+ScriptingService <- SqlScriptPublishModel :  
+SqlToolsService <-- SqlScriptPublishModel : complete
+SqlToolsClient <-- SqlToolsService : complete JSON-RPC event
+SqlToolsClient -> SqlToolsService : stop process
+main -> file : load file 
+main -> script : pipe file to stdout
+
+@endumla
