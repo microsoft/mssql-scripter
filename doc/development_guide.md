@@ -18,13 +18,13 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
 ## <a name="Preparing_Machine"></a>1. Preparing your machine
 1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
     #### Windows
-    - Install latest Python from [here](http://python.org).
-    - During installation, check the 'Add Python X.Y to PATH' option.
+    - The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  
+    - During installation, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
     
 2. Clone the repo from [https://github.com/Microsoft/sql-xplat-cli](https://github.com/Microsoft/sql-xplat-cli)
 
 ## <a name="Environment_Setup"></a>2. Environment Setup
-When developing on a Python project, it is recommended to do so in a virtual environment. A virtual environment is a sandbox that maintains a copy of all libraries necessary to run python in a isolated environment without interfering with the system or global python. For more information on virtual environments, go to [Virtual Environment Info](#virtual_environment_info.md).
+When developing on a Python project, it is recommended to do so in a virtual environment. A virtual environment is a sandbox that maintains a copy of all libraries necessary to run python in a isolated environment without interfering with the system or global python. For more information on virtual environments, go to [Virtual Environment Info](docs/virtual_environment_info.md).
 
 If not developing in a virtual environment, please proceed to [Development Setup](#Development) 
 ### Virtual Environment
@@ -32,11 +32,11 @@ If not developing in a virtual environment, please proceed to [Development Setup
  
      ##### Windows
     ```BatchFile
-    Python -m venv <clone_root>\env
+    python -m venv <clone_root>\env
     ```
     ##### MacOS/Linux (bash)
     ```Shell
-    Python –m venv <clone_root>/env
+    python –m venv <clone_root>/env
     ```
 2.  Activate the env virtual environment by running:
 
@@ -72,19 +72,18 @@ General development steps that apply to both a virtual environment or a global e
     ```
 2.	Install the dependencies:
     ```Shell
-    Python <clone_root>/dev_setup.py clean
+    python <clone_root>/dev_setup.py clean
     ```
 ## <a name="Configure_IDE"></a>3. Configuring your IDE
 #### Visual Studio (Windows only)
-1.	Install PythonTools for Visual Studio.
-2.	Open the sql-xplat-cli.pyproj project
+1.	Install [Python Tools for Visual Studio](https://github.com/Microsoft/PTVS)
+2.	Open the <clone_root>\sql-xplat-cli.pyproj project in Visual Studio
 
 
 #### Visual Studio Code (Any platform)
 
 1.	Install VS Code
-2.	Install (one of) the Python extension(s) (https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
-Debugging should now work (including stepping and setting breakpoints). 
+2.	Install the the VS Code [Python extension](https://marketplace.visualstudio.com/items?itemName=donjayamanne.python)
 
 The repo has a launch.json file that will launch the version of Python that is first on your path. 
 
@@ -105,16 +104,16 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
   
     To test the mssqlscripter:
     ```BatchFile
-    Python -m unittest discover -s mssqlscripter/tests
+    python -m unittest discover -s mssqlscripter/tests
     ```
     To test the jsonrpc library:
     ```BatchFile
-    Python -m unittest discover -s mssqlscripter/jsonrpc/tests
+    python -m unittest discover -s mssqlscripter/jsonrpc/tests
     ```
 
     To test the scripting service:
     ```BatchFile
-    Python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
+    python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
     ```
 
 ## <a name="Run_mssql-scripter"></a>5. Running mssql-scripter
@@ -133,5 +132,5 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
     ```
     which is equivalent to the following:
     ```BatchFile
-    Python -m mssqlscripter -h
+    python -m mssqlscripter -h
     ```
