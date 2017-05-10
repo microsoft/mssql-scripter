@@ -2,7 +2,8 @@ Virtual Environment
 ========================================
 
 ## What is a virtual environment?
-    - A isolated Python environment that is installed into a directory and maintains it's own copy of Python and pip (Python's package manager).
+    - A isolated Python environment that is installed into a directory.
+    - Maintains it's own copy of Python and pip (Python's package manager).
     - When activated all Python operations will route to the Python interpreter within the virtual environment.
 
 ## What are the benefits?
@@ -19,10 +20,11 @@ Virtual Environment
 ## How to create a virtual environment?
 In current directory:
     
-    Python -m venv .
+    python -m venv .
 
 In a subdirectory that does not exist:
-    Python -m venv ./new_dir
+
+    python -m venv ./new_dir
 
 ## How to activate a virtual environment?
 ##### Windows
@@ -36,7 +38,7 @@ new_dir\scripts\activate.bat
 ## How to deactivate a virtual environment?
 ##### Windows
 ```BatchFile
-<clone root>\env\scripts\deactivate.bat
+<clone_root>\env\scripts\deactivate.bat
 ```
 ##### MacOS/Linux (bash)
 ```Shell
