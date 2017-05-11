@@ -22,7 +22,7 @@ DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
     'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',
-    'DEBIAN_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
+    'Debian_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
     'Fedora_23': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-fedora-x64-netcoreapp1.0.tar.gz',
     'openSUSE_13_2': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-opensuse-x64-netcoreapp1.0.tar.gz',
     'OSX_10_11_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-osx-x64-netcoreapp1.0.tar.gz',

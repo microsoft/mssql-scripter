@@ -3,7 +3,7 @@ language: python
 os:
   - linux
 env:
-  - TOX_ENV=py27
+  - TOXENV=py27
 
 before_install:
   - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get update; fi
