@@ -12,8 +12,9 @@ before_install:
   - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get update; fi
   - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get install libunwind8; fi
 install:
+  - pip install coveralls
   - pip install tox-travis
 script:
   - tox
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -e TOXENV -f $TRAVIS_BUILD_DIR/coverage.xml
+  - coveralls
