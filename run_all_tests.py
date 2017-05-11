@@ -36,6 +36,11 @@ def run_unittests_and_code_coverage():
         root_dir,
         continue_on_error=False
     )
+    utility.exec_command(
+        'coverage xml'.format(mssqlscripter_coverage_report_dir),
+        root_dir,
+        continue_on_error=False
+    )
 
 
 if __name__ == '__main__':
