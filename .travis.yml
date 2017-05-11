@@ -4,7 +4,10 @@ os:
   - linux
 env:
   - TOXENV=py27
-
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=py35
+  - TOXENV=py36
 before_install:
   - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get update; fi
   - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get install libunwind8; fi

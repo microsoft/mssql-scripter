@@ -6,7 +6,7 @@
 from __future__ import print_function
 import utility
 import os
-import setup    # called via verify_package.py sdist to generate sdist for mssql-scripter.
+import setup    # called via "verify_package.py clean"" to detect platform for wheel generation.
 
 
 MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
@@ -17,10 +17,9 @@ MSSQLTOOLSSERVICE_DIST_DIRECTORY = os.path.abspath(os.path.join(
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
 
-def build_and_install_local():
+def build_wheel_for_current_platform():
     """
-        Build mssql-scripter and mssqltoolsservice wheel for current platform.
-        Test local install.
+        Build mssqltoolsservice wheel for current platform.
     """
     # Build mssqltoolsservice wheel for this platform.
     current_platform = os.environ['MSSQLTOOLSSERVICE_PACKAGE_SUFFIX']
@@ -30,8 +29,11 @@ def build_and_install_local():
         continue_on_error=False
     )
 
-    utility.exec_command('pip --version', root_dir)
 
+def verify_local_install():
+    """
+        Install mssql-scripter package locally that resolves mssqltoolsservice dependency from local build.
+    """
     # Local install of mssql-scripter.
     mssqlscripter_sdist_name = os.listdir(MSSQLSCRIPTER_DIST_DIRECTORY)[0]
     # To ensure we have a clean install, we disable the cache as to prevent cache overshadowing actual changes made.
@@ -42,4 +44,5 @@ def build_and_install_local():
 
 
 if __name__ == '__main__':
-    build_and_install_local()
+    build_wheel_for_current_platform()
+    verify_local_install()
