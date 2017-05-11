@@ -52,13 +52,12 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
-        self.shutdown_background_threads(test_client)
-
+        time.sleep(.2)
         response = test_client.get_response()
         baseline = {u'key': u'value'}
 
         self.assertEqual(response, baseline)
+        self.shutdown_background_threads(test_client)
         # All background threads should be shut down.
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
