@@ -20,7 +20,7 @@ def parse_arguments(args):
     parser = argparse.ArgumentParser(
         prog=u'mssql-scripter',
         description=u'Microsoft SQL Server Scripter Command Line Tool. ' +
-            'Version {}'.format(mssqlscripter.__version__))
+        'Version {}'.format(mssqlscripter.__version__))
 
     group_connection_options = parser.add_mutually_exclusive_group()
     group_connection_options.add_argument(
@@ -281,7 +281,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--database-engine-type',
-        dest=u'ScriptForTheDatabaseEngineType', 
+        dest=u'ScriptForTheDatabaseEngineType',
         # This parameter is determined based on engine edition and version in
         # the background. User cannot select it.
         action=u'store_const',
@@ -369,12 +369,12 @@ def parse_arguments(args):
         help=u'Enable verbose logging.')
 
     parser.add_argument(
-    u'--version',
-    action=u'version',
-    version='{}'.format(mssqlscripter.__version__))
+        u'--version',
+        action=u'version',
+        version='{}'.format(mssqlscripter.__version__))
 
     parameters = parser.parse_args(args)
-    
+
     if parameters.Server:
         build_connection_string(parameters)
     elif parameters.ConnectionString is None:
@@ -386,6 +386,7 @@ def parse_arguments(args):
     map_server_options(parameters)
 
     return parameters
+
 
 def get_connection_string_from_environment(parameters):
     """
@@ -414,7 +415,7 @@ def build_connection_string(parameters):
             parameters.Password = os.environ[MSSQL_SCRIPTER_PASSWORD]
 
         connection_string += u'Password={};'.format(parameters.Password or getpass.getpass())
-    
+
     else:
         connection_string += u'Integrated Security=True;'
 

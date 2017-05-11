@@ -177,6 +177,7 @@ class JsonRpcClient(object):
         self.writer.close()
         logger.info('Shutting down Json rpc client.')
 
+
 class ReadState(enum.Enum):
     Header = 1
     Content = 2

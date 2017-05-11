@@ -7,13 +7,14 @@ import unittest
 import mssqlscripter.argparser as parser
 import os
 
+
 class TestParser(unittest.TestCase):
 
     def test_connection_string_builder(self):
         """
             Verify connection string is built correctly based on auth type.
         """
-        
+
         trusted_connection = [u'-S', u'TestServer']
         parameters = parser.parse_arguments(trusted_connection)
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Integrated Security=True;')
@@ -26,7 +27,7 @@ class TestParser(unittest.TestCase):
         parameters = parser.parse_arguments(trusted_connection)
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;Integrated Security=True;')
 
-        standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username', u'-P', 'secret' ]
+        standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username', u'-P', 'secret']
         parameters = parser.parse_arguments(standard_connection)
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
 
@@ -42,6 +43,7 @@ class TestParser(unittest.TestCase):
         os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'secret123ABC'
         parameters = parser.parse_arguments(standard_connection)
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret123ABC;')
+
 
 if __name__ == u'__main__':
     unittest.main()

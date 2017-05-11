@@ -28,7 +28,6 @@ except IOError:
     pass
 else:
     import re
-    import sys
     # Use regex to parse for version.
     scripter_version = re.search(
         r'__version__\s*=\s*[\'"](.+?)[\'"]',
@@ -202,6 +201,8 @@ def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
         Retrieve sql tools service package name for this platform if supported.
     """
     if run_time_id and run_time_id in MSSQLTOOLSSERVICE_PACKAGE_SUFFIX:
+        # set package suffix name for other uses like building wheels outside of setup.py.
+        os.environ['MSSQLTOOLSSERVICE_PACKAGE_SUFFIX'] = run_time_id
         return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(
             run_time_id, MSSQLSCRIPTER_VERSION)
 

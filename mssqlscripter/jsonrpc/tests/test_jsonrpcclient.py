@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------------------
 
 import unittest
-import threading
 import time
 import io
 
@@ -75,7 +74,7 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # Verify threads are alive and running.
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
@@ -104,7 +103,7 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # request thread is alive.
         # response thread is dead due to reaching EOF.
         self.assertTrue(test_client.request_thread.isAlive())
@@ -145,7 +144,7 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # Verify threads alive.
         self.assertTrue(test_client.request_thread.isAlive())
 
@@ -209,7 +208,7 @@ class JsonRpcClientTests(unittest.TestCase):
         try:
             test_client.get_response()
         except ValueError as exception:
-             # Verify the background thread communicated the exception.
+            # Verify the background thread communicated the exception.
             self.assertEqual(
                 str(exception), u'I/O operation on closed file.')
 

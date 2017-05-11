@@ -10,7 +10,6 @@ from __future__ import print_function
 
 import os
 import setup
-import sys
 import utility
 
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
