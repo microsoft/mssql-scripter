@@ -31,7 +31,7 @@ def build_and_install_local():
     )
 
     utility.exec_command('pip --version', root_dir)
-    
+
     # Local install of mssql-scripter.
     mssqlscripter_sdist_name = os.listdir(MSSQLSCRIPTER_DIST_DIRECTORY)[0]
     # To ensure we have a clean install, we disable the cache as to prevent cache overshadowing actual changes made.
