@@ -71,6 +71,7 @@ class ScriptingRequest(Request):
             logger.debug('Scripting request received exception: {}'.format(str(error)))
             exception = {
                 u'operationId': self.id,
+                u'sequenceNumber': None,
                 u'success': False,
                 u'canceled': False,
                 u'hasError': True,
