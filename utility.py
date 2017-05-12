@@ -23,6 +23,7 @@ def exec_command(command, directory, continue_on_error=True):
         else:
             pass
 
+
 def clean_up(directory):
     """
         Delete directory.
