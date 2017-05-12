@@ -96,7 +96,7 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
     ```
     tox
     ```
-    **Note**: Tox is used to test end to end in each python versions. Running the command above will run the full suite of tests against Python 2.7 and Python 3.6, if installed. More info can be found at [tox testing.](http://tox.readthedocs.io/en/latest/index.html)
+    **Note**: Tox is used run full suite of tests in each python version. Running the command above will run the full suite of tests against Python 2.7 and Python 3.6, if installed. More info can be found at [tox testing.](http://tox.readthedocs.io/en/latest/index.html)
 
     Run tox tests against specify Python version:
 
