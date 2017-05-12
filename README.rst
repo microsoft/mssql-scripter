@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.com/Microsoft/sql-xplat-cli.svg?token=QwsuvxE5D2cbdbsRa2gk&branch=dev
+    :target: https://travis-ci.com/Microsoft/sql-xplat-cli
+
 mssql-scripter 1.0.0a1
 ============================
 
