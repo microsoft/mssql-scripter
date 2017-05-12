@@ -3,7 +3,7 @@ Development Guide
 
 ## Table of Contents
 1. [Preparing your machine](#Preparing_machine)
-1. [Environment Setup](#Environment Setup)
+1. [Environment Setup](#Environment_Setup)
 2. [Configuring IDE](#Configure_IDE)
 3. [Running Tests](#Running_Tests)
 4. [Running mssql-scripter](#Run_mssql-scripter)
