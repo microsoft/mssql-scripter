@@ -28,19 +28,19 @@ In a subdirectory that does not exist:
 
 ## How to activate a virtual environment?
 ##### Windows
-```BatchFile
+```
 new_dir\scripts\activate.bat
 ```
 ##### MacOS/Linux (bash)
-```Shell
+```
 . new_dir/bin/activate
 ```
 ## How to deactivate a virtual environment?
 ##### Windows
-```BatchFile
+```
 <clone_root>\env\scripts\deactivate.bat
 ```
 ##### MacOS/Linux (bash)
-```Shell
+```
 deactivate
 ```

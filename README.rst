@@ -64,7 +64,7 @@ database:
 
 Options
 ~~~~~~~
-.. code-block:: bash
+.. code-block::
 
     $ mssql-scripter -h
     usage: mssql-scripter [-h] [--connection-string  | -S ] [-d] [-U] [-P] [-f]

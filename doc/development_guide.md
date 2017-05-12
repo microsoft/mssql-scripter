@@ -3,7 +3,7 @@ Development Guide
 
 ## Table of Contents
 1. [Preparing your machine](#Preparing_machine)
-1. [Environment Setup](#Environment_Setup)
+1. [Environment Setup](#Environment Setup)
 2. [Configuring IDE](#Configure_IDE)
 3. [Running Tests](#Running_Tests)
 4. [Running mssql-scripter](#Run_mssql-scripter)
@@ -16,7 +16,7 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
 -	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli repository to get your code changes merged into the project repository.
 
 ## <a name="Preparing_Machine"></a>1. Preparing your machine
-1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. 
+1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. It is recommended to install Python 2.7 to ensure backwards compatibility for testing.
     #### Windows
     - The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  
     - During installation, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
@@ -31,31 +31,31 @@ If not developing in a virtual environment, please proceed to [Development Setup
 1. Create a virtual environment in a subdirectory of your `<clone_root>`, using `<clone_root>/env` as a example:
  
      ##### Windows
-    ```BatchFile
+    ```
     python -m venv <clone_root>\env
     ```
     ##### MacOS/Linux (bash)
-    ```Shell
+    ```
     python –m venv <clone_root>/env
     ```
 2.  Activate the env virtual environment by running:
 
     ##### Windows
-    ```BatchFile
+    ```
     <clone_root>\env\scripts\activate.bat
     ```
     ##### MacOS/Linux (bash)
-    ```Shell
+    ```
     . <clone_root>/env/bin/activate
     ```
 3. To deactivate the virtual environment:
 
     ##### Windows
-    ```BatchFile
+    ```
     <clone_root>\env\scripts\deactivate.bat
     ```
     ##### MacOS/Linux (bash)
-    ```Shell
+    ```
     deactivate
     ```
 ### <a name="Development"></a>Development Setup
@@ -63,15 +63,15 @@ General development steps that apply to both a virtual environment or a global e
 1.  Add `<clone_root>` to your PYTHONPATH environment variable:
 
     ##### Windows
-    ```BatchFile
+    ```
     set PYTHONPATH=<clone_root>;%PYTHONPATH%
     ```
     ##### MacOS/Linux (bash)
-    ```Shell
+    ```
     export PYTHONPATH=<clone_root>:${PYTHONPATH}
     ```
 2.	Install the dependencies:
-    ```Shell
+    ```
     python <clone_root>/dev_setup.py clean
     ```
 ## <a name="Configure_IDE"></a>3. Configuring your IDE
@@ -90,29 +90,45 @@ The repo has a launch.json file that will launch the version of Python that is f
 ## <a name="Running_Tests"></a>4. Running Tests
 Provided your PYTHONPATH was set correctly, you can run the tests from your `<clone_root>` directory.
 
-1. Run all tests:
-    ##### Windows
+1. Run end to end tests (code format, unit tests, packaging, integration,) with tox:
+    
 
-    ```BatchFile
-    <clone_root>\run_all_tests.bat
     ```
-    ##### MacOS/Linux (bash)
-    ```Shell
-    . <clone_root>/run_all_tests.sh
+    tox
+    ```
+    **Note**: Tox is used to test end to end in each python versions. Running the command above will run the full suite of tests against Python 2.7 and Python 3.6, if installed. More info can be found at [tox testing.](http://tox.readthedocs.io/en/latest/index.html)
+
+    Run tox tests against specify Python version:
+
+    ```
+    tox -e py27
+    tox -e py36
+    ```
+
+    Recommended: Recreate virtual environment to ensure you are not testing against cached changes.
+
+    ```
+    tox --recreate -e py27
+    tox --recreate -e py36
+    ```
+2. Run unit tests with code coverage only:
+
+    ```
+    python run_all_tests.py
     ```
 2. Running tests for specific components:
   
     To test the mssqlscripter:
-    ```BatchFile
+    ```
     python -m unittest discover -s mssqlscripter/tests
     ```
     To test the jsonrpc library:
-    ```BatchFile
+    ```
     python -m unittest discover -s mssqlscripter/jsonrpc/tests
     ```
 
     To test the scripting service:
-    ```BatchFile
+    ```
     python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
     ```
 
@@ -122,15 +138,15 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
 1.  Invoke mssql-scripter using:
 
     ##### MacOS/Linux (bash):
-    ```Shell
+    ```
     mssql-scripter -h
     ```
 
     ##### Windows:
-    ```BatchFile
+    ```
     <clone_root>\mssql-scripter.bat -h
     ```
     which is equivalent to the following:
-    ```BatchFile
+    ```
     python -m mssqlscripter -h
     ```
