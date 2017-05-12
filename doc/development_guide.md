@@ -105,7 +105,7 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
     tox -e py36
     ```
 
-    Recommended: Recreate virtual environment to ensure you are not testing against cached changes.
+    **Recommended**: Recreate virtual environment on each run to ensure tests are not executing against cached changes.
 
     ```
     tox --recreate -e py27
