@@ -29,7 +29,7 @@ class SqlToolsClientTest(unittest.TestCase):
         # Until we have a dummy process that blocks on the output_stream, the
         # thread active count when initialized will be 2 (Main and request
         # thread).
-        self.assertEqual(threading.active_count(), 2)
+        self.assertTrue(tools_client.json_rpc_client.request_thread.is_alive())
 
         # Create a scripting request with sample parameters.
         parameters = {

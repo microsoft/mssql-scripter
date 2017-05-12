@@ -2,27 +2,27 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See License.txt in the project root for license information.
 # --------------------------------------------------------------------------------------------
-
 from __future__ import print_function
-from future.standard_library import install_aliases
-install_aliases()
-from urllib.request import urlopen
 
 import io
 import os
 import requests
-import shutil
 import sys
 import tarfile
 import utility
 import zipfile
+
+from future.standard_library import install_aliases
+install_aliases()
+from urllib.request import urlopen
+
 
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-05-06-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
     'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',
-    'DEBIAN_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
+    'Debian_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
     'Fedora_23': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-fedora-x64-netcoreapp1.0.tar.gz',
     'openSUSE_13_2': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-opensuse-x64-netcoreapp1.0.tar.gz',
     'OSX_10_11_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-osx-x64-netcoreapp1.0.tar.gz',
@@ -36,6 +36,7 @@ SUPPORTED_PLATFORMS = {
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 BUILD_DIRECTORY = os.path.abspath(os.path.join(CURRENT_DIRECTORY, 'build'))
 TARGET_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..', 'mssqltoolsservice', 'bin'))
+
 
 def download_and_unzip(download_file_path, directory):
     """
@@ -51,27 +52,18 @@ def download_and_unzip(download_file_path, directory):
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-    
+
     print(u'Extracting files from {}'.format(download_file_path))
     compressed_file.extractall(directory)
 
-def clean_up(directory):
-    """
-        Delete directory.
-    """
-    try:
-        shutil.rmtree(directory)
-    except Exception:
-        # Ignored, directory may not exist which is fine.
-        pass
 
 def build_sqltoolsservice_wheels(platforms):
     """
         For each supported platform, build a universal wheel.
     """
     # Clean up dangling directories if previous run was interrupted.
-    clean_up(directory=TARGET_DIRECTORY)
-    clean_up(directory=BUILD_DIRECTORY)
+    utility.clean_up(directory=TARGET_DIRECTORY)
+    utility.clean_up(directory=BUILD_DIRECTORY)
 
     if not platforms:
             # Defaults to all supported platforms.
@@ -90,8 +82,9 @@ def build_sqltoolsservice_wheels(platforms):
         utility.exec_command(u'python setup.py bdist_wheel', CURRENT_DIRECTORY)
 
         print(u'Cleaning up mssqltoolservice and build directory for platform:{}'.format(platform))
-        clean_up(directory=TARGET_DIRECTORY)
-        clean_up(directory=BUILD_DIRECTORY)
+        utility.clean_up(directory=TARGET_DIRECTORY)
+        utility.clean_up(directory=BUILD_DIRECTORY)
+
 
 if __name__ == '__main__':
     build_sqltoolsservice_wheels(sys.argv[1:])

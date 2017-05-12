@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------------------
 
 import unittest
-import threading
 import time
 import io
 
@@ -53,17 +52,15 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
-        self.shutdown_background_threads(test_client)
-
+        time.sleep(.2)
         response = test_client.get_response()
         baseline = {u'key': u'value'}
 
         self.assertEqual(response, baseline)
+        self.shutdown_background_threads(test_client)
         # All background threads should be shut down.
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 1)
 
     def test_submit_simple_request(self):
         """
@@ -76,11 +73,10 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # Verify threads are alive and running.
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 2)
 
         test_client.submit_request(
             u'scriptingService/ScriptDatabase', {u'ScriptDatabaseOptions': u'True'})
@@ -94,7 +90,6 @@ class JsonRpcClientTests(unittest.TestCase):
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 1)
 
     def test_send_multiple_request(self):
         """
@@ -107,12 +102,11 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # request thread is alive.
         # response thread is dead due to reaching EOF.
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 2)
 
         test_client.submit_request(
             u'scriptingService/ScriptDatabase', {u'ScriptDatabaseOptions': u'True'})
@@ -137,7 +131,6 @@ class JsonRpcClientTests(unittest.TestCase):
         self.assertEqual(input_stream.getvalue(), expected)
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 1)
 
     def test_normal_shutdown(self):
         """
@@ -150,10 +143,9 @@ class JsonRpcClientTests(unittest.TestCase):
         test_client = json_rpc_client.JsonRpcClient(
             input_stream, output_stream)
         test_client.start()
-
+        time.sleep(.5)
         # Verify threads alive.
         self.assertTrue(test_client.request_thread.isAlive())
-        self.assertEqual(threading.active_count(), 2)
 
         # Response thread is dead due to EOF.
         self.assertFalse(test_client.response_thread.isAlive())
@@ -162,7 +154,6 @@ class JsonRpcClientTests(unittest.TestCase):
 
         self.assertFalse(test_client.request_thread.isAlive())
         self.assertFalse(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 1)
 
     def test_send_invalid_request(self):
         """
@@ -198,9 +189,8 @@ class JsonRpcClientTests(unittest.TestCase):
             # Lookup exception for invalid content length spelling.
             self.assertTrue(test_client.request_thread.isAlive())
             self.assertFalse(test_client.response_thread.isAlive())
-            self.assertEqual(threading.active_count(), 2)
             test_client.shutdown()
-            self.assertEqual(threading.active_count(), 1)
+            self.assertFalse(test_client.request_thread.isAlive())
 
     def test_response_stream_closed_exception(self):
         """
@@ -217,15 +207,14 @@ class JsonRpcClientTests(unittest.TestCase):
         try:
             test_client.get_response()
         except ValueError as exception:
-             # Verify the background thread communicated the exception.
+            # Verify the background thread communicated the exception.
             self.assertEqual(
                 str(exception), u'I/O operation on closed file.')
 
             self.assertTrue(test_client.request_thread.isAlive())
             self.assertFalse(test_client.response_thread.isAlive())
-            self.assertEqual(threading.active_count(), 2)
             test_client.shutdown()
-            self.assertEqual(threading.active_count(), 1)
+            self.assertFalse(test_client.request_thread.isAlive())
 
     @unittest.skip("Disabling until scenario is valid")
     def test_stream_has_no_response(self):
@@ -243,10 +232,9 @@ class JsonRpcClientTests(unittest.TestCase):
         self.assertEqual(response, None)
         self.assertTrue(test_client.request_thread.isAlive())
         self.assertTrue(test_client.response_thread.isAlive())
-        self.assertEqual(threading.active_count(), 3)
-
         test_client.shutdown()
-        self.assertEqual(threading.active_count(), 1)
+        self.assertFalse(test_client.request_thread.isAlive())
+        self.assertFalse(test_client.response_thread.isAlive())
 
     def test_stream_closed_during_process(self):
         """
@@ -273,7 +261,6 @@ class JsonRpcClientTests(unittest.TestCase):
                 str(exception), u'I/O operation on closed file.')
             # Verify response thread is dead.
             self.assertFalse(test_client.request_thread.isAlive())
-            self.assertEqual(threading.active_count(), 1)
             test_client.shutdown()
 
     def test_get_response_with_id(self):

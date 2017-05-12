@@ -22,6 +22,7 @@ import mssqltoolsservice
 
 logger = logging.getLogger(u'mssqlscripter.main')
 
+
 def main(args):
     """
         Main entry point to mssql-scripter.
@@ -54,8 +55,8 @@ def main(args):
 
     if parameters.EnableLogging:
         sqltoolsservice_args.append('--enable-logging')
-        sqltoolsservice_args.append('--log-dir');
-        sqltoolsservice_args.append(scripterlogging.get_config_log_dir());
+        sqltoolsservice_args.append('--log-dir')
+        sqltoolsservice_args.append(scripterlogging.get_config_log_dir())
 
     logger.debug('Loading mssqltoolsservice with arguments {}'.format(sqltoolsservice_args))
     try:
@@ -118,6 +119,7 @@ def main(args):
         except Exception:
             # Suppress exceptions.
             pass
+
 
 if __name__ == u'__main__':
     main(sys.argv[1:])

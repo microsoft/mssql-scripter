@@ -1,0 +1,20 @@
+sudo: True
+language: python
+os:
+  - linux
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+before_install:
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get update; fi
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then $ apt-get install libunwind8; fi
+install:
+  - pip install coveralls
+  - pip install tox-travis
+script:
+  - tox
+after_success:
+  - coveralls

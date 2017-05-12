@@ -5,6 +5,7 @@
 
 import sys
 
+
 def handle_response(response, display=False):
     """
         Dispatch response based on scripting response or event.
@@ -32,8 +33,8 @@ def handle_response(response, display=False):
         if response.has_error:
             # Always display error messages.
             sys.stdout.write(
-                    u'Scripting request: {} encountered error: {}\n'.format(
-                        response.operation_id, response.error_message))
+                u'Scripting request: {} encountered error: {}\n'.format(
+                    response.operation_id, response.error_message))
             sys.stdout.write(u'Error details: {}\n'.format(response.error_details))
         elif display:
             sys.stderr.write(

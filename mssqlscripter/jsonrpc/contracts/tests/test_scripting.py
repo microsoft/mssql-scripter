@@ -5,14 +5,13 @@
 
 import io
 import os
-import time
 import unittest
 
 import mssqlscripter.jsonrpc.jsonrpcclient as json_rpc_client
 import mssqlscripter.jsonrpc.contracts.scriptingservice as scripting
 
-class ScriptingRequestTests(unittest.TestCase):
 
+class ScriptingRequestTests(unittest.TestCase):
     """
         Scripting request tests.
     """
@@ -294,7 +293,7 @@ class ScriptingRequestTests(unittest.TestCase):
             formatted_params[u'ConnectionString'],
             u'Sample_connection_string')
         # Reenable assertion below when the option is supported.
-        #self.assertEqual(formatted_params['DatabaseObjects'], ['Person.Person'])
+        # self.assertEqual(formatted_params['DatabaseObjects'], ['Person.Person'])
         self.assertEqual(
             formatted_params[u'ScriptOptions'],
             expected_script_options)
@@ -338,7 +337,7 @@ class ScriptingRequestTests(unittest.TestCase):
     # Helper to generate a baseline for AdventureWorks
     #
     def generate_new_baseline(self, file_name):
-            """ 
+            """
                 Helper function to generate new baselines for scripting request test.
             """
             import subprocess
@@ -350,7 +349,7 @@ class ScriptingRequestTests(unittest.TestCase):
                     bufsize=0,
                     stdin=subprocess.PIPE,
                     stdout=baseline)
-        
+
                 # Update these parameters in order to user function.
                 parameters = {
                     u'FilePath': u'D:\\Temp\\adventureworks2014.temp.sql',
@@ -358,7 +357,7 @@ class ScriptingRequestTests(unittest.TestCase):
                     u'IncludeObjectCriteria': None,
                     u'ExcludeObjectCriteria': None,
                     u'ScriptingObjects': None}
-            
+
                 writer = json_rpc_client.JsonRpcWriter(tools_service_process.stdin)
                 writer.send_request('scripting/script', parameters, id=1)
                 # submit raw request.
@@ -368,7 +367,7 @@ class ScriptingRequestTests(unittest.TestCase):
 
     # Uncomment to generate a baseline for AdventureWorks
     #
-    #def test_gen_baseline(self):
+    # def test_gen_baseline(self):
     #    self.generate_new_baseline(u'adventureworks2014_baseline.txt')
 
     def get_test_baseline(self, file_name):

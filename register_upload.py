@@ -8,12 +8,6 @@ import sys
 import utility
 
 
-MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
-    os.path.join(os.path.abspath(__file__), '..', 'dist'))
-MSSQLTOOLSSERVICE_DIST_DIRECTORY = os.path.abspath(os.path.join(
-    os.path.abspath(__file__), '..', 'mssqltoolsservice', 'dist'))
-
-
 def register_or_upload_to_pypi(options):
     """
         Registers or uploads against a pypi server.
@@ -36,23 +30,23 @@ def register_or_upload_to_pypi(options):
             'Repository argument was provided, targeting {}'.format(
                 options[1]))
 
-    mssqlscripter_sdist_name = os.listdir(MSSQLSCRIPTER_DIST_DIRECTORY)[0]
+    mssqlscripter_sdist_name = os.listdir(utility.MSSQLSCRIPTER_DIST_DIRECTORY)[0]
     # Run twine action for mssqlscripter.
     utility.exec_command(
         'twine {} {} {}'.format(
             action,
             mssqlscripter_sdist_name,
             repository),
-        MSSQLSCRIPTER_DIST_DIRECTORY)
+        utility.MSSQLSCRIPTER_DIST_DIRECTORY)
 
-    for wheel_name in os.listdir(MSSQLTOOLSSERVICE_DIST_DIRECTORY):
+    for wheel_name in os.listdir(utility.MSSQLTOOLSSERVICE_DIST_DIRECTORY):
         # Run twine action for mssqltoolsservice wheels.
         utility.exec_command(
             'twine {} {} {}'.format(
                 action,
                 wheel_name,
                 repository),
-            MSSQLTOOLSSERVICE_DIST_DIRECTORY)
+            utility.MSSQLTOOLSSERVICE_DIST_DIRECTORY)
 
 
 if __name__ == '__main__':

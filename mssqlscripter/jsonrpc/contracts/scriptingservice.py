@@ -55,7 +55,7 @@ class ScriptingRequest(Request):
                 logger.debug(response)
                 # Decode response to either response or event type.
                 decoded_response = self.decoder.decode_response(response)
-                
+
                 logger.debug(
                     u'Scripting request received response: {}'.format(decoded_response))
                 if (isinstance(decoded_response, ScriptCompleteEvent)):
@@ -71,6 +71,7 @@ class ScriptingRequest(Request):
             logger.debug('Scripting request received exception: {}'.format(str(error)))
             exception = {
                 u'operationId': self.id,
+                u'sequenceNumber': None,
                 u'success': False,
                 u'canceled': False,
                 u'hasError': True,

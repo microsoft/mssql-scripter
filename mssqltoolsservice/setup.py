@@ -23,7 +23,6 @@ except IOError:
     pass
 else:
     import re
-    import sys
     # use regex to look for version.
     m = re.search(r'__version__\s*=\s*[\'"](.+?)[\'"]', content)
     if not m:
