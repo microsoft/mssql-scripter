@@ -16,7 +16,7 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
 -	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli repository to get your code changes merged into the project repository.
 
 ## <a name="Preparing_Machine"></a>1. Preparing your machine
-1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. It is recommended to install Python 2.7 to ensure backwards compatibility for testing.
+1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. It is recommended to install both Python 2.7 and Python3.6 to ensure backwards compatibility for testing.
     #### Windows
     - The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  
     - During installation, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
