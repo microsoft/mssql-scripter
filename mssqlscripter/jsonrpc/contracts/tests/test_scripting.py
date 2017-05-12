@@ -5,6 +5,7 @@
 
 import io
 import os
+import time
 import unittest
 
 import mssqlscripter.jsonrpc.jsonrpcclient as json_rpc_client
@@ -314,6 +315,12 @@ class ScriptingRequestTests(unittest.TestCase):
         response_event = 0
         plan_notification_event = 0
         request.execute()
+
+        # There is a intermittent failure where for a moment there is no response read so we throw a exception,
+        # and lose all previous responses. This only happens in a test scenario when reading from a file.
+        # For now the fix is to add a timer to allow the request to process in the background so we can process
+        # the response.
+        time.sleep(1)
 
         while not request.completed():
             response = request.get_response()
