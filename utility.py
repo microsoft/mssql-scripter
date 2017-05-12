@@ -20,7 +20,8 @@ def exec_command(command, directory, continue_on_error=True):
         print(err, file=sys.stderr)
         if not continue_on_error:
             sys.exit(1)
-
+        else:
+            pass
 
 def clean_up(directory):
     """
