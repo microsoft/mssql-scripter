@@ -91,16 +91,18 @@ def main(args):
             if response:
                 scriptercallbacks.handle_response(response, parameters.DisplayProgress)
 
-        with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
-            for line in script_file.readlines():
-                # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
-                # If it is not none then the user has specified a custom
-                # encoding.
-                if not sys.stdout.encoding:
-                    # We are piping and the user is using the default encoding,
-                    # so encode to utf8.
-                    line = line.encode(u'utf-8')
-                sys.stdout.write(line)
+        # Only write to stdout if user did not provide a file path.
+        if temp_file_path:
+            with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
+                for line in script_file.readlines():
+                    # If piping, stdout encoding is none in python 2 which resolves to 'ascii'.
+                    # If it is not none then the user has specified a custom
+                    # encoding.
+                    if not sys.stdout.encoding:
+                        # We are piping and the user is using the default encoding,
+                        # so encode to utf8.
+                        line = line.encode(u'utf-8')
+                    sys.stdout.write(line)
 
     finally:
 
