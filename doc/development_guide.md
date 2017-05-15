@@ -114,22 +114,22 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
 2. Run unit tests with code coverage only:
 
     ```
-    python run_all_tests.py
+    pytest --cov mssqlscripter
     ```
 2. Running tests for specific components:
   
     To test the mssqlscripter:
     ```
-    python -m unittest discover -s mssqlscripter/tests
+    pytest mssqlscripter/tests
     ```
     To test the jsonrpc library:
     ```
-    python -m unittest discover -s mssqlscripter/jsonrpc/tests
+    pytest mssqlscripter/jsonrpc/tests
     ```
 
     To test the scripting service:
     ```
-    python -m unittest discover -s mssqlscripter/jsonrpc/contracts/tests
+    pytest mssqlscripter/jsonrpc/contracts/tests
     ```
 
 ## <a name="Run_mssql-scripter"></a>5. Running mssql-scripter
