@@ -47,8 +47,9 @@ class SqlToolsClientTest(unittest.TestCase):
         # Shut down, Request thread should be killed.
         tools_client.shutdown()
         time.sleep(1)
-        self.assertEqual(threading.active_count(), 1)
 
+        self.assertFalse(tools_client.json_rpc_client.request_thread.is_alive())
+        self.assertFalse(tools_client.json_rpc_client.response_thread.is_alive())
 
 if __name__ == u'__main__':
     unittest.main()
