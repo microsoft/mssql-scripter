@@ -2,7 +2,7 @@ sudo: True
 language: python
 matrix:
   include:
-      - os: osx
+    - os: osx
       language: generic
       env: TOXENV=py36
     - os: osx
