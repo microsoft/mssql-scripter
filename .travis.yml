@@ -13,8 +13,10 @@ matrix:
     - os: linux
       python: "3.6"
     - os: osx
+      language: generic
       env: TOXENV=py36
     - os: osx
+      language: generic
       env: TOXENV=py27
 
 before_install:
