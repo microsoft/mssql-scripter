@@ -7,7 +7,7 @@ import io
 import threading
 import unittest
 import mssqlscripter.sqltoolsclient as sql_tools_client
-
+import time
 
 class SqlToolsClientTest(unittest.TestCase):
     """
@@ -45,6 +45,7 @@ class SqlToolsClientTest(unittest.TestCase):
 
         # Shut down, Request thread should be killed.
         tools_client.shutdown()
+        time.sleep(1)
         self.assertEqual(threading.active_count(), 1)
 
 
