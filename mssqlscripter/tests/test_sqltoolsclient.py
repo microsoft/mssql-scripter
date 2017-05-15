@@ -9,6 +9,7 @@ import unittest
 import mssqlscripter.sqltoolsclient as sql_tools_client
 import time
 
+
 class SqlToolsClientTest(unittest.TestCase):
     """
         SQL Tools Client tests.
