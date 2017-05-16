@@ -14,11 +14,11 @@ environment:
 
 install:
   - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
-
+  - "%PYTHON%\\python.exe -m pip install codecov" 
 build: off
 
 test_script:
   - "%PYTHON%\\python.exe -m tox"
 
 on_success:
-  - "%PYTHON%\\Scripts\\codecov.exe"
+  - "%PYTHON%\\Scripts\\codecov.exe -f coverage.xml"
