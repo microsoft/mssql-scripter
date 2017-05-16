@@ -21,4 +21,4 @@ test_script:
   - "%PYTHON%\\python.exe -m tox"
 
 on_success:
-  - "codecov"
+  - "%PYTHON%\\Scripts\codecov.exe"
