@@ -3,7 +3,7 @@
 ## Description
 
 ## Options
-.. code-block::
+For option parameters, pass in '-h': 
 
     $ mssql-scripter -h
     usage: mssql-scripter [-h] [--connection-string  | -S ] [-d] [-U] [-P] [-f]
@@ -101,7 +101,7 @@
       --version             show program's version number and exit
 
 ## Environment Variables
-.. code:: bash
+You can set environment variables for your connection string through the following steps:
 
 
     # set environment variable MSSQL_SCRIPTER_CONNECTION_STRING with a connection string.
@@ -115,7 +115,6 @@
 ## Examples
 Here are example commands that run against the AdventureWorks database:
 
-.. code:: bash
 
 
     # generate DDL scripts for all objects in the Adventureworks database and save the script to a file
