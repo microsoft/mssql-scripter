@@ -26,9 +26,12 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="doc\README.md" />
-    <Content Include="doc\development_setup.md" />
+    <Content Include="doc\architecture_guide.md" />
+    <Content Include="doc\development_guide.md" />
     <Content Include="doc\pypi_release_steps.md" />
     <Content Include="doc\installation_guide.md" />
+    <Content Include="doc\sequence_diagram.puml" />
+    <Content Include="doc\virtual_environment_info.md" />
     <Content Include="LICENSE.txt" />
     <Content Include="MANIFEST.in" />
     <Content Include="mssql-scripter" />
@@ -41,9 +44,10 @@
     <Content Include="mssqltoolsservice\setup.cfg" />
     <Content Include="README.rst" />
     <Content Include="requirements.txt" />
-    <Content Include="run_all_tests.bat" />
-    <Content Include="run_all_tests.sh" />
     <Content Include="setup.cfg" />
+    <Content Include="tox.ini" />
+    <Content Include=".bumpversion.cfg" />
+    <Content Include=".travis.yml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dev_setup.py" />
@@ -69,6 +73,7 @@
     <Compile Include="register_upload.py" />
     <Compile Include="setup.py" />
     <Compile Include="utility.py" />
+    <Compile Include="verify_packaging.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />

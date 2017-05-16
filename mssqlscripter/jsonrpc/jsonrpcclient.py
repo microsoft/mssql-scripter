@@ -171,7 +171,7 @@ class JsonRpcClient(object):
         self.request_queue.put(None)
 
         # Wait for request thread to finish with a timeout in seconds.
-        self.request_thread.join(0.2)
+        self.request_thread.join(1)
 
         # close the underlying writer.
         self.writer.close()

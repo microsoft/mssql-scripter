@@ -7,6 +7,7 @@ import io
 import threading
 import unittest
 import mssqlscripter.sqltoolsclient as sql_tools_client
+import time
 
 
 class SqlToolsClientTest(unittest.TestCase):
@@ -45,7 +46,10 @@ class SqlToolsClientTest(unittest.TestCase):
 
         # Shut down, Request thread should be killed.
         tools_client.shutdown()
-        self.assertEqual(threading.active_count(), 1)
+        time.sleep(1)
+
+        self.assertFalse(tools_client.json_rpc_client.request_thread.is_alive())
+        self.assertFalse(tools_client.json_rpc_client.response_thread.is_alive())
 
 
 if __name__ == u'__main__':
