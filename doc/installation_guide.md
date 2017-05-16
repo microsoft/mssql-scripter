@@ -100,7 +100,7 @@ $ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
-## Error: libunwind.so.8: cannot open shared object file  - 
+## Error: libunwind.so.8: cannot open shared object file
 If you encounter the below error running mssql-scripter, this means the libunwind8 package is not installed.  This error has been seen
 on Ubuntu 14 & 17, Debian 8.
 ```shell
