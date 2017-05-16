@@ -29,4 +29,4 @@ install:
 script:
   - tox
 after_success:
-  - codecov --token=d071f49d-847e-4de1-ae11-6a10e8b8aee0
+  - codecov
