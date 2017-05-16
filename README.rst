@@ -6,7 +6,9 @@
   :target: https://codecov.io/gh/Microsoft/sql-xplat-cli
 .. image:: https://badge.fury.io/py/mssql-scripter.svg
   :target: https://pypi.python.org/pypi/mssql-scripter  
-  
+.. image:: https://img.shields.io/pypi/pyversions/mssql-scripter.svg   
+   :target: https://travis-ci.org/Microsoft/sql-xplat-cli
+
 mssql-scripter 1.0.0a1
 ============================
 
