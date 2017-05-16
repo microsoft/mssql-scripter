@@ -102,7 +102,7 @@ def main(args):
                     if not sys.stdout.encoding:
                         # We are piping and the user is using the default encoding,
                         # so encode to utf8.
-                        line = line.encode('utf-8')
+                        line = line.encode(u'utf-8')
                     sys.stdout.write(line)
 
     finally:
