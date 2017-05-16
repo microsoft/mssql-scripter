@@ -4,6 +4,9 @@
 .. image:: https://codecov.io/gh/Microsoft/sql-xplat-cli/branch/dev/graph/badge.svg?token=M96uWrHOIu
   :target: https://codecov.io/gh/Microsoft/sql-xplat-cli
   
+.. image:: https://badge.fury.io/py/mssql-scripter.svg
+  :target: https://badge.fury.io/py/mssql-scripter  
+  
 mssql-scripter 1.0.0a1
 ============================
 
