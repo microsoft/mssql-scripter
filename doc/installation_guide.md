@@ -82,7 +82,7 @@ C:\> pip install mssql-scripter
 
 If you're having installation issues, please check the below known issues and workarounds.  If you're having a different issue, please check the [issues](https://github.com/Microsoft/sql-xplat-cli/issues) page to see if the issue has already been reported.  If you don't see your issue there, filing a new issue would be appreciated.
 
-## No module named mssqlscripter
+## Error: No module named mssqlscripter
 If the installation was successful and this error message is encountered, this may be caused by different versions of python in the environment.
 i.e Used python 3.6 to install mssql-scripter, but PATH has python 2.7 so it uses the python 2.7 interpreter which has no visibility to packages installed into python 3.6.
 
@@ -93,15 +93,16 @@ More information can be found at:
 
 - [Development guide](development_guide.md#Environment_Setup)
 
-## Could not find version that satifies the requirement mssql-scripter
+## Error: Could not find version that satifies the requirement mssql-scripter
 If you see the above error running `pip install mssql-scripter`, this means the pip version used is out-of-date.  Upgrade pip using the command:
 ```shell
 $ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
-## Ubuntu 14 & 17, Debian 8 - libunwind.so.8: cannot open shared object file
-If you encounter the below error running mssql-scripter, this means the libunwind8 package is not installed.
+## Error: libunwind.so.8: cannot open shared object file  - 
+If you encounter the below error running mssql-scripter, this means the libunwind8 package is not installed.  This error has been seen
+on Ubuntu 14 & 17, Debian 8.
 ```shell
 Failed to load /usr/local/lib/python2.7/dist-packages/mssqltoolsservice/bin/libcoreclr.so, error 
 libunwind.so.8: cannot open shared object file: No such file or directory
