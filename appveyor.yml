@@ -1,0 +1,25 @@
+environment:
+
+  matrix:
+    - TOXENV: "py27"
+      PYTHON: "C:\\Python27"
+    - TOXENV: "py33"
+      PYTHON: "C:\\Python33"
+    - TOXENV: "py34"
+      PYTHON: "C:\\Python34"
+    - TOXENV: "py35"
+      PYTHON: "C:\\Python35"
+    - TOXENV: "py36"
+      PYTHON: "C:\\Python36"
+
+
+install:
+  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
+
+build: off
+
+test_script:
+  - "%PYTHON%\\python.exe tox"
+
+on_success:
+  - "codecov"
