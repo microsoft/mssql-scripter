@@ -25,7 +25,7 @@ Please refer to the `installation guide`_ for detailed install instructions.
 Usage
 -----
 
-Please refer to the [usage guide](doc/usage_guide.md) for details on options and example usage.
+Please refer to the `usage guide`_ for details on options and example usage.
 
 For usage and help content, pass in the ``-h`` parameter, for example:
 
@@ -194,6 +194,7 @@ mssql-scritper is licensed under the `MIT license`_.
 
 .. _installation guide: doc/installation_guide.md
 .. _development guide: doc/development_guide.md
+.. _usage guide: doc/usage_guide.md
 .. _Issues: https://github.com/Microsoft/sql-xplat-cli/issues
 .. _Microsoft Open Source Code of Conduct: https://opensource.microsoft.com/codeofconduct/
 .. _Code of Conduct FAQ: https://opensource.microsoft.com/codeofconduct/faq/
