@@ -25,6 +25,8 @@ Please refer to the `installation guide`_ for detailed install instructions.
 Usage
 -----
 
+Please refer to the `usage guide`_ for details on options and example usage.
+
 For usage and help content, pass in the ``-h`` parameter, for example:
 
 .. code:: bash
