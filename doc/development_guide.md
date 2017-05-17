@@ -77,7 +77,7 @@ General development steps that apply to both a virtual environment or a global e
 ## <a name="Configure_IDE"></a>3. Configuring your IDE
 #### Visual Studio (Windows only)
 1.	Install [Python Tools for Visual Studio](https://github.com/Microsoft/PTVS)
-2.	Open the <clone_root>\sql-xplat-cli.pyproj project in Visual Studio
+2.	Open the `<clone_root>\sql-xplat-cli.pyproj` project in Visual Studio
 
 
 #### Visual Studio Code (Any platform)
@@ -98,7 +98,7 @@ Provided your PYTHONPATH was set correctly, you can run the tests from your `<cl
     ```
     **Note**: Tox is used run full suite of tests in each python version. Running the command above will run the full suite of tests against Python 2.7 and Python 3.6, if installed. More info can be found at [tox testing.](http://tox.readthedocs.io/en/latest/index.html)
 
-    Run tox tests against specify Python version:
+    Run tox tests against specific Python version:
 
     ```
     tox -e py27
