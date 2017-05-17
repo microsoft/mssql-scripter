@@ -92,7 +92,7 @@ def main(args):
                 scriptercallbacks.handle_response(response, parameters.DisplayProgress)
 
         # Only write to stdout if user did not provide a file path.
-        logger.info('Using encoding: {}'.format(sys.stdout.encoding))
+        logger.info('stdout current encoding: {}'.format(sys.stdout.encoding))
         if temp_file_path:
             with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
                 for line in script_file.readlines():
