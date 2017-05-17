@@ -100,6 +100,16 @@ $ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
+## Error: System.DllNotFoundException: Unable to load DLL 'System.Security.Cryptography.Native': The specified module could not be found.
+If you encounter this error on MacOS, this means you need the latest version of OpenSSL. To update:
+```shell
+$ brew update
+$ brew install openssl
+$ mkdir -p /usr/local/lib
+$ ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+$ ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+```
+
 ## Error: libunwind.so.8: cannot open shared object file
 If you encounter the below error running mssql-scripter, this means the libunwind8 package is not installed.  This error has been seen
 on Ubuntu 14 & 17, Debian 8.
