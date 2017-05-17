@@ -9,6 +9,7 @@ Development Guide
 4. [Running mssql-scripter](#Run_mssql-scripter)
 4. [Packaging](pypi_release_steps.md)
 
+See the [Architecture Guide](architecture_guide.md) for details on how mssql-scripter is designed and implemented.
 
 mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-xplat-cli). In order to contribute to the project, you are expected to: 
 -	Have a GitHub account. For Microsoft contributors, follow the guidelines on https://opensourcehub.microsoft.com/ to create, configure and link your account
