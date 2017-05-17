@@ -113,62 +113,81 @@ You can set environment variables for your connection string through the followi
     $ mssql-scripter -S localhost -d AdventureWorks -U sa
 
 ## Examples
-Here are example commands that run against the AdventureWorks database:
+Below are example commands that run against the AdventureWorks database. Here is the list of examples:
 
-Dump database object schema (note --schema-only is the default)
+[Dump datbase object schema](#dump-database-object-schema)
+
+[Dump datbase object data](#dump-database-object-data)
+
+[Dump datbase object schema and data](#dump-database-object-schema-and-data)
+
+[Include database objects](#include-database-objects)
+
+[Exclude database objects](#exclude-database-objects)
+
+[Target server version](#target-server-version)
+
+[Target server edition](#target-server-edition)
+
+[Pipe a generated script to sed](#pipe-a-generated-script-to-sed)
+
+[Script data to a file](#script-data-to-a-file)
+
+### Dump database object schema
 
     # generate DDL scripts for all objects in the Adventureworks database and save the script to a file
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa
+    mssql-scripter -S localhost -d AdventureWorks -U sa
     
     # alternatively, specify the schema only flag to generate DDL scripts for all objects in the Adventureworks database and save the script to a file
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --schema-only
+    mssql-scripter -S localhost -d AdventureWorks -U sa --schema-only
 
-Dump database object data
+### Dump database object data
 
     # generate DDL scripts for all objects in the Adventureworks database and save the script to a file
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --data-only
+    mssql-scripter -S localhost -d AdventureWorks -U sa --data-only
 
-Dump the database object schema and data
+### Dump the database object schema and data
 
     # script the database schema and data to a file.
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
+    mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
 
     # execute the generated above script with sqlcmd
-    $ sqlcmd -S mytestserver -U sa -i ./adventureworks.sql
+    sqlcmd -S mytestserver -U sa -i ./adventureworks.sql
     
-Include database objects
+### Include database objects
 
     # generate DDL scripts for objects that contain 'Employee' in their name to stdout
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee
+    mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects Employee
 
     # generate DDL scripts for the dbo schema and pipe the output to a file
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql
+    mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql
 
-Exclude database objects
+### Exclude database objects
    
     # generate DDL scripts for objects that do not contain 'Sale' in their name to stdout
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --exclude-objects Sale
+    mssql-scripter -S localhost -d AdventureWorks -U sa --exclude-objects Sale
 
-Target server version
+### Target server version
     
     # specify the version of SQL Server the script will be run against
-    $ mssql-scripter -S -U myUser -d AdventureWorks –target-server-version “SQL Azure DB” > myData.sql
+    mssql-scripter -S -U myUser -d AdventureWorks –target-server-version “SQL Azure DB” > myData.sql
 
-Target server edition
+### Target server edition
 
     # specify the edition of SQL Server the script will be run against
-    $ mssql-scripter -S -U myUser -d devDB –target-server-edition “SQL Server Enterprise Edition” > myData.sql
+    mssql-scripter -S -U myUser -d devDB –target-server-edition “SQL Server Enterprise Edition” > myData.sql
 
-Pipe a generated scripte to sed
+### Pipe a generated script to sed
+Note this example is for Linux and macOS usage.
 
     # change a schema name in the generated DDL script
     # 1) generate DDL scripts for all objects in the Adventureworks database
     # 2) pipe generated script to sed and change all occurrences of SalesLT to SalesLT_test and save the script to a file
     $ mssql-scripter scripter -S localhost -d Adventureworks -U sa | sed -e "s/SalesLT./SalesLT_test./g" > adventureworks_SalesLT_test.sql 
 
-Script data to a file
+### Script data to a file
    
     # script the all data to a file.
-    $ mssql-scripter -S localhost -d AdventureWorks -U sa --data-only > ./adventureworks-data.sql 
+    mssql-scripter -S localhost -d AdventureWorks -U sa --data-only > ./adventureworks-data.sql 
 
    
