@@ -26,7 +26,6 @@ logger = logging.getLogger(u'mssqlscripter.main')
 def main(args):
     """
         Main entry point to mssql-scripter.
-
     """
     scripterlogging.initialize_logger()
     logger.info('Python Information :{}'.format(sys.version_info))
@@ -93,7 +92,6 @@ def main(args):
 
         # Only write to stdout if user did not provide a file path.
         logger.info('stdout current encoding: {}'.format(sys.stdout.encoding))
-        print(sys.stdout.encoding)
         if temp_file_path:
             with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
                 for line in script_file.readlines():
