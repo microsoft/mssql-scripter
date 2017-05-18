@@ -9,12 +9,7 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # Set the python io encoding to UTF-8 by default if not set.
-if ["$PYTHONIOENCODING"=""]
-then
-  export PYTHONIOENCODING="UTF-8"
-  # Used as a flag to tell scripter we manually set the encoding.
-  export MSSQLSCRIPTER_DEFAULT_ENCODING="TRUE"
-fi
+if [ -z ${PYTHONIOENCODING+x} ]; then export PYTHONIOENCODING=utf8; fi
 
 export PYTHONPATH="${DIR}:${PYTHONPATH}"
 

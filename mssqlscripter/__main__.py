@@ -20,9 +20,3 @@ except KeyboardInterrupt as error:
 except Exception as error:
     sys.stderr.write(str(error))
     sys.exit(3)
-finally:
-    # If MSSQLSCRIPTER_DEFAULT_ENCODING was set, it means we set the encoding ourselves,
-    # so we have to clean up and reset the variables.
-    if 'MSSQLSCRIPTER_DEFAULT_ENCODING' in os.environ:
-        os.environ['MSSQLSCRIPTER_DEFAULT_ENCODING']=""
-        os.environ['PYTHONIOENCODING']=""
