@@ -8,6 +8,9 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
+# Set the python io encoding to UTF-8 by default if not set.
+if [ -z ${PYTHONIOENCODING+x} ]; then export PYTHONIOENCODING=utf8; fi
+
 export PYTHONPATH="${DIR}:${PYTHONPATH}"
 
 python -m mssqlscripter "$@"
