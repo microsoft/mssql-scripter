@@ -1,7 +1,7 @@
 # Usage Guide
 
 ## Description
-Mssql-scripter is the multiplatform command line equivalent of the widely used Generate Scripts Wizard experience in SSMS.
+mssql-scripter is the multiplatform command line equivalent of the widely used Generate Scripts Wizard experience in SSMS.
  
 You can use mssql-scripter on Linux, macOS, and Windows to generate data definition language (DDL) and data manipulation language (DML) T-SQL scripts for database objects in SQL Server running anywhere, Azure SQL Database, and Azure SQL Data Warehouse. You can save the generated T-SQL script to a .sql file or pipe it to standard *nix utilities (for example, sed, awk, grep) for further transformations. You can edit the generated script or check it into source control and subsequently execute the script in your existing SQL database deployment processes and DevOps pipelines with standard multiplatform SQL command line tools such as sqlcmd.
 
@@ -32,16 +32,16 @@ Below are example commands that run against the AdventureWorks database. Here is
     mssql-scripter -S localhost -d AdventureWorks -U sa
     
     # alternatively, specify the schema only flag to generate DDL scripts for all objects in the Adventureworks database and save the script to a file
-    mssql-scripter -S localhost -d AdventureWorks -U sa --schema-only
+    mssql-scripter -S localhost -d AdventureWorks -U sa -f ./adventureworks.sql
 
 ### Dump database object data
 
-    # generate DDL scripts for all objects in the Adventureworks database and save the script to a file
+    # generate DDL scripts for all objects in the Adventureworks database and save the script to stdout.
     mssql-scripter -S localhost -d AdventureWorks -U sa --data-only
 
 ### Dump the database object schema and data
 
-    # script the database schema and data to a file.
+    # script the database schema and data piped to a file.
     mssql-scripter -S localhost -d AdventureWorks -U sa --schema-and-data  > ./adventureworks.sql
 
     # execute the generated above script with sqlcmd
@@ -63,12 +63,12 @@ Below are example commands that run against the AdventureWorks database. Here is
 ### Target server version
     
     # specify the version of SQL Server the script will be run against
-    mssql-scripter -S -U myUser -d AdventureWorks –target-server-version “SQL Azure DB” > myData.sql
+    mssql-scripter -S myServer -d AdventureWorks -U myUser –-target-server-version "AzureDB" > myData.sql
 
 ### Target server edition
 
     # specify the edition of SQL Server the script will be run against
-    mssql-scripter -S -U myUser -d devDB –target-server-edition “SQL Server Enterprise Edition” > myData.sql
+    mssql-scripter -S localhost -d AdventureWorks -U myUser –-target-server-edition "Enterprise" > myData.sql
 
 ### Pipe a generated script to sed
 Note this example is for Linux and macOS usage.
