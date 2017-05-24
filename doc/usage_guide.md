@@ -76,7 +76,7 @@ Note this example is for Linux and macOS usage.
     # change a schema name in the generated DDL script
     # 1) generate DDL scripts for all objects in the Adventureworks database
     # 2) pipe generated script to sed and change all occurrences of SalesLT to SalesLT_test and save the script to a file
-    $ mssql-scripter scripter -S localhost -d Adventureworks -U sa | sed -e "s/SalesLT./SalesLT_test./g" > adventureworks_SalesLT_test.sql 
+    $ mssql-scripter -S localhost -d Adventureworks -U sa | sed -e "s/SalesLT./SalesLT_test./g" > adventureworks_SalesLT_test.sql 
 
 ### Script data to a file
    
