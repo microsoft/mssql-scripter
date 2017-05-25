@@ -8,7 +8,9 @@ import utility
 import os
 import setup    # called via "verify_package.py clean"" to detect platform for wheel generation.
 
+
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
+
 
 def build_wheel_for_current_platform():
     """
