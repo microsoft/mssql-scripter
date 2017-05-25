@@ -5,8 +5,16 @@
 
 from __future__ import print_function
 from subprocess import check_call, CalledProcessError
+import os
 import shutil
 import sys
+
+
+MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
+    os.path.join(os.path.abspath(__file__), '..', 'dist'))
+
+MSSQLTOOLSSERVICE_DIST_DIRECTORY = os.path.abspath(os.path.join(
+    os.path.abspath(__file__), '..', 'mssqltoolsservice', 'dist'))
 
 
 def exec_command(command, directory, continue_on_error=True):

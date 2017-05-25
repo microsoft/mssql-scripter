@@ -8,14 +8,7 @@ import utility
 import os
 import setup    # called via "verify_package.py clean"" to detect platform for wheel generation.
 
-
-MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
-    os.path.join(os.path.abspath(__file__), '..', 'dist'))
-MSSQLTOOLSSERVICE_DIST_DIRECTORY = os.path.abspath(os.path.join(
-    os.path.abspath(__file__), '..', 'mssqltoolsservice', 'dist'))
-
 root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-
 
 def build_wheel_for_current_platform():
     """
@@ -35,7 +28,7 @@ def verify_local_install():
         Install mssql-scripter package locally that resolves mssqltoolsservice dependency from local build.
     """
     # Local install of mssql-scripter.
-    mssqlscripter_sdist_name = os.listdir(MSSQLSCRIPTER_DIST_DIRECTORY)[0]
+    mssqlscripter_sdist_name = os.listdir(utility.MSSQLSCRIPTER_DIST_DIRECTORY)[0]
     # To ensure we have a clean install, we disable the cache as to prevent cache overshadowing actual changes made.
     utility.exec_command(
         'pip install --no-cache-dir --no-index --find-links=./mssqltoolsservice/dist ./dist/{}'.format(mssqlscripter_sdist_name),
