@@ -30,6 +30,15 @@ For operating system specific installs, see one of the following links:
 
 # macOS Installation
 
+Check if Python is installed using command:
+```shell
+$ python --version
+```
+If Python is not installed or less than version 2.7, upgrade Python using the following command:
+```shell
+$ sudo brew install python
+```
+
 Check if pip 9.0 or above is installed using command: 
 ```shell
 $ pip --version
@@ -38,7 +47,6 @@ $ pip --version
 If pip is not installed or less than version 9.0, upgrade pip using the following command:
 
 ```shell
-$ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
