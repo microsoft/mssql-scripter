@@ -102,7 +102,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--target-server-version',
-        dest=u'ScriptForServerVersion',
+        dest=u'ScriptCompatibilityOption',
         choices=[
             '2005',
             '2008',
@@ -118,7 +118,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--target-server-edition',
-        dest=u'ScriptForTheDatabaseEngineEdition',
+        dest=u'TargetDatabaseEngineEdition ',
         choices=[
             u'Standard',
             u'Personal'
@@ -427,41 +427,41 @@ def map_server_options(parameters):
         Map short form to long form name and maps Azure versions to their appropriate editions.
     """
     azure_server_edition_map = {
-        u'AzureDB': u'Microsoft Azure SQL Database Edition',
-        u'AzureDW': u'Microsoft Azure Data Warehouse Edition',
+        u'AzureDB': u'SqlAzureDatabaseEdition',
+        u'AzureDW': u'SqlDatawarehouseEdition',
     }
 
     on_prem_server_edition_map = {
-        u'Standard': u'Microsoft SQL Server Standard Edition',
-        u'Personal': u'Microsoft SQL Server Personal Edition',
-        u'Express': u'Microsoft SQL Server Express Edition',
-        u'Enterprise': u'Microsoft SQL Server Enterprise Edition',
-        u'Stretch': u'Microsoft SQL Server Stretch Database Edition',
+        u'Standard'  : u'SqlServerStandardEdition',
+        u'Personal'  : u'SqlServerPersonalEdition',
+        u'Express'   : u'SqlServerExpressEdition',
+        u'Enterprise': u'SqlServerEnterpriseEdition',
+        u'Stretch'   : u'SqlServerStretchDatabaseEdition',
     }
 
     on_prem_server_version_map = {
-        u'2005': u'SQL Server 2005',
-        u'2008': u'SQL Server 2008',
-        u'2008R2': u'SQL Server 2008 R2',
-        u'2012': u'SQL Server 2012',
-        u'2014': u'SQL Server 2014',
-        u'2016': u'SQL Server 2016',
-        u'vNext': u'SQL Server vNext CTP',
+        u'2005'  : u'Script90Compat',
+        u'2008'  : u'Script100Compat',
+        u'2008R2': u'Script105Compat',
+        u'2012'  : u'Script110Compat',
+        u'2014'  : u'Script120Compat',
+        u'2016'  : u'Script130Compat',
+        u'vNext' : u'Script140Compat',
     }
 
-    target_server_version = parameters.ScriptForServerVersion
-    target_server_edition = parameters.ScriptForTheDatabaseEngineEdition
+    target_server_version = parameters.ScriptCompatibilityOption
+    target_server_edition = parameters.TargetDatabaseEngineEdition
     # When targetting Azure, only the edition matters.
     if u'Azure' in target_server_version:
         # SMO ignores this value when it is targetting Azure.
-        parameters.ScriptForServerVersion = u'SQL Server 2016'
-        parameters.ScriptForTheDatabaseEngineEdition = azure_server_edition_map[
+        parameters.ScriptCompatibilityOption= u'Script140Compat'
+        parameters.TargetDatabaseEngineEdition = azure_server_edition_map[
             target_server_version]
         parameters.ScriptForTheDatabaseEngineType = u'SqlAzure'
 
     else:
-        parameters.ScriptForServerVersion = on_prem_server_version_map[target_server_version]
-        parameters.ScriptForTheDatabaseEngineEdition = on_prem_server_edition_map[
+        parameters.ScriptCompatibilityOption = on_prem_server_version_map[target_server_version]
+        parameters.TargetDatabaseEngineEdition  = on_prem_server_edition_map[
             target_server_edition]
         parameters.ScriptForTheDatabaseEngineType = u'SingleInstance'
 
