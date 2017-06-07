@@ -169,22 +169,22 @@ class ScriptingOptions(object):
             u'ScriptStatsAll',
             u'ScriptStatsNone',
             u'ScriptStatsDll'],
-        u'ScriptForServerVersion': [
-            u'SQL Server 2005',
-            u'SQL Server 2008',
-            u'SQL Server 2008 R2',
-            u'SQL Server 2012',
-            u'SQL Server 2014',
-            u'SQL Server 2016',
-            u'SQL Server vNext CTP 1.0'],
-        u'ScriptForTheDatabaseEngineEdition': [
-            u'Microsoft SQL Server Standard Edition',
-            u'Microsoft SQL Server Personal Edition'
-            u'Microsoft SQL Server Express Edition',
-            u'Microsoft SQL Server Enterprise Edition',
-            u'Microsoft SQL Server Stretch Database Edition',
-            u'Microsoft Azure SQL Database Edition',
-            u'Microsoft Azure Data Warehouse Edition', ]}
+        u'ScriptCompatibilityOption': [
+            u'Script90Compat',
+            u'Script100Compat',
+            u'Script105Compat',
+            u'Script110Compat',
+            u'Script120Compat',
+            u'Script130Compat',
+            u'Script140Compat'],
+        u'TargetDatabaseEngineEdition': [
+            u'SqlServerStandardEdition',
+            u'SqlServerPersonalEdition',
+            u'SqlServerExpressEdition',
+            u'SqlServerEnterpriseEdition',
+            u'SqlServerStretchDatabaseEdition'
+            u'SqlAzureDatabaseEdition',
+            u'SqlDatawarehouseEdition']}
 
     def __init__(self, parameters=None):
         """
@@ -226,8 +226,8 @@ class ScriptingOptions(object):
         self.ScriptDropAndCreate = u'ScriptCreate'
         self.ScriptForTheDatabaseEngineType = u'SingleInstance'
         self.ScriptStatistics = u'ScriptStatsNone'
-        self.ScriptForServerVersion = u'SQL Server vNext CTP 1.0'
-        self.ScriptForTheDatabaseEngineEdition = u'Microsoft SQL Server Standard Edition'
+        self.ScriptCompatibilityOption = u'Script140Compat'
+        self.TargetDatabaseEngineEdition = u'SqlServerStandardEdition'
 
         if parameters:
             self.update_options(parameters)
