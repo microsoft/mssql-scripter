@@ -118,7 +118,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--target-server-edition',
-        dest=u'TargetDatabaseEngineEdition ',
+        dest=u'TargetDatabaseEngineEdition',
         choices=[
             u'Standard',
             u'Personal'
@@ -432,21 +432,21 @@ def map_server_options(parameters):
     }
 
     on_prem_server_edition_map = {
-        u'Standard'  : u'SqlServerStandardEdition',
-        u'Personal'  : u'SqlServerPersonalEdition',
-        u'Express'   : u'SqlServerExpressEdition',
+        u'Standard': u'SqlServerStandardEdition',
+        u'Personal': u'SqlServerPersonalEdition',
+        u'Express': u'SqlServerExpressEdition',
         u'Enterprise': u'SqlServerEnterpriseEdition',
-        u'Stretch'   : u'SqlServerStretchDatabaseEdition',
+        u'Stretch': u'SqlServerStretchDatabaseEdition',
     }
 
     on_prem_server_version_map = {
-        u'2005'  : u'Script90Compat',
-        u'2008'  : u'Script100Compat',
+        u'2005': u'Script90Compat',
+        u'2008': u'Script100Compat',
         u'2008R2': u'Script105Compat',
-        u'2012'  : u'Script110Compat',
-        u'2014'  : u'Script120Compat',
-        u'2016'  : u'Script130Compat',
-        u'vNext' : u'Script140Compat',
+        u'2012': u'Script110Compat',
+        u'2014': u'Script120Compat',
+        u'2016': u'Script130Compat',
+        u'vNext': u'Script140Compat',
     }
 
     target_server_version = parameters.ScriptCompatibilityOption
@@ -454,14 +454,14 @@ def map_server_options(parameters):
     # When targetting Azure, only the edition matters.
     if u'Azure' in target_server_version:
         # SMO ignores this value when it is targetting Azure.
-        parameters.ScriptCompatibilityOption= u'Script140Compat'
+        parameters.ScriptCompatibilityOption = u'Script140Compat'
         parameters.TargetDatabaseEngineEdition = azure_server_edition_map[
             target_server_version]
         parameters.ScriptForTheDatabaseEngineType = u'SqlAzure'
 
     else:
         parameters.ScriptCompatibilityOption = on_prem_server_version_map[target_server_version]
-        parameters.TargetDatabaseEngineEdition  = on_prem_server_edition_map[
+        parameters.TargetDatabaseEngineEdition = on_prem_server_edition_map[
             target_server_edition]
         parameters.ScriptForTheDatabaseEngineType = u'SingleInstance'
 

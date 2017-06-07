@@ -27,7 +27,7 @@ def handle_response(response, display=False):
         if display:
             sys.stderr.write(
                 u'Scripting progress: Status: {} Progress: {} out of {} objects scripted\n'.format(
-                    response.status, response.count, response.total_count))
+                    response.status, response.completed_count, response.total_count))
 
     def handle_script_complete(response, display=False):
         if response.has_error:

@@ -169,7 +169,7 @@ class ScriptingOptions(object):
             u'ScriptStatsAll',
             u'ScriptStatsNone',
             u'ScriptStatsDll'],
-        u'ScriptCompatibilityOption: [
+        u'ScriptCompatibilityOption': [
             u'Script90Compat',
             u'Script100Compat',
             u'Script105Compat',
@@ -182,7 +182,7 @@ class ScriptingOptions(object):
             u'SqlServerPersonalEdition',
             u'SqlServerExpressEdition',
             u'SqlServerEnterpriseEdition',
-            u'SqlServerStretchDatabaseEdition',]}
+            u'SqlServerStretchDatabaseEdition']}
 
     def __init__(self, parameters=None):
         """
@@ -225,7 +225,7 @@ class ScriptingOptions(object):
         self.ScriptForTheDatabaseEngineType = u'SingleInstance'
         self.ScriptStatistics = u'ScriptStatsNone'
         self.ScriptCompatibilityOption = u'Script140Compat'
-        self.TargetDatabaseEngineEdition= u'SqlServerStandardEdition'
+        self.TargetDatabaseEngineEdition = u'SqlServerStandardEdition'
 
         if parameters:
             self.update_options(parameters)

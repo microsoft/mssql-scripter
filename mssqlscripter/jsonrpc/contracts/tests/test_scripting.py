@@ -168,8 +168,8 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptDropAndCreate': u'ScriptCreate',
             u'ScriptForTheDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
-            u'ScriptForServerVersion': u'SQL Server vNext CTP 1.0',
-            u'ScriptForTheDatabaseEngineEdition': u'Microsoft SQL Server Standard Edition'}
+            u'ScriptCompatibilityOption': u'Script140Compat',
+            u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
 
         self.assertEqual(scripting_options.get_options(), expected)
 
@@ -220,8 +220,8 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptDropAndCreate': u'ScriptCreate',
             u'ScriptForTheDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
-            u'ScriptForServerVersion': u'SQL Server vNext CTP 1.0',
-            u'ScriptForTheDatabaseEngineEdition': u'Microsoft SQL Server Standard Edition'}
+            u'ScriptCompatibilityOption': u'Script140Compat',
+            u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
 
         self.assertEqual(scripting_options.get_options(), expected)
 
@@ -232,7 +232,7 @@ class ScriptingRequestTests(unittest.TestCase):
         invalid_options = {u'ANSIPadding': u'NonValid'}
 
         invalid_server_version = {
-            u'ScriptForServerVersion': u'SQL Server 1689'}
+            u'ScriptCompatibilityOption': u'SQL Server 1689'}
 
         with self.assertRaises(ValueError):
             scripting.ScriptingOptions(invalid_options)
@@ -284,8 +284,8 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptDropAndCreate': u'ScriptCreate',
             u'ScriptForTheDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
-            u'ScriptForServerVersion': u'SQL Server vNext CTP 1.0',
-            u'ScriptForTheDatabaseEngineEdition': u'Microsoft SQL Server Standard Edition'}
+            u'ScriptCompatibilityOption': u'Script140Compat',
+            u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
 
         self.assertEqual(
             formatted_params[u'FilePath'],
