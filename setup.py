@@ -14,7 +14,7 @@ from setuptools import setup
 
 # This version number is in place in two places and must be in sync with
 # mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = '1.0.0a7'
+MSSQLSCRIPTER_VERSION = '1.0.0a11'
 
 # If we have the source, validate our setup version matches source version.
 # This will prevent uploading releases with mismatched versions. This will
@@ -248,6 +248,7 @@ setup(
     author_email='sqlxplatclieng@microsoft.com',
     url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
+    long_description=open('README.rst').read(),
     classifiers=CLASSIFIERS,
     include_package_data=True,
     scripts=[
