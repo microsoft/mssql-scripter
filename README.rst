@@ -1,16 +1,21 @@
-.. image:: https://travis-ci.org/Microsoft/sql-xplat-cli.svg?branch=dev
-    :target: https://travis-ci.org/Microsoft/sql-xplat-cli
-.. image:: https://ci.appveyor.com/api/projects/status/vpm8p71265ijytqs/branch/dev?svg=true
-    :target: https://ci.appveyor.com/project/MrMeemus/sql-xplat-cli
-.. image:: https://codecov.io/gh/Microsoft/sql-xplat-cli/branch/dev/graph/badge.svg?token=M96uWrHOIu
-    :target: https://codecov.io/gh/Microsoft/sql-xplat-cli/branch/dev
-.. image:: https://badge.fury.io/py/mssql-scripter.svg
-    :target: https://pypi.python.org/pypi/mssql-scripter  
-.. image:: https://img.shields.io/pypi/pyversions/mssql-scripter.svg   
-    :target: https://travis-ci.org/Microsoft/sql-xplat-cli
-   
 mssql-scripter 1.0.0a7
 ============================
+
+.. image:: https://travis-ci.org/Microsoft/sql-xplat-cli.svg?branch=dev
+    :target: https://travis-ci.org/Microsoft/sql-xplat-cli
+
+.. image:: https://ci.appveyor.com/api/projects/status/vpm8p71265ijytqs/branch/dev?svg=true
+    :target: https://ci.appveyor.com/project/MrMeemus/sql-xplat-cli
+
+.. image:: https://codecov.io/gh/Microsoft/sql-xplat-cli/branch/dev/graph/badge.svg?token=M96uWrHOIu
+    :target: https://codecov.io/gh/Microsoft/sql-xplat-cli/branch/dev
+
+.. image:: https://badge.fury.io/py/mssql-scripter.svg
+    :target: https://pypi.python.org/pypi/mssql-scripter
+
+.. image:: https://img.shields.io/pypi/pyversions/mssql-scripter.svg
+    :target: https://travis-ci.org/Microsoft/sql-xplat-cli
+
 
 We’re excited to introduce mssql-scripter, a multi-platform command line
 experience for scripting SQL Server databases.
