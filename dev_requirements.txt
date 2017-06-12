@@ -1,11 +1,8 @@
-# Requirements for both dev and production.
 enum34 >= 1.1.6
 future >= 0.16.0
 setuptools >= 36.0.1
 requests >= 2.13.0
 wheel >= 0.29.0
-
-#Development requirements.
 coverage >= 4.3.4
 twine >= 1.8.1
 bumpversion >= 0.5.3 
