@@ -18,7 +18,7 @@ print('Running dev setup...')
 print('Root directory \'{}\'\n'.format(root_dir))
 
 # install general requirements.
-utility.exec_command('pip install -r requirements.txt', root_dir)
+utility.exec_command('pip install -r dev_requirements.txt', root_dir)
 
 # install mssqltoolsservice if this platform supports it.
 mssqltoolsservice_package_name = os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME']

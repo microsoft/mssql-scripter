@@ -79,7 +79,7 @@ def build_sqltoolsservice_wheels(platforms):
 
         print(u'Calling setup bdist_wheel for platform:{}'.format(platform))
         download_and_unzip(SUPPORTED_PLATFORMS[platform], directory=TARGET_DIRECTORY)
-        utility.exec_command(u'python setup.py bdist_wheel', CURRENT_DIRECTORY)
+        utility.exec_command(u'python setup.py check -r -s bdist_wheel', CURRENT_DIRECTORY)
 
         print(u'Cleaning up mssqltoolservice and build directory for platform:{}'.format(platform))
         utility.clean_up(directory=TARGET_DIRECTORY)

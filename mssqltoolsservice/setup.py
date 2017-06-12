@@ -63,6 +63,7 @@ setup(
     author_email='sqlxplatclieng@microsoft.com',
     url='https://github.com/Microsoft/sqltoolsservice',
     zip_safe=True,
+    long_description=open('README.rst').read(),
     classifiers=CLASSIFIERS,
     include_package_data=True,
     packages=[
