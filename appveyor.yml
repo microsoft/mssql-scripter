@@ -13,7 +13,7 @@ environment:
       PYTHON: "C:\\Python36"
 
 install:
-  - "%PYTHON%\\python.exe -m pip install -r requirements.txt"
+  - "%PYTHON%\\python.exe -m pip install -r dev_requirements.txt"
   - "%PYTHON%\\python.exe -m pip install codecov" 
 build: off
 
