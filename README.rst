@@ -13,8 +13,8 @@
 .. image:: https://img.shields.io/pypi/pyversions/mssql-scripter.svg
     :target: https://travis-ci.org/Microsoft/sql-xplat-cli
 
-mssql-scripter 1.0.0a11
-============================
+mssql-scripter
+===============
 We’re excited to introduce mssql-scripter, a multi-platform command line
 experience for scripting SQL Server databases.
 

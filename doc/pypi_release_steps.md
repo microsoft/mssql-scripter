@@ -48,9 +48,9 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
       rm -rf dist
       rm -rf mssqltoolsservice/dist
       ```
-2. Build mssql-scripter source distribution, From `<clone_root>` execute:
+2. Build mssql-scripter source distribution and verify readme.rst, From `<clone_root>` execute:
     ```
-    python setup.py sdist
+    python setup.py check -r -s sdist
     ```
 
 3. Build mssqltoolsservice wheels for each supported platform, From `<clone_root>/mssqltoolsservice` execute:
@@ -91,8 +91,6 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
 		password = your_password
         ```
 4. Register and upload to pypi test server:
-    
-    
     
     ```
     python register_upload.py register pypitest
