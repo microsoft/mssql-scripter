@@ -162,7 +162,7 @@ class ScriptingOptions(object):
             u'ScriptCreate',
             u'ScriptDrop',
             u'ScriptCreateDrop'],
-        u'ScriptForTheDatabaseEngineType': [
+        u'TargetDatabaseEngineType': [
             u'SingleInstance',
             u'SqlAzure'],
         u'ScriptStatistics': [
@@ -224,7 +224,7 @@ class ScriptingOptions(object):
         # Scripting options that are limited.
         self.TypeOfDataToScript = u'SchemaOnly'
         self.ScriptDropAndCreate = u'ScriptCreate'
-        self.ScriptForTheDatabaseEngineType = u'SingleInstance'
+        self.TargetDatabaseEngineType = u'SingleInstance'
         self.ScriptStatistics = u'ScriptStatsNone'
         self.ScriptCompatibilityOption = u'Script140Compat'
         self.TargetDatabaseEngineEdition = u'SqlServerStandardEdition'

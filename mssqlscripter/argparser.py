@@ -281,7 +281,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--database-engine-type',
-        dest=u'ScriptForTheDatabaseEngineType',
+        dest=u'TargetDatabaseEngineType',
         # This parameter is determined based on engine edition and version in
         # the background. User cannot select it.
         action=u'store_const',
@@ -454,15 +454,15 @@ def map_server_options(parameters):
     # When targetting Azure, only the edition matters.
     if u'Azure' in target_server_version:
         # SMO ignores this value when it is targetting Azure.
-        parameters.ScriptCompatibilityOption = u'Script140Compat'
+        parameters.ScriptCompatibilityOption = u'Script105Compat'
         parameters.TargetDatabaseEngineEdition = azure_server_edition_map[
             target_server_version]
-        parameters.ScriptForTheDatabaseEngineType = u'SqlAzure'
+        parameters.TargetDatabaseEngineType = u'SqlAzure'
 
     else:
         parameters.ScriptCompatibilityOption = on_prem_server_version_map[target_server_version]
         parameters.TargetDatabaseEngineEdition = on_prem_server_edition_map[
             target_server_edition]
-        parameters.ScriptForTheDatabaseEngineType = u'SingleInstance'
+        parameters.TargetDatabaseEngineType = u'SingleInstance'
 
     return parameters

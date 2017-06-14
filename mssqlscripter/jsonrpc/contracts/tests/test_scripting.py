@@ -166,7 +166,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptUniqueKeys': False,
             u'TypeOfDataToScript': u'SchemaOnly',
             u'ScriptDropAndCreate': u'ScriptCreate',
-            u'ScriptForTheDatabaseEngineType': u'SingleInstance',
+            u'TargetDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
             u'ScriptCompatibilityOption': u'Script140Compat',
             u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
@@ -218,7 +218,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptUniqueKeys': False,
             u'TypeOfDataToScript': u'SchemaOnly',
             u'ScriptDropAndCreate': u'ScriptCreate',
-            u'ScriptForTheDatabaseEngineType': u'SingleInstance',
+            u'TargetDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
             u'ScriptCompatibilityOption': u'Script140Compat',
             u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
@@ -282,7 +282,7 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ScriptUniqueKeys': False,
             u'TypeOfDataToScript': u'SchemaOnly',
             u'ScriptDropAndCreate': u'ScriptCreate',
-            u'ScriptForTheDatabaseEngineType': u'SingleInstance',
+            u'TargetDatabaseEngineType': u'SingleInstance',
             u'ScriptStatistics': u'ScriptStatsNone',
             u'ScriptCompatibilityOption': u'Script140Compat',
             u'TargetDatabaseEngineEdition': u'SqlServerStandardEdition'}
