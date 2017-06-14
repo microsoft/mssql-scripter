@@ -7,6 +7,7 @@ import argparse
 import getpass
 import mssqlscripter
 import os
+import shutil
 import sys
 
 MSSQL_SCRIPTER_CONNECTION_STRING = u'MSSQL_SCRIPTER_CONNECTION_STRING'
@@ -54,12 +55,19 @@ def parse_arguments(args):
 
     # Basic parameters.
     parser.add_argument(
-        u'-f', u'--file',
+        u'-f', u'--file-path',
         dest=u'FilePath',
         metavar=u'',
         default=None,
-        help=u'Output file name.',
-    )
+        help=u'File to script out to or Directory name if scripting file per object.')
+
+    parser.add_argument(
+        u'--file-per-object',
+        dest=u'ScriptDestination',
+        action=u'store_const',
+        const=u'ToFilePerObject',
+        default=u'ToSingleFile',
+        help=u'By default script to a single file. If supplied and given a directory for --file-path, script a file per object to that directory.')
 
     group_type_of_data = parser.add_mutually_exclusive_group()
     group_type_of_data.add_argument(
@@ -121,7 +129,7 @@ def parse_arguments(args):
         dest=u'TargetDatabaseEngineEdition',
         choices=[
             u'Standard',
-            u'Personal'
+            u'Personal',
             u'Express',
             u'Enterprise',
             u'Stretch'],
@@ -375,6 +383,8 @@ def parse_arguments(args):
 
     parameters = parser.parse_args(args)
 
+    verify_directory(parameters)
+
     if parameters.Server:
         build_connection_string(parameters)
     elif parameters.ConnectionString is None:
@@ -387,6 +397,18 @@ def parse_arguments(args):
 
     return parameters
 
+def verify_directory(parameters):
+    """
+        If creating a file per object, create the directory if it does not exist.
+    """
+    target_directory = parameters.FilePath
+    if parameters.ScriptDestination is 'ToFilePerObject':
+        if not os.path.exists(target_directory):
+            os.makedirs(target_directory)
+            
+        # Give warning to user that target directory was not empty.
+        if os.listdir(target_directory):
+            sys.stdout.write(u'warning: Target directory {} was not empty.'.format(target_directory))
 
 def get_connection_string_from_environment(parameters):
     """
