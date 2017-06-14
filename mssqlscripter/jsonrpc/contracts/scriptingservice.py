@@ -96,6 +96,7 @@ class ScriptingParams(object):
     def __init__(self, parameters):
         self.file_path = parameters[u'FilePath']
         self.connection_string = parameters[u'ConnectionString']
+        self.script_destination = parameters[u'ScriptDestination']
         self.scripting_options = ScriptingOptions(parameters)
 
         # List of scripting objects.
@@ -112,7 +113,8 @@ class ScriptingParams(object):
                 u'ConnectionString': self.connection_string,
                 u'IncludeObjectCriteria': self.include_objects.format(),
                 u'ExcludeObjectCriteria': self.exclude_objects.format(),
-                u'ScriptOptions': self.scripting_options.get_options()}
+                u'ScriptOptions': self.scripting_options.get_options(),
+                u'ScriptDestination': self.script_destination}
 
 
 class ScriptingObjects(object):

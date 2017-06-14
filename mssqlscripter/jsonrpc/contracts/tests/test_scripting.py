@@ -32,7 +32,8 @@ class ScriptingRequestTests(unittest.TestCase):
                 u'ConnectionString': u'Sample_connection_string',
                 u'IncludeObjectCriteria': None,
                 u'ExcludeObjectCriteria': None,
-                u'ScriptingObjects': None}
+                u'ScriptingObjects': None,
+                u'ScriptDestination': 'ToSingleFile'}
             request = scripting.ScriptingRequest(1, rpc_client, parameters)
 
             self.verify_response_count(
@@ -248,7 +249,8 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ConnectionString': u'Sample_connection_string',
             u'IncludeObjectCriteria': [],
             u'ExcludeObjectCriteria': [],
-            u'ScriptingObjects': [u'Person.Person']}
+            u'ScriptingObjects': [u'Person.Person'],
+            u'ScriptDestination': 'ToSingleFile'}
         scripting_params = scripting.ScriptingParams(params)
 
         formatted_params = scripting_params.format()
