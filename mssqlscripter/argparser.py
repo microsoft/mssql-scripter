@@ -59,7 +59,7 @@ def parse_arguments(args):
         dest=u'FilePath',
         metavar=u'',
         default=None,
-        help=u'File to script out to or Directory name if scripting file per object.')
+        help=u'File to script out to or directory name if scripting file per object.')
 
     parser.add_argument(
         u'--file-per-object',
