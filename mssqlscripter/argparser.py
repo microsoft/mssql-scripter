@@ -152,6 +152,38 @@ def parse_arguments(args):
         metavar=u'',
         help=u'Database objects to exclude from script.')
 
+    parser.add_argument(
+        u'--include-schema',
+        dest=u'IncludeSchema',
+        nargs=u'*',
+        type=str,
+        metavar=u'',
+        help=u'Database objects of this schema to include in script.')
+
+    parser.add_argument(
+        u'--exclude-schema',
+        dest=u'ExcludeSchema',
+        nargs=u'*',
+        type=str,
+        metavar=u'',
+        help=u'Database objects of this schema to exclude from script.')
+
+    parser.add_argument(
+        u'--include-type',
+        dest=u'IncludeType',
+        nargs=u'*',
+        type=str,
+        metavar=u'',
+        help=u'Database objects of this type to include in script.')
+
+    parser.add_argument(
+        u'--exclude-type',
+        dest=u'ExcludeType',
+        nargs=u'*',
+        type=str,
+        metavar=u'',
+        help=u'Database objects of this type to exclude from script.')
+
     # General boolean Scripting Options
     parser.add_argument(
         u'--ansi-padding',

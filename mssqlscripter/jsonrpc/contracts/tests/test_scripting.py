@@ -32,6 +32,10 @@ class ScriptingRequestTests(unittest.TestCase):
                 u'ConnectionString': u'Sample_connection_string',
                 u'IncludeObjectCriteria': None,
                 u'ExcludeObjectCriteria': None,
+                u'IncludeSchema': None,
+                u'ExcludeSchema': None,
+                u'IncludeType': None,
+                u'ExcludeType': None,
                 u'ScriptingObjects': None,
                 u'ScriptDestination': 'ToSingleFile'}
             request = scripting.ScriptingRequest(1, rpc_client, parameters)
