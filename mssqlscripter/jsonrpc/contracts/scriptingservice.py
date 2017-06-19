@@ -99,10 +99,10 @@ class ScriptingParams(object):
         self.script_destination = parameters[u'ScriptDestination']
         self.scripting_options = ScriptingOptions(parameters)
 
-        self.include_schema = parameters[u'IncludeSchema'] if u'IncludeSchema' in parameters else None
-        self.exclude_schema = parameters[u'ExcludeSchema'] if u'ExcludeSchema' in parameters else None
-        self.include_type = parameters[u'IncludeType'] if u'IncludeType' in parameters else None
-        self.exclude_type = parameters[u'ExcludeType'] if u'ExcludeType' in parameters else None
+        self.include_schema = parameters[u'IncludeSchemas'] if u'IncludeSchemas' in parameters else None
+        self.exclude_schema = parameters[u'ExcludeSchemas'] if u'ExcludeSchemas' in parameters else None
+        self.include_type = parameters[u'IncludeTypes'] if u'IncludeTypes' in parameters else None
+        self.exclude_type = parameters[u'ExcludeTypes'] if u'ExcludeTypes' in parameters else None
 
         # List of scripting objects.
         self.include_objects = ScriptingObjects(
@@ -118,10 +118,10 @@ class ScriptingParams(object):
                 u'ConnectionString': self.connection_string,
                 u'IncludeObjectCriteria': self.include_objects.format(),
                 u'ExcludeObjectCriteria': self.exclude_objects.format(),
-                u'IncludeSchema': self.include_schema,
-                u'ExcludeSchema': self.exclude_schema,
-                u'IncludeType': self.include_type,
-                u'ExcludeType': self.exclude_type,
+                u'IncludeSchemas': self.include_schema,
+                u'ExcludeSchemas': self.exclude_schema,
+                u'IncludeTypes': self.include_type,
+                u'ExcludeTypes': self.exclude_type,
                 u'ScriptOptions': self.scripting_options.get_options(),
                 u'ScriptDestination': self.script_destination}
 

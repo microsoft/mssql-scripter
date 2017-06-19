@@ -154,7 +154,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--include-schemas',
-        dest=u'IncludeSchema',
+        dest=u'IncludeSchemas',
         nargs=u'*',
         type=str,
         metavar=u'',
@@ -162,7 +162,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--exclude-schemas',
-        dest=u'ExcludeSchema',
+        dest=u'ExcludeSchemas',
         nargs=u'*',
         type=str,
         metavar=u'',
@@ -170,7 +170,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--include-types',
-        dest=u'IncludeType',
+        dest=u'IncludeTypes',
         nargs=u'*',
         type=str,
         metavar=u'',
@@ -178,7 +178,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--exclude-types',
-        dest=u'ExcludeType',
+        dest=u'ExcludeTypes',
         nargs=u'*',
         type=str,
         metavar=u'',
