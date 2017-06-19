@@ -99,6 +99,11 @@ class ScriptingParams(object):
         self.script_destination = parameters[u'ScriptDestination']
         self.scripting_options = ScriptingOptions(parameters)
 
+        self.include_schema = parameters[u'IncludeSchemas'] if u'IncludeSchemas' in parameters else None
+        self.exclude_schema = parameters[u'ExcludeSchemas'] if u'ExcludeSchemas' in parameters else None
+        self.include_type = parameters[u'IncludeTypes'] if u'IncludeTypes' in parameters else None
+        self.exclude_type = parameters[u'ExcludeTypes'] if u'ExcludeTypes' in parameters else None
+
         # List of scripting objects.
         self.include_objects = ScriptingObjects(
             parameters[u'IncludeObjects'] if u'IncludeObjects' in parameters else None)
@@ -113,6 +118,10 @@ class ScriptingParams(object):
                 u'ConnectionString': self.connection_string,
                 u'IncludeObjectCriteria': self.include_objects.format(),
                 u'ExcludeObjectCriteria': self.exclude_objects.format(),
+                u'IncludeSchemas': self.include_schema,
+                u'ExcludeSchemas': self.exclude_schema,
+                u'IncludeTypes': self.include_type,
+                u'ExcludeTypes': self.exclude_type,
                 u'ScriptOptions': self.scripting_options.get_options(),
                 u'ScriptDestination': self.script_destination}
 

@@ -32,6 +32,10 @@ class ScriptingRequestTests(unittest.TestCase):
                 u'ConnectionString': u'Sample_connection_string',
                 u'IncludeObjectCriteria': None,
                 u'ExcludeObjectCriteria': None,
+                u'IncludeSchemas': None,
+                u'ExcludeSchemas': None,
+                u'IncludeTypes': None,
+                u'ExcludeTypes': None,
                 u'ScriptingObjects': None,
                 u'ScriptDestination': 'ToSingleFile'}
             request = scripting.ScriptingRequest(1, rpc_client, parameters)
@@ -249,6 +253,10 @@ class ScriptingRequestTests(unittest.TestCase):
             u'ConnectionString': u'Sample_connection_string',
             u'IncludeObjectCriteria': [],
             u'ExcludeObjectCriteria': [],
+            u'IncludeSchemas': None,
+            u'ExcludeSchemas': None,
+            u'IncludeTypes': None,
+            u'ExcludeTypes': None,
             u'ScriptingObjects': [u'Person.Person'],
             u'ScriptDestination': 'ToSingleFile'}
         scripting_params = scripting.ScriptingParams(params)
@@ -365,6 +373,10 @@ class ScriptingRequestTests(unittest.TestCase):
                     u'ConnectionString': u'server=bro-hb;database=AdventureWorks2014;Integrated Security=true',
                     u'IncludeObjectCriteria': None,
                     u'ExcludeObjectCriteria': None,
+                    u'IncludeSchemas': None,
+                    u'ExcludeSchemas': None,
+                    u'IncludeTypes': None,
+                    u'ExcludeTypes': None,
                     u'ScriptingObjects': None}
 
                 writer = json_rpc_client.JsonRpcWriter(tools_service_process.stdin)
