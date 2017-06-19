@@ -153,7 +153,7 @@ def parse_arguments(args):
         help=u'Database objects to exclude from script.')
 
     parser.add_argument(
-        u'--include-schema',
+        u'--include-schemas',
         dest=u'IncludeSchema',
         nargs=u'*',
         type=str,
@@ -161,7 +161,7 @@ def parse_arguments(args):
         help=u'Database objects of this schema to include in script.')
 
     parser.add_argument(
-        u'--exclude-schema',
+        u'--exclude-schemas',
         dest=u'ExcludeSchema',
         nargs=u'*',
         type=str,
@@ -169,7 +169,7 @@ def parse_arguments(args):
         help=u'Database objects of this schema to exclude from script.')
 
     parser.add_argument(
-        u'--include-type',
+        u'--include-types',
         dest=u'IncludeType',
         nargs=u'*',
         type=str,
@@ -177,7 +177,7 @@ def parse_arguments(args):
         help=u'Database objects of this type to include in script.')
 
     parser.add_argument(
-        u'--exclude-type',
+        u'--exclude-types',
         dest=u'ExcludeType',
         nargs=u'*',
         type=str,
