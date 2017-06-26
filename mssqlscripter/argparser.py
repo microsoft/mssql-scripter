@@ -414,7 +414,6 @@ def parse_arguments(args):
         version='{}'.format(mssqlscripter.__version__))
 
     parameters = parser.parse_args(args)
-
     verify_directory(parameters)
 
     if parameters.Server:
@@ -426,7 +425,6 @@ def parse_arguments(args):
             sys.exit()
 
     map_server_options(parameters)
-
     return parameters
 
 
@@ -434,11 +432,11 @@ def verify_directory(parameters):
     """
         If creating a file per object, create the directory if it does not exist.
     """
+
     target_directory = parameters.FilePath
-    if parameters.ScriptDestination is 'ToFilePerObject':
+    if parameters.ScriptDestination == 'ToFilePerObject':
         if not os.path.exists(target_directory):
             os.makedirs(target_directory)
-
         # Give warning to user that target directory was not empty.
         if os.listdir(target_directory):
             sys.stdout.write(u'warning: Target directory {} was not empty.'.format(target_directory))
