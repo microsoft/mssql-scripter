@@ -169,7 +169,7 @@ class ScriptingOptions(object):
             u'SchemaAndData',
             u'DataOnly',
             u'SchemaOnly'],
-        u'ScriptDropAndCreate': [
+        u'ScriptCreateDrop': [
             u'ScriptCreate',
             u'ScriptDrop',
             u'ScriptCreateDrop'],
@@ -202,19 +202,19 @@ class ScriptingOptions(object):
             Create default or non default scripting options based on parameters.
         """
         # General Default scripting options.
-        self.ANSIPadding = False
+        self.ScriptAnsiPadding = False
         self.AppendToFile = False
-        self.CheckForObjectExistence = False
+        self.IncludeIfNotExists = False
         self.ContinueScriptingOnError = False
-        self.ConvertUDDTsToBaseTypes = False
+        self.ConvertUDDTToBaseType = False
         self.GenerateScriptForDependentObjects = False
         self.IncludeDescriptiveHeaders = False
         self.IncludeSystemConstraintNames = False
         self.IncludeUnsupportedStatements = False
-        self.SchemaQualifyObjectNames = False
-        self.ScriptBindings = False
-        self.SciptionCollations = False
-        self.ScriptDefaults = False
+        self.SchemaQualify = False
+        self.Bindings = False
+        self.Collation = False
+        self.Default = False
         self.ScriptExtendedProperties = False
         self.ScriptLogins = False
         self.ScriptObjectLevelPermissions = False
@@ -225,16 +225,16 @@ class ScriptingOptions(object):
         self.ScriptChangeTracking = False
         self.ScriptCheckConstraints = False
         self.ScriptDataCompressionOptions = False
-        self.ScriptForeignKey = False
-        self.ScriptFullTextIndexrs = False
+        self.ScriptForeignKeys = False
+        self.ScriptFullTextIndexes = False
         self.ScriptIndexes = False
         self.ScriptPrimaryKeys = False
         self.ScriptTriggers = False
-        self.ScriptUniqueKeys = False
+        self.UniqueKeys = False
 
         # Scripting options that are limited.
         self.TypeOfDataToScript = u'SchemaOnly'
-        self.ScriptDropAndCreate = u'ScriptCreate'
+        self.ScriptCreateDrop = u'ScriptCreate'
         self.TargetDatabaseEngineType = u'SingleInstance'
         self.ScriptStatistics = u'ScriptStatsNone'
         self.ScriptCompatibilityOption = u'Script140Compat'

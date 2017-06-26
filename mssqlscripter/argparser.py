@@ -88,21 +88,21 @@ def parse_arguments(args):
     group_create_drop = parser.add_mutually_exclusive_group()
     group_create_drop.add_argument(
         u'--script-create',
-        dest=u'ScriptCreate',
+        dest=u'ScriptCreateDrop',
         action=u'store_const',
         const=u'ScriptCreate',
         default=u'ScriptCreate',
         help=u'Script object CREATE statements.')
     group_create_drop.add_argument(
         u'--script-drop',
-        dest=u'ScriptCreate',
+        dest=u'ScriptCreateDrop',
         action=u'store_const',
         const=u'ScriptDrop',
         default=u'ScriptCreate',
         help=u'Script object DROP statements.')
     group_create_drop.add_argument(
         u'--script-drop-create',
-        dest=u'ScriptCreate',
+        dest=u'ScriptCreateDrop',
         action=u'store_const',
         const=u'ScriptCreateDrop',
         default=u'ScriptCreate',
@@ -187,7 +187,7 @@ def parse_arguments(args):
     # General boolean Scripting Options
     parser.add_argument(
         u'--ansi-padding',
-        dest=u'ANSIPadding',
+        dest=u'ScriptAnsiPadding',
         action=u'store_true',
         default=False,
         help=u'Generates ANSI Padding statements.')
@@ -201,9 +201,10 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--check-for-existence',
+        dest=u'IncludeIfNotExists',
         action=u'store_true',
         default=False,
-        help=u'Check for database object existence.')
+        help=u'Check that an object with the given name exists before dropping or altering or that an object with the given name does not exist before creating.')
 
     parser.add_argument(
         u'-r',
@@ -215,7 +216,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--convert-uddts',
-        dest=u'ConvertUDDTsToBaseTypes',
+        dest=u'ConvertUDDTToBaseType',
         action=u'store_true',
         default=False,
         help=u'Convert user-defined data types to base types.')
@@ -250,28 +251,28 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--object-schema',
-        dest=u'SchemaQualifyObjectNames',
+        dest=u'SchemaQualify',
         action=u'store_true',
         default=False,
         help=u'Prefix object names with the object schema.')
 
     parser.add_argument(
         u'--bindings',
-        dest=u'ScriptBindings',
+        dest=u'Bindings',
         action=u'store_true',
         default=False,
         help=u'Script options to set binding options.')
 
     parser.add_argument(
         u'--collation',
-        dest=u'ScriptCollations',
+        dest=u'Collation',
         action=u'store_true',
         default=False,
         help=u'Script the objects that use collation.')
 
     parser.add_argument(
         u'--defaults',
-        dest=u'ScriptDefaults',
+        dest=u'Default',
         action=u'store_true',
         default=False,
         help=u'Script the default values.')
@@ -353,7 +354,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--foreign-keys',
-        dest=u'ScriptForeignKey',
+        dest=u'ScriptForeignKeys',
         action=u'store_true',
         default=False,
         help=u'Script the foreign keys for each table scripted.')
@@ -388,7 +389,7 @@ def parse_arguments(args):
 
     parser.add_argument(
         u'--unique-keys',
-        dest=u'ScriptUniqueKeys',
+        dest=u'UniqueKeys',
         action=u'store_true',
         default=False,
         help=u'Script the unique keys for each table or view scripted.')
