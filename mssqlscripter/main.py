@@ -44,7 +44,8 @@ def main(args):
     logger.info(scrubbed_parameters)
 
     temp_file_path = None
-    if not parameters.FilePath and parameters.ScriptDestination is 'ToSingleFile':
+
+    if not parameters.FilePath and parameters.ScriptDestination == 'ToSingleFile':
         # Generate and track the temp file.
         temp_file_path = tempfile.NamedTemporaryFile(
             prefix=u'mssqlscripter_', delete=False).name
