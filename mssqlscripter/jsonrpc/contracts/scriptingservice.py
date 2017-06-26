@@ -193,7 +193,7 @@ class ScriptingOptions(object):
             u'SqlServerPersonalEdition',
             u'SqlServerExpressEdition',
             u'SqlServerEnterpriseEdition',
-            u'SqlServerStretchDatabaseEdition'
+            u'SqlServerStretchDatabaseEdition',
             u'SqlAzureDatabaseEdition',
             u'SqlDatawarehouseEdition']}
 
