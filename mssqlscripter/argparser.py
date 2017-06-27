@@ -229,11 +229,11 @@ def parse_arguments(args):
         help=u'Generate script for the dependent objects for each object scripted.')
 
     parser.add_argument(
-        u'--headers',
+        u'--exclude-headers',
         dest=u'IncludeDescriptiveHeaders',
-        action=u'store_true',
-        default=False,
-        help=u'Include descriptive headers for each object scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude descriptive headers for each object scripted.')
 
     parser.add_argument(
         u'--constraint-names',
@@ -250,11 +250,11 @@ def parse_arguments(args):
         help=u'Include statements in the script that are not supported on the target SQL Server Version.')
 
     parser.add_argument(
-        u'--object-schema',
+        u'--disable-schema-qualification',
         dest=u'SchemaQualify',
-        action=u'store_true',
-        default=False,
-        help=u'Prefix object names with the object schema.')
+        action=u'store_false',
+        default=True,
+        help=u'Do not prefix object names with the object schema.')
 
     parser.add_argument(
         u'--bindings',
@@ -271,18 +271,18 @@ def parse_arguments(args):
         help=u'Script the objects that use collation.')
 
     parser.add_argument(
-        u'--defaults',
+        u'--exclude-defaults',
         dest=u'Default',
-        action=u'store_true',
-        default=False,
-        help=u'Script the default values.')
+        action=u'store_false',
+        default=True,
+        help=u'Do not script the default values.')
 
     parser.add_argument(
-        u'--extended-properties',
+        u'--exclude-extended-properties',
         dest=u'ScriptExtendedProperties',
-        action=u'store_true',
-        default=False,
-        help=u'Script the extended properties for each object scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude extended properties for each object scripted.')
 
     parser.add_argument(
         u'--logins',
@@ -306,11 +306,11 @@ def parse_arguments(args):
         help=u'Script owner for the objects.')
 
     parser.add_argument(
-        u'--use-database',
+        u'--exclude-use-database',
         dest=u'ScriptUseDatabase',
-        action=u'store_true',
-        default=False,
-        help=u'Generate USE DATABASE statement.')
+        action=u'store_false',
+        default=True,
+        help=u'Do not generate USE DATABASE statement.')
 
     parser.add_argument(
         u'--statistics',
@@ -339,11 +339,11 @@ def parse_arguments(args):
         help=u'Script the change tracking information.')
 
     parser.add_argument(
-        u'--check-constraints',
+        u'--exclude-check-constraints',
         dest=u'ScriptCheckConstraints',
-        action=u'store_true',
-        default=False,
-        help=u'Script the check constraints for each table or view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude check constraints for each table or view scripted.')
 
     parser.add_argument(
         u'--data-compressions',
@@ -353,46 +353,46 @@ def parse_arguments(args):
         help=u'Script the data compression information.')
 
     parser.add_argument(
-        u'--foreign-keys',
+        u'--exclude-foreign-keys',
         dest=u'ScriptForeignKeys',
-        action=u'store_true',
-        default=False,
-        help=u'Script the foreign keys for each table scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude foreign keys for each table scripted.')
 
     parser.add_argument(
-        u'--full-text-indexes',
+        u'--exclude-full-text-indexes',
         dest=u'ScriptFullTextIndexes',
-        action=u'store_true',
-        default=False,
-        help=u'Script the full-text indexes for each table or indexed view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude full-text indexes for each table or indexed view scripted.')
 
     parser.add_argument(
-        u'--indexes',
+        u'--exclude-indexes',
         dest=u'ScriptIndexes',
-        action=u'store_true',
-        default=False,
-        help=u'Script the indexes (XML and clustered) for each table or indexed view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude indexes (XML and clustered) for each table or indexed view scripted.')
 
     parser.add_argument(
-        u'--primary-keys',
+        u'--exclude-primary-keys',
         dest=u'ScriptPrimaryKeys',
-        action=u'store_true',
-        default=False,
-        help=u'Script the primary keys for each table or view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude primary keys for each table or view scripted.')
 
     parser.add_argument(
-        u'--triggers',
+        u'--exclude-triggers',
         dest=u'ScriptTriggers',
-        action=u'store_true',
-        default=False,
-        help=u'Script the triggers for each table or view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude triggers for each table or view scripted.')
 
     parser.add_argument(
-        u'--unique-keys',
+        u'--exclude-unique-keys',
         dest=u'UniqueKeys',
-        action=u'store_true',
-        default=False,
-        help=u'Script the unique keys for each table or view scripted.')
+        action=u'store_false',
+        default=True,
+        help=u'Exclude unique keys for each table or view scripted.')
 
     # Configuration Options.
     parser.add_argument(
