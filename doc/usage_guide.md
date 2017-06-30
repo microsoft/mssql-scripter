@@ -1,7 +1,9 @@
 # Usage Guide
 Contents:
 [Options](#Options)
+
 [Examples](#Examples)
+
 [Environment Variables](#Environment-Variables)
 
 ## Description
