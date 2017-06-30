@@ -1,4 +1,8 @@
 # Usage Guide
+Contents:
+[Options](#Options)
+[Examples](#Examples)
+[Environment Variables](#Environment-Variables)
 
 ## Description
 mssql-scripter is the multiplatform command line equivalent of the widely used Generate Scripts Wizard experience in SSMS.
