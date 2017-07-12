@@ -77,6 +77,8 @@ $ sudo pip install mssql-scripter
 ```
 If you are using Ubuntu or Debian, you'll need to install the libunwind8 package.  See the [libunwind8 installation steps below](#installing-the-libunwind8-package).
 
+If you are using RHEL, you'll need to install the icu package.  See the [icu installation steps below](#installing-the-icu-package).
+
 # Windows Installation
 
 Python is not installed by default on Windows.  The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  When installing, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
@@ -126,6 +128,9 @@ Failed to load /usr/local/lib/python2.7/dist-packages/mssqltoolsservice/bin/libc
 libunwind.so.8: cannot open shared object file: No such file or directory
 ```
 
+## Error: Failed to initialize CoreCLR, HRESULT: 0x80131500 on RHEL
+If you encounter this error running mssql-scripter Red Hat Enterprise Linux, it could be due to the icu package not being installed.  See the [icu installation steps below](#installing-the-icu-package).
+
 ## Installing the libunwind8 package
 
 ### Ubuntu 14 & 17
@@ -144,4 +149,12 @@ Then run commands:
 ```shell
 $ sudo apt-get update
 $ sudo apt-get install libunwind8
+```
+
+## Installing the icu package
+
+### RHEL 7.3
+Run commands
+```shell
+$ sudo sudo yum install icu
 ```
