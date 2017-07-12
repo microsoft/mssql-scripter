@@ -94,7 +94,7 @@ def main(args):
         # Only write to stdout if user did not provide a file path.
         logger.info('stdout current encoding: {}'.format(sys.stdout.encoding))
         if temp_file_path:
-            with io.open(parameters.FilePath, encoding=u'utf-16') as script_file:
+            with io.open(parameters.FilePath, encoding=u'utf-8') as script_file:
                 for line in script_file.readlines():
                     sys.stdout.write(line)
 
