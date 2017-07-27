@@ -508,7 +508,6 @@ def map_server_options(parameters):
     target_server_edition = parameters.TargetDatabaseEngineEdition
     # When targetting Azure, only the edition matters.
     if u'Azure' in target_server_version:
-        # SMO ignores this value when it is targetting Azure.
         # SMO requires 120 compat or higher when scripting Azure or AzureDW.
         parameters.ScriptCompatibilityOption = u'Script130Compat'
         parameters.TargetDatabaseEngineEdition = azure_server_edition_map[
