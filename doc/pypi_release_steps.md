@@ -90,12 +90,7 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
 		username = your_username
 		password = your_password
         ```
-4. Register and upload to pypi test server:
-    
-    ```
-    python register_upload.py register pypitest
-    ```
-    
+4. Upload to pypi test server:
     ```
     python register_upload.py upload pypitest
     ```
