@@ -17,20 +17,20 @@ install_aliases()
 from urllib.request import urlopen
 
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-08-01-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-08-07-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
-    'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp1.0.tar.gz',
-    'Debian_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp1.0.tar.gz',
-    'Fedora_23': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-fedora-x64-netcoreapp1.0.tar.gz',
-    'openSUSE_13_2': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-opensuse-x64-netcoreapp1.0.tar.gz',
-    'OSX_10_11_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-osx-x64-netcoreapp1.0.tar.gz',
-    'RHEL_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-rhel-x64-netcoreapp1.0.tar.gz',
-    'Ubuntu_14': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu14-x64-netcoreapp1.0.tar.gz',
-    'Ubuntu_16': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu16-x64-netcoreapp1.0.tar.gz',
-    'Windows_7_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x64-netcoreapp1.0.zip',
-    'Windows_7_86': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x86-netcoreapp1.0.zip',
+    'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp2.0.tar.gz',
+    'Debian_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp2.0.tar.gz',
+    'Fedora_23': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-fedora-x64-netcoreapp2.0.tar.gz',
+    'openSUSE_13_2': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-opensuse-x64-netcoreapp2.0.tar.gz',
+    'OSX_10_11_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-osx-x64-netcoreapp2.0.tar.gz',
+    'RHEL_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-rhel-x64-netcoreapp2.0.tar.gz',
+    'Ubuntu_14': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu14-x64-netcoreapp2.0.tar.gz',
+    'Ubuntu_16': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu16-x64-netcoreapp2.0.tar.gz',
+    'Windows_7_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x64-netcoreapp2.0.zip',
+    'Windows_7_86': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x86-netcoreapp2.0.zip'
 }
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
