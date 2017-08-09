@@ -87,3 +87,38 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# DS Store
+.DS_Store
+
+# sqltoolsservice binaries
+/mssqlscripter/sqltoolsservice/*
+/mssqltoolsservice/mssqltoolsservice/bin/*
+
+
+# VSCode configuration
+.vscode/*
+
+# Visual Studio User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# MonoDevelop/Xamarin Studio User-specific files 
+*.userprefs
+
+# Visual Studio Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2015 cache/options directory
+.vs/
