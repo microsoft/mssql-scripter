@@ -5,15 +5,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{f4bb6290-43f3-4f35-b26e-067c5ef8e64b}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>mssqlscripter\main.py</StartupFile>
+    <StartupFile>build.py</StartupFile>
     <SearchPath>.</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
-    <InterpreterVersion />
-    <CommandLineArguments>-S localhost -d AdventureWorks2014</CommandLineArguments>
+    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
@@ -25,7 +26,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="doc\README.md" />
+    <Content Include="appveyor.yml" />
+    <Content Include="dev_requirements.txt" />
     <Content Include="doc\architecture_guide.md" />
     <Content Include="doc\development_guide.md" />
     <Content Include="doc\pypi_release_steps.md" />
@@ -43,13 +45,15 @@
     <Content Include="mssqltoolsservice\README.rst" />
     <Content Include="mssqltoolsservice\setup.cfg" />
     <Content Include="README.rst" />
-    <Content Include="requirements.txt" />
     <Content Include="setup.cfg" />
     <Content Include="tox.ini" />
     <Content Include=".bumpversion.cfg" />
     <Content Include=".travis.yml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="build.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="dev_setup.py" />
     <Compile Include="mssqlscripter\argparser.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\scriptingservice.py" />
@@ -86,6 +90,10 @@
     <Folder Include="mssqlscripter\tests" />
     <Folder Include="mssqltoolsservice\" />
     <Folder Include="mssqltoolsservice\mssqltoolsservice\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
