@@ -76,6 +76,8 @@ def build(options):
             return
         action = options[0]
 
+    if action == 'nightly':
+        assert BLOB_SERVICE_CONNECTION_STRING, 'Set AZURE_STORAGE_CONNECTION_STRING environment variable'
 
     print_heading('Cleanup')
 
@@ -100,7 +102,6 @@ def build(options):
     utility.exec_command('python buildwheels.py', utility.MSSQLTOOLSSERVICE_DIRECTORY, continue_on_error = False)
 
     if action == 'nightly':
-        assert BLOB_SERVICE_CONNECTION_STRING, 'Set AZURE_STORAGE_CONNECTION_STRING environment variable'
         blob_service = BlockBlobService(connection_string=BLOB_SERVICE_CONNECTION_STRING)
     
         print_heading('Uploading packages to blob storage ')
