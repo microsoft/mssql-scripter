@@ -13,7 +13,7 @@ import tempfile
 import utility
 from azure.storage.blob import BlockBlobService, ContentSettings
 
-BLOB_SERVICE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')
+AZURE_STORAGE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')
 BLOB_CONTAINER_NAME = 'simple'
 UPLOADED_PACKAGE_LINKS = [] 
 
@@ -77,7 +77,7 @@ def build(options):
         action = options[0]
 
     if action == 'nightly':
-        assert BLOB_SERVICE_CONNECTION_STRING, 'Set AZURE_STORAGE_CONNECTION_STRING environment variable'
+        assert AZURE_STORAGE_CONNECTION_STRING, 'Set AZURE_STORAGE_CONNECTION_STRING environment variable'
 
     print_heading('Cleanup')
 
@@ -102,7 +102,7 @@ def build(options):
     utility.exec_command('python buildwheels.py', utility.MSSQLTOOLSSERVICE_DIRECTORY, continue_on_error = False)
 
     if action == 'nightly':
-        blob_service = BlockBlobService(connection_string=BLOB_SERVICE_CONNECTION_STRING)
+        blob_service = BlockBlobService(connection_string=AZURE_STORAGE_CONNECTION_STRING)
     
         print_heading('Uploading packages to blob storage ')
         for pkg in os.listdir(utility.MSSQLSCRIPTER_DIST_DIRECTORY):
