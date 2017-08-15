@@ -28,7 +28,7 @@ def get_executable_path():
                 'bin'))
 
     # Format name based on platform.
-    mssqltoolsservice_name = u'Microsoft.SqlTools.ServiceLayer{}'.format(
+    mssqltoolsservice_name = u'MicrosoftSqlToolsServiceLayer{}'.format(
         u'.exe' if (platform.system() == u'Windows') else u'')
 
     mssqltoolsservice_full_path = os.path.abspath(os.path.join(mssqltoolsservice_base_path, mssqltoolsservice_name))
