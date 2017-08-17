@@ -48,6 +48,7 @@
     <Content Include=".travis.yml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="build.py" />
     <Compile Include="dev_setup.py" />
     <Compile Include="mssqlscripter\argparser.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\scriptingservice.py" />
