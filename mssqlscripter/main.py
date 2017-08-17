@@ -87,7 +87,7 @@ def main(args):
 
         while not scripting_request.completed():
             # The sleep prevents burning up the CPU and lets other threads get scheduled.
-            time.sleep(0.1) 
+            time.sleep(0.1)
             response = scripting_request.get_response()
             if response:
                 scriptercallbacks.handle_response(response, parameters.DisplayProgress)
