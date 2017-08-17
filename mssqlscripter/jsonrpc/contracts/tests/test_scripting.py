@@ -362,7 +362,7 @@ class ScriptingRequestTests(unittest.TestCase):
             # Point sqltoolsservice output to file.
             with io.open(file_name, 'wb') as baseline:
                 tools_service_process = subprocess.Popen(
-                    'D:\\GitHub\\sqltoolsservice\\src\\Microsoft.SqlTools.ServiceLayer\\bin\\Debug\\netcoreapp1.0\\win7-x64\\Microsoft.SqlTools.ServiceLayer.exe',
+                    'D:\\GitHub\\sqltoolsservice\\src\\Microsoft.SqlTools.ServiceLayer\\bin\\Debug\\netcoreapp2.0\\win7-x64\\MicrosoftSqlToolsServiceLayer.exe',
                     bufsize=0,
                     stdin=subprocess.PIPE,
                     stdout=baseline)

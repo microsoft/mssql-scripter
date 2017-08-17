@@ -9,6 +9,10 @@ import os
 import shutil
 import sys
 
+ROOT_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
+
+MSSQLTOOLSSERVICE_DIRECTORY = os.path.abspath(os.path.join(
+    os.path.abspath(__file__), '..', 'mssqltoolsservice'))
 
 MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
     os.path.join(os.path.abspath(__file__), '..', 'dist'))
@@ -30,6 +34,12 @@ def exec_command(command, directory, continue_on_error=True):
             sys.exit(1)
         else:
             pass
+
+
+def cleaun_up_egg_info_sub_directories(directory):
+    for f in os.listdir(directory):
+        if f.endswith(".egg-info"):
+            clean_up(os.path.join(directory, f))
 
 
 def clean_up(directory):

@@ -12,18 +12,16 @@ import os
 import setup
 import utility
 
-root_dir = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
-
 print('Running dev setup...')
-print('Root directory \'{}\'\n'.format(root_dir))
+print('Root directory \'{}\'\n'.format(utility.ROOT_DIR))
 
 # install general requirements.
-utility.exec_command('pip install -r dev_requirements.txt', root_dir)
+utility.exec_command('pip install -r dev_requirements.txt', utility.ROOT_DIR)
 
 # install mssqltoolsservice if this platform supports it.
 mssqltoolsservice_package_name = os.environ['MSSQLTOOLSSERVICE_PACKAGE_NAME']
 print('Installing {}...'.format(mssqltoolsservice_package_name))
 # mssqltoolsservice package name is retrieved from environment variable set by setup.py.
-utility.exec_command('pip install {}'.format(mssqltoolsservice_package_name), root_dir)
+utility.exec_command('pip install {}'.format(mssqltoolsservice_package_name), utility.ROOT_DIR)
 
 print('Finished dev setup.')
