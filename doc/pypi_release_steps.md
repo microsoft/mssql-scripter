@@ -86,7 +86,7 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
 		    pypitest
 		 
 		[pypitest]
-		repository = https://test.pypi.org/legacy
+		repository = https://test.pypi.org/legacy/
 		username = your_username
 		password = your_password
         ```
