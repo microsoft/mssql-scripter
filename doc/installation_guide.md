@@ -1,7 +1,7 @@
 # Installation Guide
 
 ## Quick Start
-mssql-scritper is installed via pip.  If you know  pip, you can install mssql-scripter using command
+mssql-scripter is installed via pip.  If you know pip, you can install mssql-scripter using command
 ```shell
 $ pip install mssql-scripter 
 ```
@@ -70,7 +70,7 @@ $ sudo apt-get install python-pip
 $ sudo pip install --upgrade pip
 ```
 
-Install mssql-scritper using command:
+Install mssql-scripter using command:
 
 ```shell
 $ sudo pip install mssql-scripter 
@@ -103,7 +103,7 @@ More information can be found at:
 
 - [Development guide](development_guide.md#Environment_Setup)
 
-## Error: Could not find version that satifies the requirement mssql-scripter
+## Error: Could not find version that satisfies the requirement mssql-scripter
 If you see the above error running `pip install mssql-scripter`, this means the pip version used is out-of-date.  Upgrade pip using the command:
 ```shell
 $ sudo apt-get install python-pip
@@ -141,7 +141,7 @@ $ sudo apt-get install libunwind8
 ```
 
 ### Debian 8
-The file `/etc/apt/sources.list' needs to updated with the following line
+The file `/etc/apt/sources.list' needs to be updated with the following line
 ```
 deb http://ftp.us.debian.org/debian/ jessie main
 ```
