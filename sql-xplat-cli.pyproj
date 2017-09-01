@@ -11,8 +11,6 @@
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
-    <InterpreterVersion />
     <CommandLineArguments>-S localhost -d AdventureWorks2014</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
@@ -21,10 +19,11 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="appveyor.yml" />
+    <Content Include="dev_requirements.txt" />
     <Content Include="doc\README.md" />
     <Content Include="doc\architecture_guide.md" />
     <Content Include="doc\development_guide.md" />
@@ -43,13 +42,13 @@
     <Content Include="mssqltoolsservice\README.rst" />
     <Content Include="mssqltoolsservice\setup.cfg" />
     <Content Include="README.rst" />
-    <Content Include="requirements.txt" />
     <Content Include="setup.cfg" />
     <Content Include="tox.ini" />
     <Content Include=".bumpversion.cfg" />
     <Content Include=".travis.yml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="build.py" />
     <Compile Include="dev_setup.py" />
     <Compile Include="mssqlscripter\argparser.py" />
     <Compile Include="mssqlscripter\jsonrpc\contracts\scriptingservice.py" />
@@ -87,6 +86,5 @@
     <Folder Include="mssqltoolsservice\" />
     <Folder Include="mssqltoolsservice\mssqltoolsservice\" />
   </ItemGroup>
-  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

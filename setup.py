@@ -14,7 +14,7 @@ from setuptools import setup
 
 # This version number is in place in two places and must be in sync with
 # mssqltoolsservice's version in setup.py.
-MSSQLSCRIPTER_VERSION = '1.0.0a18'
+MSSQLSCRIPTER_VERSION = '1.0.0a20'
 
 # If we have the source, validate our setup version matches source version.
 # This will prevent uploading releases with mismatched versions. This will
@@ -56,7 +56,7 @@ else:
                 toolsservice_version.group(1)))
         sys.exit(1)
 
-MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice_{}=={}'
+MSSQLTOOLSSERVICE_PACKAGE_NAME = 'mssqltoolsservice-{}=={}'
 MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
     'CentOS_7',
     'Debian_8',
@@ -204,7 +204,7 @@ def get_mssqltoolsservice_package_name(run_time_id=_get_runtime_id()):
         # set package suffix name for other uses like building wheels outside of setup.py.
         os.environ['MSSQLTOOLSSERVICE_PACKAGE_SUFFIX'] = run_time_id
         return MSSQLTOOLSSERVICE_PACKAGE_NAME.format(
-            run_time_id, MSSQLSCRIPTER_VERSION)
+            run_time_id, MSSQLSCRIPTER_VERSION).replace('_', '-').lower()
 
     raise EnvironmentError('mssqltoolsservice is not supported on this platform.')
 
@@ -217,7 +217,6 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',

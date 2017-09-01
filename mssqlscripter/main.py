@@ -87,9 +87,11 @@ def main(args):
 
         while not scripting_request.completed():
             response = scripting_request.get_response()
-
             if response:
                 scriptercallbacks.handle_response(response, parameters.DisplayProgress)
+            else:
+                # The sleep prevents burning up the CPU and lets other threads get scheduled.
+                time.sleep(0.1)
 
         # Only write to stdout if user did not provide a file path.
         logger.info('stdout current encoding: {}'.format(sys.stdout.encoding))
