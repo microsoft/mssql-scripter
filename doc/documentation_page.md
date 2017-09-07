@@ -1,8 +1,8 @@
 # Get Started with mssql-scripter
 
-mssql-scripter is the multiplatform command line equivalent of the widely used Generate Scripts Wizard experience in SSMS.
+mssql-scripter is the command line equivalent of the widely used Generate Scripts Wizard experience in SSMS.
 
-You can use mssql-scripter on Linux, macOS, and Windows to generate data definition language (DDL) and data manipulation language (DML) T-SQL scripts for database objects in SQL Server running anywhere, Azure SQL Database, and Azure SQL Data Warehouse. You can save the generated T-SQL script to a .sql file or pipe it to standard *nix utilities (for example, sed, awk, grep) for further transformations. You can edit the generated script or check it into source control and subsequently execute the script in your existing SQL database deployment processes and DevOps pipelines with standard multiplatform SQL command line tools such as sqlcmd.
+You can use mssql-scripter on Linux, macOS, Windows, and the Azure Cloud Shell to generate data definition language (DDL) and data manipulation language (DML) T-SQL scripts for database objects in SQL Server running anywhere, Azure SQL Database, and Azure SQL Data Warehouse. You can save the generated T-SQL script to a .sql file or pipe it to standard *nix utilities (for example, sed, awk, grep) for further transformations. You can edit the generated script or check it into source control and subsequently execute the script in your existing SQL database deployment processes and DevOps pipelines with standard multiplatform SQL command line tools such as sqlcmd.
 
 ## Install
 
@@ -82,11 +82,19 @@ You can set environment variables for your connection string through the followi
     export MSSQL_SCRIPTER_PASSWORD='ABC123'
     mssql-scripter -S localhost -d AdventureWorks -U sa
     
- ## Run your scripts using sqlcmd
- Now that you have generated a script for your database objects, you can execute the script using sqlcmd such as in the example below.
+ ## Generate and run scripts
+ In this example you will generate a script, send it to a file, and execute the script.
  
+ Generate a script and send it to a file using mssql-scripter.
     # script all the data to a file.
     mssql-scripter -S localhost -d AdventureWorks -U sa --data-only > ./adventureworks-data.sql
+    
+ Now that you have generated a script for your database objects, you can execute the script using sqlcmd such as in the example below.
+    
+    # execute the script from the file.
     sqlcmd -S localhost -d AdventureWorks -U sa -i`./adventureworks-data.sql
  
  You can find more details on using sqlcmd [here](https://docs.microsoft.com/en-us/sql/relational-databases/scripting/sqlcmd-use-the-utility).
+
+## Use mssql-scripter in the Cloud Shell
+You can use mssql-scripter in the Azure Cloud Shell to generate scripter for Azure SQL DB, Azure SQL DW, and SQL Server instances in Azure VMs. [Connect to the Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview?view=azure-cli-latest). Once connected, you can use mssql-scripter in the terminal as you would in a local terminal.
