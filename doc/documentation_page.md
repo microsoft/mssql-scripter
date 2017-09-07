@@ -8,6 +8,8 @@ You can use mssql-scripter on Linux, macOS, and Windows to generate data definit
 
 For information about installation, please see the LINK/install guide/LINK.
 
+The examples in this guide use the Adventureworks sample database. You can download the sample [here](https://www.microsoft.com/en-us/download/details.aspx?id=49502).
+
 ## Dump database object schema
 
     # generate DDL scripts for all objects in the Adventureworks database and save the script to a file
