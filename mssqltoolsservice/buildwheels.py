@@ -17,20 +17,14 @@ install_aliases()
 from urllib.request import urlopen
 
 
-DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-08-16-2017/'
+DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-10-12-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
-    'CentOS_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-centos-x64-netcoreapp2.0.tar.gz',
-    'Debian_8': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-debian-x64-netcoreapp2.0.tar.gz',
-    'Fedora_23': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-fedora-x64-netcoreapp2.0.tar.gz',
-    'openSUSE_13_2': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-opensuse-x64-netcoreapp2.0.tar.gz',
-    'OSX_10_11_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-osx-x64-netcoreapp2.0.tar.gz',
-    'RHEL_7': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-rhel-x64-netcoreapp2.0.tar.gz',
-    'Ubuntu_14': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu14-x64-netcoreapp2.0.tar.gz',
-    'Ubuntu_16': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-ubuntu16-x64-netcoreapp2.0.tar.gz',
-    'Windows_7_64': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x64-netcoreapp2.0.zip',
-    'Windows_7_86': DOWNLOAD_URL_BASE + 'microsoft.sqltools.servicelayer-win-x86-netcoreapp2.0.zip'
+    'Linux_64': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-linux-x64-netcoreapp2.0.tar.gz',
+    'OSX_10_11_64': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-osx-x64-netcoreapp2.0.tar.gz',
+    'Windows_7_64': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-win-x64-netcoreapp2.0.zip',
+    'Windows_7_86': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-win-x86-netcoreapp2.0.zip'
 }
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
@@ -78,6 +72,7 @@ def build_sqltoolsservice_wheels(platforms):
         os.environ[u'MSSQLTOOLSSERVICE_PLATFORM'] = platform
 
         print(u'Calling setup bdist_wheel for platform:{}'.format(platform))
+        print(SUPPORTED_PLATFORMS[platform])
         download_and_unzip(SUPPORTED_PLATFORMS[platform], directory=TARGET_DIRECTORY)
         utility.exec_command(u'python setup.py check -r -s bdist_wheel', CURRENT_DIRECTORY)
 
