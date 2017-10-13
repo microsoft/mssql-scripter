@@ -137,7 +137,7 @@ setup(
     description='Microsoft SQL Scripter Command-Line Tool',
     license='MIT',
     author='Microsoft Corporation',
-    author_email='sqlxplatclieng@microsoft.com',
+    author_email='sqlcli@microsoft.com',
     url='https://github.com/Microsoft/sql-xplat-cli/',
     zip_safe=True,
     long_description=open('README.rst').read(),
