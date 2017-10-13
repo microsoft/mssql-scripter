@@ -64,6 +64,7 @@ MSSQLTOOLSSERVICE_PACKAGE_SUFFIX = [
     'Linux_64'
 ]
 
+
 def _get_runtime_id(
         system=_platform.system(),
         architecture=_platform.architecture()[0],
