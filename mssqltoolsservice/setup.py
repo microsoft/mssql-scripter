@@ -12,7 +12,9 @@ import sys
 
 # This version number is in place in two places and must be in sync with
 # mssqlscripter's version in setup.py.
+
 MSSQLTOOLSSERVICE_VERSION = '1.0.0a21'
+
 
 # If we have source, validate version numbers match to prevent
 # uploading releases with mismatched versions.

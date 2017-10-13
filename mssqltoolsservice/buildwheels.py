@@ -17,6 +17,7 @@ install_aliases()
 from urllib.request import urlopen
 
 
+
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-10-12-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
@@ -25,7 +26,7 @@ SUPPORTED_PLATFORMS = {
     'OSX_10_11_64': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-osx-x64-netcoreapp2.0.tar.gz',
     'Windows_7_64': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-win-x64-netcoreapp2.0.zip',
     'Windows_7_86': DOWNLOAD_URL_BASE + 'Microsoft.SqlTools.ServiceLayer-win-x86-netcoreapp2.0.zip'
-}
+
 
 CURRENT_DIRECTORY = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 BUILD_DIRECTORY = os.path.abspath(os.path.join(CURRENT_DIRECTORY, 'build'))
