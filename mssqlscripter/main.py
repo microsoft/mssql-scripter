@@ -105,7 +105,7 @@ def main(args):
         sql_tools_client.shutdown()
         tools_service_process.kill()
         # 1 second time out, allow tools service process to be killed.
-        time.sleep(1)
+        time.sleep(.1)
         # Close the stdout file handle or else we would get a resource warning (found via pytest).
         # This must be closed after the process is killed, otherwise we would block because the process is using
         # it's stdout.
