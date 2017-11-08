@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "sql-xplat-cli", "sql-xplat-cli.pyproj", "{F4BB6290-43F3-4F35-B26E-067C5EF8E64B}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "mssql-scripter", "mssql-scripter.pyproj", "{F4BB6290-43F3-4F35-B26E-067C5EF8E64B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

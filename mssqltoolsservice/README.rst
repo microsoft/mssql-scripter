@@ -14,4 +14,4 @@ Support is not provided to this package alone.
 `mssql-scripter GitHub repository`_
 
 .. _Microsoft SQL Tools Service GitHub repository: https://github.com/Microsoft/sqltoolsservice
-.. _mssql-scripter GitHub repository: https://github.com/Microsoft/sql-xplat-cli
+.. _mssql-scripter GitHub repository: https://github.com/Microsoft/mssql-scripter
