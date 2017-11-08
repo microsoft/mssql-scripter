@@ -17,7 +17,6 @@ install_aliases()
 from urllib.request import urlopen
 
 
-
 DOWNLOAD_URL_BASE = 'https://mssqlscripter.blob.core.windows.net/sqltoolsservice-10-12-2017/'
 
 # Supported platform key's must match those in mssqlscript's setup.py.
