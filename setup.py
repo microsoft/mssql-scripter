@@ -140,7 +140,7 @@ setup(
     license='MIT',
     author='Microsoft Corporation',
     author_email='sqlcli@microsoft.com',
-    url='https://github.com/Microsoft/sql-xplat-cli/',
+    url='https://github.com/Microsoft/mssql-scripter/',
     zip_safe=True,
     long_description=open('README.rst').read(),
     classifiers=CLASSIFIERS,
