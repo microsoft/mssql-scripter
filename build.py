@@ -147,7 +147,7 @@ def publish_official(platforms_names):
 
 if __name__ == '__main__':
     action = 'build'
-    supported_platforms = ['win32', 'win64', 'macosx_10_11_intel', 'manylinux1_x86_64']
+    supported_platforms = ['win32', 'win_amd64', 'macosx_10_11_intel', 'manylinux1_x86_64']
 
     targets = {
         'build': build,

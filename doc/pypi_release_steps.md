@@ -54,7 +54,7 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     Build a OS-Specific wheel:
 	```
     python build.py build win32
-    python build.py build win64
+    python build.py build win_amd64
     python build.py build macosx_10_11_intel
     python build.py build manylinux1_x86_64
 	```
