@@ -10,7 +10,7 @@ from azure.storage.blob import BlockBlobService, ContentSettings
 import os
 import sys
 import utility
-import mssqlscripter.mssqltoolsservice.download as mssqltoolsservice
+import mssqlscripter.mssqltoolsservice.external as mssqltoolsservice
 
 AZURE_STORAGE_CONNECTION_STRING = os.environ.get('AZURE_STORAGE_CONNECTION_STRING')
 BLOB_CONTAINER_NAME = 'simple'
@@ -21,7 +21,7 @@ def print_heading(heading, f=None):
     print('{0}\n{1}\n{0}'.format('=' * len(heading), heading), file=f)
 
 
-def build(platforms):
+def build(platform_names):
     """
         Builds mssql-scripter package.
     """
@@ -39,9 +39,8 @@ def build(platforms):
     # convert windows line endings to unix for mssql-cli bash script
     utility.exec_command('python dos2unix.py mssql-scripter mssql-scripter', utility.ROOT_DIR)
 
-    for platform in platforms:
-        print_heading('Downloading mssqltoolsservice for platform: {}'.format(platform))
-        mssqltoolsservice.download_mssqltoolsservice(platform)
+    for platform in platform_names:
+        mssqltoolsservice.copy_sqltoolsservice(platform)
 
         print_heading('Building mssql-scripter {} wheel package package'.format(platform))
         utility.exec_command('python --version', utility.ROOT_DIR)
@@ -51,6 +50,7 @@ def build(platforms):
             continue_on_error=False)
         
         mssqltoolsservice.clean_up_sqltoolsservice()
+
 
 def _upload_index_file(service, blob_name, title, links):
     print('Uploading index file {}'.format(blob_name))
@@ -95,7 +95,7 @@ def _upload_package(service, file_path, pkg_name):
     _gen_pkg_index_html(service, pkg_name)
 
 
-def validate_package(platforms):
+def validate_package(platform_names):
     """
         Install mssql-scripter wheel package locally.
     """
@@ -105,15 +105,14 @@ def validate_package(platforms):
     current_platform = utility.get_current_platform()
 
     mssqlscripter_wheel_name = [pkge for pkge in mssqlscripter_wheel_dir if current_platform in pkge]
-    print(mssqlscripter_wheel_name)
+
     # To ensure we have a clean install, we disable the cache as to prevent cache overshadowing actual changes made.
-    tility.exec_command(
-       'pip install --no-cache-dir --no-index ./dist/{}'.format(mssqlscripter_sdist_name),
-       root_dir, continue_on_error=False
+    utility.exec_command(
+       'pip install --no-cache-dir --no-index ./dist/{}'.format(mssqlscripter_wheel_name),
+       root_dir, continue_on_error=False)
     
 
-
-def publish_daily(platforms):
+def publish_daily(platforms_names):
     """
     Publish mssql-scripter wheel package to daily storage account.
     """
@@ -131,7 +130,7 @@ def publish_daily(platforms):
     _upload_index_file(blob_service, 'index.html', 'Simple Index', UPLOADED_PACKAGE_LINKS)
 
 
-def publish_official(platforms):
+def publish_official(platforms_names):
     """
     Publish mssql-scripter wheel package to PyPi.
     """
@@ -146,8 +145,8 @@ def publish_official(platforms):
 
 
 if __name__ == '__main__':
-    action = ['build']
-    platforms = ['win32', 'win64', 'macosx_10_11_intel', 'manylinux1']
+    action = 'build'
+    supported_platforms = ['win32', 'win64', 'macosx_10_11_intel', 'manylinux1']
 
     targets = {
         'build': build,
@@ -160,10 +159,10 @@ if __name__ == '__main__':
         action = sys.argv[1]
     
     if len(sys.argv) > 2:
-        platforms = [sys.argv[2]]
+        supported_platforms = [sys.argv[2]]
     
     if action in targets:
-        targets[action](platforms)
+        targets[action](supported_platforms)
     else:
         print('{} is not a supported action'.format(action))
         print('Supported actions are {}'.format(list(targets.keys())))
