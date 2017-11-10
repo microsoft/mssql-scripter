@@ -38,7 +38,7 @@ def copy_sqltoolsservice(platform):
     if not platform or platform not in SUPPORTED_PLATFORMS:
         print('Please provide a valid platform flag.' +
               '[win32, win_amd64, win64, manylinux1_x86_64, manylinux1_i686, macosx_10_11_intel]')
-        return 
+        return
 
     copy_file_path = SUPPORTED_PLATFORMS[platform]
 
@@ -50,12 +50,11 @@ def copy_sqltoolsservice(platform):
 
     if not os.path.exists(TARGET_DIRECTORY):
         os.makedirs(TARGET_DIRECTORY)
-    
-    print(u'Bin placing sqltoolsservice for this platform.')
+
+    print(u'Bin placing sqltoolsservice for this platform: {}.'.format(platform))
     print(u'Extracting files from {}'.format(copy_file_path))
     compressed_file.extractall(TARGET_DIRECTORY)
 
 
 def clean_up_sqltoolsservice():
     utility.clean_up(directory=TARGET_DIRECTORY)
-

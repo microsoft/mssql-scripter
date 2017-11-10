@@ -15,6 +15,7 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
     os.path.join(os.path.abspath(__file__), '..', 'dist'))
 
+
 def exec_command(command, directory, continue_on_error=True):
     """
         Execute command.
@@ -45,6 +46,7 @@ def clean_up(directory):
     except Exception:
         # Ignored, directory may not exist which is fine.
         pass
+
 
 def get_current_platform():
     """
