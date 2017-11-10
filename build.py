@@ -92,7 +92,6 @@ def _upload_package(service, file_path, pkg_name):
         blob_name=blob_name,
         file_path=file_path
     )
-    _gen_pkg_index_html(service, pkg_name)
 
 
 def validate_package(platform_names):
@@ -126,7 +125,9 @@ def publish_daily(platforms_names):
         pkg_path = os.path.join(utility.MSSQLSCRIPTER_DIST_DIRECTORY, pkg)
         print('Uploading package {}'.format(pkg_path))
         _upload_package(blob_service, pkg_path, 'mssql-scripter')
-    # Upload the final index file
+        
+    # Upload index files
+    _gen_pkg_index_html(blob_service, 'mssql-scripter')
     _upload_index_file(blob_service, 'index.html', 'Simple Index', UPLOADED_PACKAGE_LINKS)
 
 
