@@ -10,10 +10,6 @@ import os
 import platform
 
 
-__version__ = '1.0.0a21'
-
-
-
 def get_executable_path():
     """
         Find mssqltoolsservice executable relative to this package.

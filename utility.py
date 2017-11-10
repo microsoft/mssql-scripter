@@ -6,20 +6,14 @@
 from __future__ import print_function
 from subprocess import check_call, CalledProcessError
 import os
+import platform
 import shutil
 import sys
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.abspath(__file__), '..'))
 
-MSSQLTOOLSSERVICE_DIRECTORY = os.path.abspath(os.path.join(
-    os.path.abspath(__file__), '..', 'mssqltoolsservice'))
-
 MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
     os.path.join(os.path.abspath(__file__), '..', 'dist'))
-
-MSSQLTOOLSSERVICE_DIST_DIRECTORY = os.path.abspath(os.path.join(
-    os.path.abspath(__file__), '..', 'mssqltoolsservice', 'dist'))
-
 
 def exec_command(command, directory, continue_on_error=True):
     """
@@ -51,3 +45,23 @@ def clean_up(directory):
     except Exception:
         # Ignored, directory may not exist which is fine.
         pass
+
+def get_current_platform():
+    """
+        Get current platform name.
+    """
+    system = platform.system()
+    arch = platform.architecture()[0]
+
+    run_time_id = None
+    if system == 'Windows':
+        if arch == '32bit':
+            run_time_id = 'win32'
+        elif arch == '64bit':
+            run_time_id = 'win64'
+    elif system == 'Darwin':
+        run_time_id = 'macosx_10_11_intel'
+    elif system == 'Linux':
+        run_time_id = 'manylinux1'
+
+    return run_time_id

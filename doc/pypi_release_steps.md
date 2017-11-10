@@ -40,37 +40,25 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     ##### Windows
       ```
       rmdir /s dist
-      rmdir /s mssqltoolsservice\dist
       ```
   
     ##### OSX/Ubuntu (bash)
       ```
       rm -rf dist
-      rm -rf mssqltoolsservice/dist
       ```
-2. Build mssql-scripter source distribution and verify readme.rst, From `<clone_root>` execute:
+2. Build mssql-scripter platform wheels and verify readme.rst, From `<clone_root>` execute:
     ```
-    python setup.py check -r -s sdist
+    python build.py
     ```
-
-3. Build mssqltoolsservice wheels for each supported platform, From `<clone_root>/mssqltoolsservice` execute:
-    ```
-	python buildwheels.py
+    
+    Build a OS-Specific wheel:
+	```
+    python build.py build win32
+    python build.py build win64
+    python build.py build macosx_10_11_intel
+    python build.py build manylinux1
 	```
 
-	Build a OS-Specific wheel:
-	```
-    python buildwheels.py CentOS_7
-    python buildwheels.py Debian_8
-    python buildwheels.py Fedora_23
-    python buildwheels.py openSUSE_13_2
-    python buildwheels.py OSX_10_11_64
-    python buildwheels.py RHEL_7
-    python buildwheels.py Ubuntu_14
-    python buildwheels.py Ubuntu_16
-    python buildwheels.py Windows_7_64
-    python buildwheels.py Windows_7_86
-	```
 4. Add a .pypirc configuration file:
 
     - Create a .pypirc file in your user directory:
@@ -97,9 +85,9 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
 
 5. Test install locally
 
-	To install the local mssql-scripter pip package, from `<clone_root>` execute:
+	To install the local mssql-scripter wheel package, from `<clone_root>` execute:
     ```
-    sudo pip install --no-index -i ./mssqltoolsservice/dist/* ./dist/mssql-scripter-1.0.0a1.tar.gz
+    sudo pip install --no-index -i ./dist/mssql_scripter-1.0.0a1-py2.py3-none-win32.whl
     ```
 
 6. Test install via pypi server:

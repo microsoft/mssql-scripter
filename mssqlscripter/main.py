@@ -18,7 +18,7 @@ import mssqlscripter.scripterlogging as scripterlogging
 import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
-import mssqltoolsservice
+import mssqlscripter.mssqltoolsservice as mssqltoolsservice
 
 logger = logging.getLogger(u'mssqlscripter.main')
 
