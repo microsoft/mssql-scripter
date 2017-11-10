@@ -17,7 +17,7 @@ SQLTOOLSSERVICE_BASE = os.path.join(utility.ROOT_DIR, 'sqltoolsservice/')
 
 # Supported platform key's must match those in mssqlscript's setup.py.
 SUPPORTED_PLATFORMS = {
-    'manylinux1': SQLTOOLSSERVICE_BASE + 'manylinux1/' + 'Microsoft.SqlTools.ServiceLayer-linux-x64-netcoreapp2.0.tar.gz',
+    'manylinux1_x86_64': SQLTOOLSSERVICE_BASE + 'manylinux1_x86_64/' + 'Microsoft.SqlTools.ServiceLayer-linux-x64-netcoreapp2.0.tar.gz',
     'macosx_10_11_intel': SQLTOOLSSERVICE_BASE + 'macosx_10_11_intel/' + 'Microsoft.SqlTools.ServiceLayer-osx-x64-netcoreapp2.0.tar.gz',
     'win64': SQLTOOLSSERVICE_BASE + 'win64/' + 'Microsoft.SqlTools.ServiceLayer-win-x64-netcoreapp2.0.zip',
     'win32': SQLTOOLSSERVICE_BASE + 'win32/' + 'Microsoft.SqlTools.ServiceLayer-win-x86-netcoreapp2.0.zip'
@@ -34,7 +34,7 @@ def copy_sqltoolsservice(platform):
     utility.clean_up(directory=TARGET_DIRECTORY)
 
     if not platform or platform not in SUPPORTED_PLATFORMS:
-        print('Please provide a valid platform flag. [win32, win64, manylinux1, macosx_10_11_intel]')
+        print('Please provide a valid platform flag. [win32, win64, manylinux1_x86_64, macosx_10_11_intel]')
         return 
 
     copy_file_path = SUPPORTED_PLATFORMS[platform]

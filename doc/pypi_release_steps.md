@@ -56,7 +56,7 @@ bumpversion release_version    ->  1.0.0a<b>1</b>
     python build.py build win32
     python build.py build win64
     python build.py build macosx_10_11_intel
-    python build.py build manylinux1
+    python build.py build manylinux1_x86_64
 	```
 
 4. Add a .pypirc configuration file:
