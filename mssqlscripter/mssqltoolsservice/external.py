@@ -5,6 +5,7 @@
 from __future__ import print_function
 
 import os
+import sys
 import tarfile
 import utility
 import zipfile
@@ -38,7 +39,7 @@ def copy_sqltoolsservice(platform):
     if not platform or platform not in SUPPORTED_PLATFORMS:
         print('Please provide a valid platform flag.' +
               '[win32, win_amd64, win64, manylinux1_x86_64, manylinux1_i686, macosx_10_11_intel]')
-        return
+        sys.exit(1)
 
     copy_file_path = SUPPORTED_PLATFORMS[platform]
 
