@@ -14,6 +14,7 @@ from setuptools import setup
 
 MSSQLSCRIPTER_VERSION = '1.0.0a21'
 
+
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
@@ -44,7 +45,7 @@ setup(
     license='MIT',
     author='Microsoft Corporation',
     author_email='sqlcli@microsoft.com',
-    url='https://github.com/Microsoft/sql-xplat-cli/',
+    url='https://github.com/Microsoft/mssql-scripter/',
     zip_safe=True,
     long_description=open('README.rst').read(),
     classifiers=CLASSIFIERS,

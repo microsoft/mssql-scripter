@@ -9,6 +9,12 @@
 import os
 import platform
 
+<<<<<<< HEAD:mssqlscripter/mssqltoolsservice/__init__.py
+=======
+
+__version__ = '1.0.0a21'
+
+>>>>>>> dev:mssqltoolsservice/mssqltoolsservice/__init__.py
 
 def get_executable_path():
     """
