@@ -37,6 +37,7 @@ def copy_sqltoolsservice(platform):
     utility.clean_up(directory=TARGET_DIRECTORY)
 
     if not platform or platform not in SUPPORTED_PLATFORMS:
+        print('{} is not supported.'.format(platform))
         print('Please provide a valid platform flag.' +
               '[win32, win_amd64, win64, manylinux1_x86_64, manylinux1_i686, macosx_10_11_intel]')
         sys.exit(1)
