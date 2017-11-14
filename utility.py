@@ -16,7 +16,7 @@ MSSQLSCRIPTER_DIST_DIRECTORY = os.path.abspath(
     os.path.join(os.path.abspath(__file__), '..', 'dist'))
 
 MSSQLSCRIPTER_BUILD_DIRECTORY = os.path.abspath(
-    os.path.join(os.path.abspath(__file__), '..', 'dist'))
+    os.path.join(os.path.abspath(__file__), '..', 'build'))
 
 
 def exec_command(command, directory, continue_on_error=True):
