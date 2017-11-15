@@ -151,10 +151,19 @@ $ sudo apt-get update
 $ sudo apt-get install libunwind8
 ```
 
+### CentOS 7
+Run commands
+```shell
+## libunwind.x86_64 is in the epel-release repository
+## (Not necessary on GNOME, minimal install does not have this installed)
+$ sudo yum -y install epel-release
+$ sudo yum -y install libunwind
+```
+
 ## Installing the icu package
 
 ### RHEL 7.3
 Run commands
 ```shell
-$ sudo sudo yum install icu
+$ sudo yum install icu
 ```
