@@ -29,7 +29,6 @@ def build(platform_names):
 
     # clean
     utility.clean_up(utility.MSSQLSCRIPTER_DIST_DIRECTORY)
-    utility.cleaun_up_egg_info_sub_directories(utility.ROOT_DIR)
 
     print_heading('Running setup')
 
@@ -40,12 +39,15 @@ def build(platform_names):
     utility.exec_command('python dos2unix.py mssql-scripter mssql-scripter', utility.ROOT_DIR)
 
     for platform in platform_names:
+        utility.clean_up(utility.MSSQLSCRIPTER_BUILD_DIRECTORY)
+        utility.cleaun_up_egg_info_sub_directories(utility.ROOT_DIR)
+
         mssqltoolsservice.copy_sqltoolsservice(platform)
 
         print_heading('Building mssql-scripter {} wheel package package'.format(platform))
         utility.exec_command('python --version', utility.ROOT_DIR)
         utility.exec_command(
-            'python setup.py check -r -s bdist_wheel --plat-name {}'.format(platform), 
+            'python setup.py check -r -s bdist_wheel --plat-name {}'.format(platform),
             utility.ROOT_DIR,
             continue_on_error=False)
         
