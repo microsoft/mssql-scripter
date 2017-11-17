@@ -11,10 +11,10 @@ Development Guide
 
 See the [Architecture Guide](architecture_guide.md) for details on how mssql-scripter is designed and implemented.
 
-mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-xplat-cli). In order to contribute to the project, you are expected to: 
+mssql-scripter sources are located on GitHub (https://github.com/Microsoft/mssql-scripter). In order to contribute to the project, you are expected to: 
 -	Have a GitHub account. For Microsoft contributors, follow the guidelines on https://opensourcehub.microsoft.com/ to create, configure and link your account
--	Fork the  https://github.com/Microsoft/sql-xplat-clirepository into your private GitHub account
--	Create pull requests against the https://github.com/Microsoft/sql-xplat-cli repository to get your code changes merged into the project repository.
+-	Fork the  https://github.com/Microsoft/mssql-scripterrepository into your private GitHub account
+-	Create pull requests against the https://github.com/Microsoft/mssql-scripter repository to get your code changes merged into the project repository.
 
 ## <a name="Preparing_Machine"></a>1. Preparing your machine
 1.	Install latest Python from http://python.org. Please note that the version of Python that comes preinstalled on OSX is 2.7. It is recommended to install both Python 2.7 and Python3.6 to ensure backwards compatibility for testing.
@@ -22,7 +22,7 @@ mssql-scripter sources are located on GitHub (https://github.com/Microsoft/sql-x
     - The latest Python installation package can be downloaded from [here](https://www.python.org/downloads/).  
     - During installation, select the 'Add Python to PATH' option.  Python must be in the PATH environment variable.
     
-2. Clone the repo from [https://github.com/Microsoft/sql-xplat-cli](https://github.com/Microsoft/sql-xplat-cli)
+2. Clone the repo from [https://github.com/Microsoft/mssql-scripter](https://github.com/Microsoft/mssql-scripter)
 
 ## <a name="Environment_Setup"></a>2. Environment Setup
 When developing on a Python project, it is recommended to do so in a virtual environment. A virtual environment is a sandbox that maintains a copy of all libraries necessary to run python in a isolated environment without interfering with the system or global python. For more information on virtual environments, go to [Virtual Environment Info](docs/virtual_environment_info.md).
@@ -78,7 +78,7 @@ General development steps that apply to both a virtual environment or a global e
 ## <a name="Configure_IDE"></a>3. Configuring your IDE
 #### Visual Studio (Windows only)
 1.	Install [Python Tools for Visual Studio](https://github.com/Microsoft/PTVS)
-2.	Open the `<clone_root>\sql-xplat-cli.pyproj` project in Visual Studio
+2.	Open the `<clone_root>\mssql-scripter.pyproj` project in Visual Studio
 
 
 #### Visual Studio Code (Any platform)

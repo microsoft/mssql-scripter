@@ -90,7 +90,7 @@ C:\> pip install mssql-scripter
 
 # Troubleshooting
 
-If you're having installation issues, please check the below known issues and workarounds.  If you're having a different issue, please check the [issues](https://github.com/Microsoft/sql-xplat-cli/issues) page to see if the issue has already been reported.  If you don't see your issue there, filing a new issue would be appreciated.
+If you're having installation issues, please check the below known issues and workarounds.  If you're having a different issue, please check the [issues](https://github.com/Microsoft/mssql-scripter/issues) page to see if the issue has already been reported.  If you don't see your issue there, filing a new issue would be appreciated.
 
 ## Error: No module named mssqlscripter
 If the installation was successful and this error message is encountered, this may be caused by different versions of python in the environment.
@@ -151,10 +151,19 @@ $ sudo apt-get update
 $ sudo apt-get install libunwind8
 ```
 
+### CentOS 7
+Run commands
+```shell
+## libunwind.x86_64 is in the epel-release repository
+## (Not necessary on GNOME, minimal install does not have this installed)
+$ sudo yum -y install epel-release
+$ sudo yum -y install libunwind
+```
+
 ## Installing the icu package
 
 ### RHEL 7.3
 Run commands
 ```shell
-$ sudo sudo yum install icu
+$ sudo yum install icu
 ```

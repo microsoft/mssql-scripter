@@ -18,7 +18,7 @@ import mssqlscripter.scripterlogging as scripterlogging
 import mssqlscripter.argparser as parser
 import mssqlscripter.scriptercallbacks as scriptercallbacks
 import mssqlscripter.sqltoolsclient as sqltoolsclient
-import mssqltoolsservice
+import mssqlscripter.mssqltoolsservice as mssqltoolsservice
 
 logger = logging.getLogger(u'mssqlscripter.main')
 
@@ -101,15 +101,21 @@ def main(args):
                     sys.stdout.write(line)
 
     finally:
+        if sql_tools_client:
+            sql_tools_client.shutdown()
 
-        sql_tools_client.shutdown()
-        tools_service_process.kill()
-        # 1 second time out, allow tools service process to be killed.
-        time.sleep(1)
-        # None value indicates process has not terminated.
-        if not tools_service_process.poll():
-            sys.stderr.write(
-                u'Sql Tools Service process was not shut down properly.')
+        if tools_service_process:
+            tools_service_process.kill()
+            # 1 second time out, allow tools service process to be killed.
+            time.sleep(.1)
+            # Close the stdout file handle or else we would get a resource warning (found via pytest).
+            # This must be closed after the process is killed, otherwise we would block because the process is using
+            # it's stdout.
+            tools_service_process.stdout.close()
+            # None value indicates process has not terminated.
+            if not tools_service_process.poll():
+                sys.stderr.write(
+                    u'Sql Tools Service process was not shut down properly.')
         try:
             # Remove the temp file if we generated one.
             if temp_file_path:

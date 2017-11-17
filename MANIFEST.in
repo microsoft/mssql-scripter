@@ -1,2 +1,4 @@
 include LICENSE.txt
 include README.rst
+include mssqlscripter/mssqltoolsservice/bin/*
+include mssqlscripter/mssqltoolsservice/bin/*/*
