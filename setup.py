@@ -15,6 +15,7 @@ from setuptools import setup
 MSSQLSCRIPTER_VERSION = '1.0.0a22'
 
 
+
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
