@@ -143,7 +143,7 @@ def publish_official(platforms_names):
     # Credentials will be stored in a .pypirc file.
     for mssqlscripter_wheel_name in mssqlscripter_wheel_dir:
         utility.exec_command(
-            'twine upload {} pypi'.format(mssqlscripter_wheel_name),
+            'twine upload {}'.format(mssqlscripter_wheel_name),
             utility.MSSQLSCRIPTER_DIST_DIRECTORY)
 
 
