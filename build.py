@@ -153,8 +153,7 @@ if __name__ == '__main__':
         'win32',
         'win_amd64',
         'macosx_10_11_intel',
-        'manylinux1_x86_64',
-        'manylinux1_i686']
+        'manylinux1_x86_64']
 
     targets = {
         'build': build,
