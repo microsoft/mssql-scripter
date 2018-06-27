@@ -37,7 +37,7 @@ def copy_sqltoolsservice(platform):
     if not platform or platform not in SUPPORTED_PLATFORMS:
         print('{} is not supported.'.format(platform))
         print('Please provide a valid platform flag.' +
-              '[win32, win_amd64, win64, manylinux1_x86_64, manylinux1_i686, macosx_10_11_intel]')
+              '[win32, win_amd64, manylinux1_x86_64, macosx_10_11_intel]')
         sys.exit(1)
 
     copy_file_path = SUPPORTED_PLATFORMS[platform]
