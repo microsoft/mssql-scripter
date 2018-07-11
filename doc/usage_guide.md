@@ -141,9 +141,9 @@ For option parameters, pass in '-h':
 ## Examples
 Below are example commands that run against the AdventureWorks database. Here is the list of examples:
 
-[Dump datbase object schema](#dump-database-object-schema)
+[Dump database object schema](#dump-database-object-schema)
 
-[Dump datbase object data](#dump-database-object-data)
+[Dump database object data](#dump-database-object-data)
 
 [Dump database object schema and data](#dump-the-database-object-schema-and-data)
 
