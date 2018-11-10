@@ -12,7 +12,12 @@ def get_config_log_dir():
     """
         Retrieve logging directory, create it if it doesn't exist.
     """
-    log_dir = os.path.expanduser(os.path.join(u'~', u'.mssqlscripter'))
+    if u'XDG_CONFIG_HOME' in os.environ:
+        config_home, dir_name = os.environ[u'XDG_CONFIG_HOME'], u'mssqlscripter'
+    else:
+        config_home, dir_name = u'~', u'.mssqlscripter'
+
+    log_dir = os.path.expanduser(os.path.join(config_home, dir_name))
     if (not os.path.exists(log_dir)):
         os.makedirs(log_dir)
     return log_dir
