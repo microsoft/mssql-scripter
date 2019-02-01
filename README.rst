@@ -44,10 +44,13 @@ For general help content, pass in the ``-h`` parameter:
 
 Docker
 -----
-        docker pull felipegouveiae/mssql-scripter:latest
-        docker run -it -v $(pwd):/var/data felipegouveiae/mssql-scripter:latest mssql-scripter [PARAMS]
 
-        github: https://github.com/felipegouveiae/mssql-scripter-docker
+github: https://github.com/felipegouveiae/mssql-scripter-docker
+
+.. code:: bash
+        $ docker pull felipegouveiae/mssql-scripter:latest
+        $ docker run -it -v $(pwd):/var/data felipegouveiae/mssql-scripter:latest mssql-scripter [PARAMS]
+        
 
 Contributing
 -----------------------------
