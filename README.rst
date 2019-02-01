@@ -48,9 +48,8 @@ Docker
 github: https://github.com/felipegouveiae/mssql-scripter-docker
 
 .. code:: bash
-        $ docker pull felipegouveiae/mssql-scripter:latest
-        $ docker run -it -v $(pwd):/var/data felipegouveiae/mssql-scripter:latest mssql-scripter [PARAMS]
-        
+    $ docker pull felipegouveiae/mssql-scripter:latest
+    $ docker run -it -v $(pwd):/var/data felipegouveiae/mssql-scripter:latest mssql-scripter [PARAMS]
 
 Contributing
 -----------------------------
