@@ -42,6 +42,16 @@ For general help content, pass in the ``-h`` parameter:
 
     $ mssql-scripter -h
 
+Docker
+------
+
+github: https://github.com/felipegouveiae/mssql-scripter-docker
+
+.. code:: bash
+
+    $ docker pull felipegouveiae/mssql-scripter:latest
+    $ docker run -it -v $(pwd):/var/data felipegouveiae/mssql-scripter:latest mssql-scripter [PARAMS]
+
 Contributing
 -----------------------------
 If you would like to contribute to the project, please refer to the `development guide`_.
