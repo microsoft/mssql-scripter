@@ -63,7 +63,7 @@ opencode@microsoft.com with any additional questions or comments.
 License
 -------
 
-mssql-scritper is licensed under the `MIT license`_.
+mssql-scripter is licensed under the `MIT license`_.
 
 .. _installation guide: doc/installation_guide.md
 .. _development guide: doc/development_guide.md
