@@ -29,20 +29,20 @@ class TestParser(unittest.TestCase):
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username', u'-P', 'secret']
         parameters = parser.parse_arguments(standard_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;')
 
     def test_connection_string_with_environment(self):
         """
             Verify parser picks up connection string and password from environment variable.
         """
-        os.environ[parser.MSSQL_SCRIPTER_CONNECTION_STRING] = u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;'
+        os.environ[parser.MSSQL_SCRIPTER_CONNECTION_STRING] = u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;'
         parameters = parser.parse_arguments(['--append'])
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;')
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username']
-        os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'secret123ABC'
+        os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'PLACEHOLDER'
         parameters = parser.parse_arguments(standard_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=secret123ABC;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;')
 
 
 if __name__ == u'__main__':

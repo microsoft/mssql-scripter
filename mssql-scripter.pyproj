@@ -66,13 +66,10 @@
     <Compile Include="mssqlscripter\tests\test_sqltoolsclient.py" />
     <Compile Include="mssqlscripter\__init__.py" />
     <Compile Include="mssqlscripter\__main__.py" />
-    <Compile Include="mssqltoolsservice\buildwheels.py" />
-    <Compile Include="mssqltoolsservice\mssqltoolsservice\__init__.py" />
-    <Compile Include="mssqltoolsservice\setup.py" />
-    <Compile Include="register_upload.py" />
+    <Compile Include="mssqlscripter\mssqltoolsservice\__init__.py" />
+    <Compile Include="mssqlscripter\mssqltoolsservice\external.py" />
     <Compile Include="setup.py" />
     <Compile Include="utility.py" />
-    <Compile Include="verify_packaging.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="doc\" />
@@ -83,8 +80,7 @@
     <Folder Include="mssqlscripter\jsonrpc\contracts\tests\scripting_baselines" />
     <Folder Include="mssqlscripter\jsonrpc\tests" />
     <Folder Include="mssqlscripter\tests" />
-    <Folder Include="mssqltoolsservice\" />
-    <Folder Include="mssqltoolsservice\mssqltoolsservice\" />
+    <Folder Include="mssqlscripter\mssqltoolsservice\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

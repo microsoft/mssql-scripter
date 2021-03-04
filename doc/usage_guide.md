@@ -141,9 +141,9 @@ For option parameters, pass in '-h':
 ## Examples
 Below are example commands that run against the AdventureWorks database. Here is the list of examples:
 
-[Dump datbase object schema](#dump-database-object-schema)
+[Dump database object schema](#dump-database-object-schema)
 
-[Dump datbase object data](#dump-database-object-data)
+[Dump database object data](#dump-database-object-data)
 
 [Dump database object schema and data](#dump-the-database-object-schema-and-data)
 
@@ -225,5 +225,5 @@ You can set environment variables for your connection string through the followi
     $ mssql-scripter
 
     # set environment variable MSSQL_SCRIPTER_PASSWORD so no password input is required.
-    $ export MSSQL_SCRIPTER_PASSWORD='ABC123'
+    $ export MSSQL_SCRIPTER_PASSWORD='[PLACEHOLDER]'
     $ mssql-scripter -S localhost -d AdventureWorks -U sa
