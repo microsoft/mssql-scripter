@@ -40,9 +40,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;')
 
         standard_connection = [u'-S', u'TestServer', u'-d', u'mydatabase', u'-U', 'my_username']
-        os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'TestPLACEHOLDER'
+        os.environ[parser.MSSQL_SCRIPTER_PASSWORD] = u'PLACEHOLDER'
         parameters = parser.parse_arguments(standard_connection)
-        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=TestPLACEHOLDER;')
+        self.assertEqual(parameters.ConnectionString, u'Server=TestServer;Database=mydatabase;User Id=my_username;Password=PLACEHOLDER;')
 
 
 if __name__ == u'__main__':
