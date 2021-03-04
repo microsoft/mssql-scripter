@@ -225,5 +225,5 @@ You can set environment variables for your connection string through the followi
     $ mssql-scripter
 
     # set environment variable MSSQL_SCRIPTER_PASSWORD so no password input is required.
-    $ export MSSQL_SCRIPTER_PASSWORD='ABC123'
+    $ export MSSQL_SCRIPTER_PASSWORD='[PLACEHOLDER]'
     $ mssql-scripter -S localhost -d AdventureWorks -U sa
