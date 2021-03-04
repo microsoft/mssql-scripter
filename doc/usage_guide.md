@@ -151,6 +151,8 @@ Below are example commands that run against the AdventureWorks database. Here is
 
 [Exclude database objects](#exclude-database-objects)
 
+[Include database object types](#include-database-object-types)
+
 [Target server version](#target-server-version)
 
 [Target server edition](#target-server-edition)
@@ -158,6 +160,9 @@ Below are example commands that run against the AdventureWorks database. Here is
 [Pipe a generated script to sed](#pipe-a-generated-script-to-sed)
 
 [Script data to a file](#script-data-to-a-file)
+
+
+
 
 ### Dump database object schema
 
@@ -193,6 +198,13 @@ Below are example commands that run against the AdventureWorks database. Here is
     # generate DDL scripts for objects that do not contain 'Sale' in their name to stdout
     mssql-scripter -S localhost -d AdventureWorks -U sa --exclude-objects Sale
 
+### Include database object types
+   
+    # generate DDL scripts for stored procedures to stdout  
+    # The list of object types is specified in the DatabaseObjectTypes Enum of Microsoft.SqlServer.Management.Smo 
+    # https://docs.microsoft.com/en-us/dotnet/api/microsoft.sqlserver.management.smo.databaseobjecttypes?view=sql-smo-160
+    mssql-scripter -S localhost -d AdventureWorks -U sa --include-types StoredProcedure
+
 ### Target server version
     
     # specify the version of SQL Server the script will be run against
@@ -215,6 +227,7 @@ Note this example is for Linux and macOS usage.
    
     # script all the data to a file.
     mssql-scripter -S localhost -d AdventureWorks -U sa --data-only > ./adventureworks-data.sql 
+    
 
 ## Environment Variables
 You can set environment variables for your connection string through the following steps:
