@@ -71,4 +71,4 @@ mssql-scritper is licensed under the `MIT license`_.
 .. _Issues: https://github.com/Microsoft/mssql-scripter/issues
 .. _Microsoft Open Source Code of Conduct: https://opensource.microsoft.com/codeofconduct/
 .. _Code of Conduct FAQ: https://opensource.microsoft.com/codeofconduct/faq/
-.. _MIT license: https://github.com/Microsoft/mssql-scripter/blob/dev/LI
+.. _MIT license: https://github.com/Microsoft/mssql-scripter/blob/dev/LICENSE.txt
