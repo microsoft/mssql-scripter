@@ -245,13 +245,10 @@ You can set environment variables for your connection string through the followi
 
     # (windows)
     # set environment variable MSSQL_SCRIPTER_CONNECTION_STRING with a connection string.
-    setx MSSQL_SCRIPTER_CONNECTION_STRING 'Server=myserver;Database=mydb;User Id=myuser;Password=mypassword;'
-    # note: you must start a new PS session for the change to take effect
+    $Env:MSSQL_SCRIPTER_CONNECTION_STRING = 'Server=myserver;Database=mydb;User Id=myuser;Password=mypassword;'
     mssql-scripter
     
     # (windows)
     # set environment variable MSSQL_SCRIPTER_PASSWORD so no password input is required.
-    setx MSSQL_SCRIPTER_PASSWORD mypassword
-    # note: you must start a new PS session for the change to take effect
+    $Env:MSSQL_SCRIPTER_PASSWORD = "placeholder"
     $ mssql-scripter -S localhost -d AdventureWorks -U sa
-   
