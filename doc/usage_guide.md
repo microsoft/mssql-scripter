@@ -72,18 +72,24 @@ For option parameters, pass in '-h':
                             Script only features compatible with the specified SQL
                             Server database edition.
       --include-objects [ [ ...]]
-                            Database objects to include in script.
+                            Database objects to include in script. 
+                            Each object delimited by space.
       --exclude-objects [ [ ...]]
-                            Database objects to exclude from script.
+                            Database objects to exclude from script. 
+                            Each object delimited by space.
       --include-schemas [ [ ...]]
-                            Database objects of this schema to include in script.
+                            Database objects of this schema to include in script. 
+                            Each object delimited by space.
       --exclude-schemas [ [ ...]]
                             Database objects of this schema to exclude from
-                            script.
+                            script. 
+                            Each object delimited by space.
       --include-types [ [ ...]]
-                            Database objects of this type to include in script.
+                            Database objects of this type to include in script. 
+                            Each object delimited by space.
       --exclude-types [ [ ...]]
-                            Database objects of this type to exclude from script.
+                            Database objects of this type to exclude from script. 
+                            Each object delimited by space.
       --ansi-padding        Generates ANSI Padding statements.
       --append              Append script to file.
       --check-for-existence
@@ -192,6 +198,9 @@ Below are example commands that run against the AdventureWorks database. Here is
 
     # generate DDL scripts for the dbo schema and pipe the output to a file
     mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects dbo. > ./dboschema.sql
+
+    # Using space to include multiple objects
+    mssql-scripter -S localhost -d AdventureWorks -U sa --include-objects table1 table2 > ./multipleObjects.sql
 
 ### Exclude database objects
    
