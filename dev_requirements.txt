@@ -12,4 +12,5 @@ pytest >= 3.0.7
 pytest-cov >= 2.5.1
 readme_renderer >= 17.2
 docutils >= 0.13.1
-azure-storage >= 0.33.0
+azure-storage-blob >= 12.14.1
+
